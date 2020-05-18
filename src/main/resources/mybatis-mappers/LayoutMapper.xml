@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.apcos.data.capsule.mapper.LayoutMapper">
+
+    <insert id="save" parameterType="com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select sys_guid() from dual
+        </selectKey>
+        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","CREATE_TIME", "UPDATE_TIME")
+        VALUES
+        (
+        #{id,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
+        #{layout,jdbcType=VARCHAR},
+        sysdate,
+        sysdate)
+    </insert>
+
+    <update id="update" parameterType="com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout">
+        UPDATE ODS_LAYOUT_CONFIG r
+        <set>
+            <if test="layout != null and layout !=''">
+                r.LAYOUT = #{layout,jdbcType=VARCHAR},
+            </if>
+            r.UPDATE_TIME = sysdate
+        </set>
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM ODS_LAYOUT_CONFIG WHERE ID  = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="seleceByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout">
+        SELECT
+        r.ID,
+        r.USER_ID as userId,
+        r.LAYOUT as layout,
+        r.CREATE_TIME as createTime,
+        r.UPDATE_TIME as updateTime
+        FROM ODS_LAYOUT_CONFIG r
+        <where>
+            <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
+        </where>
+    </select>
+
+
+</mapper>

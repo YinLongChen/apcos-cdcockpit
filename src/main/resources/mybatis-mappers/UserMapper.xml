@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.apcos.data.capsule.mapper.UserMapper">
+
+    <select id="selectUser" resultType="com.jinxin.platform.apcos.data.capsule.pojo.domain.User">
+        select USER_ID as userId,
+               USER_NAME as userName,
+               ID_CARD as idCard,
+               AGE as age,
+               GENDER as gender,
+               DEPT as dept,
+               PROV as prov,
+               CITY as city,
+               AREA as area,
+               REGIST_TIME as registTime
+        from ODS_USER_CENTER_INFO where 1=1
+        <if test="ageStart != null">and AGE &gt;= #{ageStart}</if>
+        <if test="ageEnd != null">and AGE &lt;= #{ageEnd}</if>
+        <if test="gender != null and gender != ''">and GENDER = #{gender}</if>
+        <if test="startTime != null">and REGIST_TIME &gt;= #{startTime}</if>
+        order by REGIST_TIME
+    </select>
+
+    <select id="userCountByGender" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
+        SELECT GENDER as name,count(*) as value FROM ODS_USER_CENTER_INFO GROUP BY GENDER
+    </select>
+
+    <select id="userCountByRegion" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
+        SELECT PROV as name ,count(*) as value FROM ODS_USER_CENTER_INFO GROUP BY PROV
+    </select>
+
+</mapper>
