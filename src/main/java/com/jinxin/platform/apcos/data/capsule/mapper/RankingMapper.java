@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 排行榜模型Mapper
+ */
 @Mapper
 public interface RankingMapper {
 

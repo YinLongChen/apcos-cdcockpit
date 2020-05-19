@@ -31,19 +31,13 @@ public interface CountUserService {
      */
     List<CountResult> userCountByAgeGroup();
 
-    /**
-     * 最近一月注册用户统计
-     *
-     * @return
-     */
-    List<CountResult> userCountByLastMonth();
 
     /**
-     * 最近一年注册用户统计
+     * 最近一天/一月/一年注册用户统计
      *
      * @return
      */
-    List<CountResult> userCountByLastYear();
+    List<CountResult> userCountByTime(int field);
 
     /**
      * 用户地区统计

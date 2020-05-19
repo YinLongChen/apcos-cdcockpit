@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 排行榜模型
  * @author Huang LingSong
  * 2020-05-15 14:43
  */

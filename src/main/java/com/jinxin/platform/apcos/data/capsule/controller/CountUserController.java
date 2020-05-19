@@ -67,24 +67,14 @@ public class CountUserController {
     }
 
 
-    @ApiOperation(value = "最近一月注册用户统计", notes = "最近一月注册用户统计")
+    @ApiOperation(value = "最近一天/一周/一月/一年注册用户统计", notes = "最近一月/一年注册用户统计(5-天统计，3-周统计，2-月统计，1-年统计)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
-    @GetMapping("/countByLastMonth")
-    public DataResult<List<CountResult>> userCountByLastMonth() {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", countUserService.userCountByLastMonth());
-    }
-
-    @ApiOperation(value = "最近一年注册用户统计", notes = "最近一年注册用户统计")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 500, message = "服务器内部错误")
-    })
-    @GetMapping("/countByLastYear")
-    public DataResult<List<CountResult>> userCountByLastYear() {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", countUserService.userCountByLastYear());
+    @GetMapping("/countByTime")
+    public DataResult<List<CountResult>> userCountByTime(@RequestParam Integer field) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", countUserService.userCountByTime(field));
     }
 
 }

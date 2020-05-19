@@ -4,6 +4,9 @@ import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult;
 
 import java.util.List;
 
+/**
+ * 排行榜模型
+ */
 public interface RankingService {
 
     /**

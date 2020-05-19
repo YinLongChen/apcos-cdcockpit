@@ -13,7 +13,7 @@
         	    m.model_id AS modelId,
         	    row_number ( ) over ( ORDER BY VALUE DESC ) AS top
          FROM
-         	ODS_RANKING_MODEL m
+         	ODS_RANKING_MODEL_DATA m
          WHERE
          	MODEL_ID = #{modelId}
     </select>
