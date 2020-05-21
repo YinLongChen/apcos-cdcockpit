@@ -31,20 +31,20 @@ public class CountUserServiceImpl implements CountUserService {
     private UserMapper userMapper;
 
     @Override
-    public Paging<User> findUsersPage(UserForm userForm) {
-        Page page = PageHelper.startPage(userForm.getCurrent(), userForm.getSize());
+    public Paging<User> findUsersPage(UserForm form) {
+        Page page = PageHelper.startPage(form.getCurrent(), form.getSize());
 
-        int[] ages = getAge(userForm.getAgeGroup());
+        int[] ages = getAge(form.getAgeGroup());
 
         List<User> users = userMapper.selectUser(UserCriteria
                 .builder()
-                .gender(userForm.getGender())
-                .startTime(userForm.getStartTime())
+                .gender(form.getGender())
+                .startTime(form.getStartTime())
                 .ageStart(ages == null ? null : ages[0])
                 .ageEnd(ages == null ? null : ages[1])
                 .build());
 
-        return new Paging<>(userForm.getCurrent(), userForm.getSize(), page.getTotal(), page.getPages(), users);
+        return new Paging<>(form.getCurrent(), form.getSize(), page.getTotal(), page.getPages(), users);
     }
 
     @Override

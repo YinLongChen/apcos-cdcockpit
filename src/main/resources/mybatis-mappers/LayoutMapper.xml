@@ -8,12 +8,13 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","CREATE_TIME", "UPDATE_TIME")
+        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","COL_NUM","CREATE_TIME", "UPDATE_TIME")
         VALUES
         (
         #{id,jdbcType=VARCHAR},
         #{userId,jdbcType=VARCHAR},
         #{layout,jdbcType=VARCHAR},
+        #{colNum,jdbcType=NUMERIC},
         sysdate,
         sysdate)
     </insert>
@@ -23,6 +24,9 @@
         <set>
             <if test="layout != null and layout !=''">
                 r.LAYOUT = #{layout,jdbcType=VARCHAR},
+            </if>
+            <if test="colNum != null">
+                r.COL_NUM = #{colNum,jdbcType=VARCHAR},
             </if>
             r.UPDATE_TIME = sysdate
         </set>
@@ -38,6 +42,7 @@
         r.ID,
         r.USER_ID as userId,
         r.LAYOUT as layout,
+        r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
         r.UPDATE_TIME as updateTime
         FROM ODS_LAYOUT_CONFIG r

@@ -17,11 +17,7 @@ public interface ListService {
      */
     List<Map<String,Object>> findByType(String type);
 
-//    /**
-//     * 获取具体业务类型
-//     * @return
-//     */
-//    List<String> findDataType();
+
 
     /**
      * 根据业务类型获取字段名中英文映射关系

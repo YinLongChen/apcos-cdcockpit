@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ListMap {
     private String id;
-    private String reportType;
+    private String modelId;
     private String columnOrl;
     private String columnEn;
     private String columnCn;

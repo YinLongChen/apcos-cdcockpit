@@ -45,13 +45,4 @@ public class ListModelController {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findNameMapByType(modelId));
     }
 
-//    @ApiOperation(value = "获取业务类型", notes = "获取业务类型")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "成功"),
-//            @ApiResponse(code = 500, message = "服务器内部错误")
-//    })
-//    @GetMapping("/type")
-//    public DataResult findDataType() {
-//        return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findDataType());
-//    }
 }

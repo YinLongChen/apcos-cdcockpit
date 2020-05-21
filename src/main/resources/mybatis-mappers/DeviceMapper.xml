@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.apcos.data.capsule.mapper.DeviceMapper">
+
+    <select id="selectDevice" resultType="com.jinxin.platform.apcos.data.capsule.pojo.domain.Device">
+        select
+            DEVICE_NUM as deviceNum,
+            DEVICE_MAC as deviceMac,
+            PRODUCE_CODE as produceCode,
+            REGIST_TIME as registTime,
+            PROV as prov,
+            CITY as city,
+            AREA as area
+        from ODS_DEVICE_CENTER_INFO where 1=1
+        <if test="produceCode != null and produceCode !=''">and PRODUCE_CODE = #{produceCode}</if>
+        <if test="startTime != null">and REGIST_TIME &gt;= #{startTime}</if>
+        order by REGIST_TIME
+    </select>
+
+    <select id="deviceCountByRegion" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
+        SELECT PROV as name ,count(*) as value FROM ODS_DEVICE_CENTER_INFO GROUP BY PROV
+    </select>
+
+</mapper>

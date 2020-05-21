@@ -67,7 +67,7 @@ public class CountUserController {
     }
 
 
-    @ApiOperation(value = "最近一天/一周/一月/一年注册用户统计", notes = "最近一月/一年注册用户统计(5-天统计，3-周统计，2-月统计，1-年统计)")
+    @ApiOperation(value = "最近一天/一周/一月/一年注册用户统计", notes = "注册用户统计(5-天统计，3-周统计，2-月统计，1-年统计)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")

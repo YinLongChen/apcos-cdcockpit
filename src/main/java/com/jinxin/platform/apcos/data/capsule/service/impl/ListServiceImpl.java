@@ -2,14 +2,11 @@ package com.jinxin.platform.apcos.data.capsule.service.impl;
 
 import com.jinxin.platform.apcos.data.capsule.mapper.ListMapper;
 import com.jinxin.platform.apcos.data.capsule.pojo.domain.ListMap;
-import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult;
 import com.jinxin.platform.apcos.data.capsule.service.ListService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +28,7 @@ public class ListServiceImpl implements ListService {
 
         Map<String, String> map =  listMapper.selectMap(type).stream().collect(Collectors.toMap(ListMap::getColumnOrl, ListMap::getColumnEn));
 
-        List<Map<String, Object>> result = listMapper.selectByType(type).stream().map(u -> {
+        List<Map<String, Object>> result = listMapper.selectByModelId(type).stream().map(u -> {
             Map<String, Object> temp = new HashMap<>();
             for (Map.Entry<String, Object> entry : u.entrySet()) {
                 String nameEn = map.get(entry.getKey());
