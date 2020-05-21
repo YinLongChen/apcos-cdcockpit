@@ -18,7 +18,7 @@ public class Layout {
     private String id;
     private String userId;
     private String layout;
-    private Integer colNum;
+    private String colNum;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

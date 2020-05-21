@@ -11,9 +11,8 @@
                AGE as age,
                GENDER as gender,
                DEPT as dept,
-               PROV as prov,
-               CITY as city,
-               AREA as area,
+               USER_ADDRESS as address,
+               USER_CELLPHONE_NO as phone,
                REGIST_TIME as registTime
         from ODS_USER_CENTER_INFO where 1=1
         <if test="ageStart != null">and AGE &gt;= #{ageStart}</if>
@@ -27,8 +26,5 @@
         SELECT GENDER as name,count(*) as value FROM ODS_USER_CENTER_INFO GROUP BY GENDER
     </select>
 
-    <select id="userCountByRegion" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
-        SELECT PROV as name ,count(*) as value FROM ODS_USER_CENTER_INFO GROUP BY PROV
-    </select>
 
 </mapper>

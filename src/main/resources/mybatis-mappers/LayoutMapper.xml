@@ -14,7 +14,7 @@
         #{id,jdbcType=VARCHAR},
         #{userId,jdbcType=VARCHAR},
         #{layout,jdbcType=VARCHAR},
-        #{colNum,jdbcType=NUMERIC},
+        #{colNum,jdbcType=VARCHAR},
         sysdate,
         sysdate)
     </insert>

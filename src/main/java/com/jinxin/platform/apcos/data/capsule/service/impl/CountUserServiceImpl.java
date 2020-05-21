@@ -10,6 +10,8 @@ import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.Paging;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.user.UserCriteria;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.user.UserForm;
 import com.jinxin.platform.apcos.data.capsule.service.CountUserService;
+import com.jinxin.platform.apcos.data.capsule.utils.Phone;
+import com.jinxin.platform.apcos.data.capsule.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,12 +164,28 @@ public class CountUserServiceImpl implements CountUserService {
 
     @Override
     public List<CountResult> userCountByRegion() {
-        return userMapper.userCountByRegion().stream().map(u -> {
-            if (StringUtils.isEmpty(u.getName())) {
-                u.setName("未知");
+        List<User> users =  userMapper.selectUser(UserCriteria.builder().build());
+
+        Map<String, List<User>> map = users.stream().map(u -> {
+
+            if (StringUtils.isEmpty(u.getAddress())) {
+                Phone region = PhoneUtil.getPhoneNumberInfo(u.getPhone());
+                u.setProv(region == null ? "未知" : region.getProvince());
+            } else {
+                u.setProv(PhoneUtil.transform(u.getAddress()).getProvince());
             }
+
             return u;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.groupingBy(User::getProv));
+
+
+        List<CountResult> countResults = new ArrayList<>();
+        for (Map.Entry<String, List<User>> entry : map.entrySet()) {
+            countResults.add(CountResult.builder().name(entry.getKey()).value(entry.getValue().size()).build());
+
+        }
+
+        return countResults;
     }
 
 

@@ -9,6 +9,8 @@ import com.jinxin.platform.apcos.data.capsule.pojo.vo.device.DeviceCriteria;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.device.DeviceForm;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.Paging;
 import com.jinxin.platform.apcos.data.capsule.service.DeviceService;
+import com.jinxin.platform.apcos.data.capsule.utils.Phone;
+import com.jinxin.platform.apcos.data.capsule.utils.PhoneUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -115,11 +117,27 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<CountResult> deviceCountByRegion() {
-        return deviceMapper.deviceCountByRegion().stream().map(u -> {
-            if (StringUtils.isEmpty(u.getName())) {
-                u.setName("未知");
+        List<Device> devices = deviceMapper.selectDevice(DeviceCriteria.builder().build());
+
+        Map<String, List<Device>> map = devices.stream().map(u -> {
+
+            if (StringUtils.isEmpty(u.getAddress())) {
+                Phone region = PhoneUtil.getPhoneNumberInfo(u.getPhone());
+                u.setProv(region == null ? "未知" : region.getProvince());
+            } else {
+                u.setProv(PhoneUtil.transform(u.getAddress()).getProvince());
             }
+
             return u;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.groupingBy(Device::getProv));
+
+
+        List<CountResult> countResults = new ArrayList<>();
+        for (Map.Entry<String, List<Device>> entry : map.entrySet()) {
+            countResults.add(CountResult.builder().name(entry.getKey()).value(entry.getValue().size()).build());
+
+        }
+
+        return countResults;
     }
 }

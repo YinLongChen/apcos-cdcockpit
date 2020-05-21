@@ -21,9 +21,4 @@ public interface DeviceMapper {
      */
     List<Device> selectDevice(DeviceCriteria deviceCriteria);
 
-    /**
-     * 设备地区统计
-     * @return
-     */
-    List<CountResult> deviceCountByRegion();
 }

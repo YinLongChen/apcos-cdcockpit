@@ -10,5 +10,5 @@ import lombok.Data;
 public class LayoutForm {
     private String id;
     private String layout;
-    private Integer colNum;
+    private String colNum;
 }

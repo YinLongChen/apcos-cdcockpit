@@ -25,11 +25,5 @@ public interface UserMapper {
      */
     List<CountResult> userCountByGender();
 
-    /**
-     * 用户地区统计
-     * @return
-     */
-    List<CountResult> userCountByRegion();
-
 
 }

@@ -10,17 +10,13 @@
             DEVICE_MAC as deviceMac,
             PRODUCE_CODE as produceCode,
             REGIST_TIME as registTime,
-            PROV as prov,
-            CITY as city,
-            AREA as area
+            USER_CELLPHONE_NO as phone,
+            USER_ADDRESS as address
         from ODS_DEVICE_CENTER_INFO where 1=1
         <if test="produceCode != null and produceCode !=''">and PRODUCE_CODE = #{produceCode}</if>
         <if test="startTime != null">and REGIST_TIME &gt;= #{startTime}</if>
         order by REGIST_TIME
     </select>
 
-    <select id="deviceCountByRegion" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
-        SELECT PROV as name ,count(*) as value FROM ODS_DEVICE_CENTER_INFO GROUP BY PROV
-    </select>
 
 </mapper>

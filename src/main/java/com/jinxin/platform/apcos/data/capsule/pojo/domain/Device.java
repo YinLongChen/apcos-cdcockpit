@@ -15,7 +15,8 @@ public class Device {
     private String produceCode;
     private Date registTime;
     private String registStrTime;
+    private String address;
+    private String phone;
     private String prov;
     private String city;
-    private String area;
 }
