@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportCriteria {
-    private String produceCode;
+    private String productCode;
     private Date startTime;
     private String modelId;
     private String cmdName;

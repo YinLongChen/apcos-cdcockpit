@@ -16,10 +16,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeviceReport {
-    private String deviceNum;
+    private String serialNum;
     private String deviceName;
     private String deviceMac;
-    private String produceCode;
+    private String productCode;
     private Date reportTime;
     private String reportStrTime;
     private String cmdName;

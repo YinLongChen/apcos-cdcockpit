@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeviceForm {
-    private String produceCode;
+    private String productCode;
     private Date startTime;
     private Integer current = 1;
     private Integer size = 10;

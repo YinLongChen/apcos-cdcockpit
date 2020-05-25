@@ -33,7 +33,7 @@ public class DeviceServiceImpl implements DeviceService {
     public Paging<Device> findDevicePage(DeviceForm form) {
         Page page = PageHelper.startPage(form.getCurrent(), form.getSize());
         List<Device> devices = deviceMapper.selectDevice(DeviceCriteria.builder()
-                .produceCode(form.getProduceCode())
+                .productCode(form.getProductCode())
                 .startTime(form.getStartTime())
                 .build());
         return new Paging<>(form.getCurrent(), form.getSize(), page.getTotal(), page.getPages(), devices);
@@ -64,11 +64,12 @@ public class DeviceServiceImpl implements DeviceService {
                 return null;
 
         }
-
-        //获取数据
-        List<Device> users = deviceMapper.selectDevice(DeviceCriteria
+        DeviceCriteria deviceCriteria =  DeviceCriteria
                 .builder()
-                .startTime(c.getTime()).build()
+                .startTime(c.getTime()).build();
+        //获取数据
+        List<Device> users = deviceMapper.selectDevice(
+                deviceCriteria
         );
 
         Map<String, List<Device>> deviceMap = users.stream()
@@ -134,6 +135,7 @@ public class DeviceServiceImpl implements DeviceService {
 
         List<CountResult> countResults = new ArrayList<>();
         for (Map.Entry<String, List<Device>> entry : map.entrySet()) {
+
             countResults.add(CountResult.builder().name(entry.getKey()).value(entry.getValue().size()).build());
 
         }

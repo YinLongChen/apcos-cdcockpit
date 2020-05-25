@@ -5,15 +5,15 @@
 <mapper namespace="com.jinxin.platform.apcos.data.capsule.mapper.DeviceReportMapper">
 
     <select id="selectReport" resultType="com.jinxin.platform.apcos.data.capsule.pojo.domain.DeviceReport">
-        select DEVICE_NUM as deviceNum,
+        select SERIAL_NUM as serialNum,
                DEVICE_NAME as deviceName,
                DEVICE_MAC as deviceMac,
-               PRODUCE_CODE as produceCode,
+               PRODUCT_CODE as productCode,
                REPORT_TIME as reportTime,
                CMD_NAME as cmdName,
                MODEL_ID as modelId
-        from ODS_DEVICE_REPORT where 1=1
-        <if test="produceCode != null and produceCode !=''">and PRODUCE_CODE = #{produceCode}</if>
+        from V_ODS_DEVICE_REPORT where 1=1
+        <if test="productCode != null and productCode !=''">and PRODUCT_CODE = #{productCode}</if>
         <if test="modelId != null and modelId !=''">and MODEL_ID = #{modelId}</if>
         <if test="cmdName != null and cmdName !=''">and CMD_NAME = #{cmdName}</if>
         <if test="startTime != null">and REPORT_TIME &gt;= #{startTime}</if>

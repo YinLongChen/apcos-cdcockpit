@@ -20,7 +20,7 @@ public interface DeviceReportMapper {
      *
      * @return
      */
-    @Select("select distinct CMD_NAME from ODS_DEVICE_REPORT")
+    @Select("select distinct CMD_NAME from V_ODS_DEVICE_REPORT")
     List<String> selectReportType();
 
     List<DeviceReport> selectReport(ReportCriteria reportCriteria);

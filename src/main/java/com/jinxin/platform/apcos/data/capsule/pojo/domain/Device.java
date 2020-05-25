@@ -10,9 +10,9 @@ import java.util.Date;
  */
 @Data
 public class Device {
-    private String deviceNum;
+    private String serialNum;
     private String deviceMac;
-    private String produceCode;
+    private String productCode;
     private Date registTime;
     private String registStrTime;
     private String address;

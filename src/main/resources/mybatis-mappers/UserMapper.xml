@@ -14,7 +14,7 @@
                USER_ADDRESS as address,
                USER_CELLPHONE_NO as phone,
                REGIST_TIME as registTime
-        from ODS_USER_CENTER_INFO where 1=1
+        from V_ODS_USER_CENTER_INFO where 1=1
         <if test="ageStart != null">and AGE &gt;= #{ageStart}</if>
         <if test="ageEnd != null">and AGE &lt;= #{ageEnd}</if>
         <if test="gender != null and gender != ''">and GENDER = #{gender}</if>
@@ -23,7 +23,7 @@
     </select>
 
     <select id="userCountByGender" resultType="com.jinxin.platform.apcos.data.capsule.pojo.vo.config.CountResult">
-        SELECT GENDER as name,count(*) as value FROM ODS_USER_CENTER_INFO GROUP BY GENDER
+        SELECT GENDER as name,count(*) as value FROM V_ODS_USER_CENTER_INFO GROUP BY GENDER
     </select>
 
 

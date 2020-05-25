@@ -80,6 +80,10 @@ public class PhoneUtil {
     public static Phone transform(String addr) {
         String[] splitArr = addr.split("省");
 
+        if (splitArr.length==1){
+            splitArr = addr.split("市");
+        }
+
         Map<String, String> map = new HashMap<>();
 
         // 直辖市

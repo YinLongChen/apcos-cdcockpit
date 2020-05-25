@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.20.243:1521:orcl
-    username: ODS_TEST
-    password: ODS_TEST
+    url: jdbc:oracle:thin:@192.168.30.243:1521:beoneaut1
+    username: SW_WGBZUEFNNJBQB
+    password: SW_FGZLTIDGUJVRC
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 1
     minIdle: 3

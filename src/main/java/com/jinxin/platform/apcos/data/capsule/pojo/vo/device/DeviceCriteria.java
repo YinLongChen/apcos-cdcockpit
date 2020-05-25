@@ -16,6 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeviceCriteria {
-    private String produceCode;
+    private String productCode;
     private Date startTime;
 }

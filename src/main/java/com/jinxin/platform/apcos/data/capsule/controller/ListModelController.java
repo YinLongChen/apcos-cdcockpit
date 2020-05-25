@@ -25,7 +25,7 @@ public class ListModelController {
     private ListService listService;
 
 
-    @ApiOperation(value = "根据类型id获取业务数据", notes = "根据类型id获取业务数据")
+    @ApiOperation(value = "根据类型id获取业务数据 无分页", notes = "根据类型id获取业务数据 无分页")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
