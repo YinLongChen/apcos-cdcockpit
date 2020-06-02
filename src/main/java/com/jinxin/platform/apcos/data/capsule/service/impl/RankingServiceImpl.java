@@ -20,7 +20,7 @@ public class RankingServiceImpl implements RankingService {
     private RankingMapper rankingMapper;
 
     @Override
-    public List<CountResult> RankingByModelId(String modelId) {
+    public List<CountResult> rankingByModelId(String modelId) {
         return rankingMapper.selectRankingByModelId(modelId).stream().map(
                 u -> CountResult.builder().name(u.getName()).value(u.getTop()).remark(u.getValue().toString()).build()
         ).collect(Collectors.toList());

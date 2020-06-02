@@ -1,15 +1,23 @@
 package com.jinxin.platform.apcos.data.capsule.controller;
 
-import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.DataResult;
+import com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout;
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutForm;
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.DataResult;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.ResponseResult;
 import com.jinxin.platform.apcos.data.capsule.service.LayoutService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -19,8 +27,7 @@ public class LayoutController {
     @Autowired
     private LayoutService layoutService;
 
-
-    @ApiOperation(value = "添加", notes = "添加")
+    @ApiOperation(value = "添加", notes = "添加[ status 状态（0 草稿，1 发布）]")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
@@ -32,7 +39,7 @@ public class LayoutController {
     }
 
 
-    @ApiOperation(value = "编辑", notes = "编辑")
+    @ApiOperation(value = "编辑", notes = "编辑[ status 状态（0 草稿，1 发布）]")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
@@ -64,5 +71,26 @@ public class LayoutController {
     @GetMapping
     public DataResult findByUserId() {
         return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.findByUserId());
+    }
+//
+//    @ApiOperation(value = "获取已发布布局配置", notes = "获取已发布布局配置")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "成功"),
+//            @ApiResponse(code = 500, message = "服务器内部错误")
+//    })
+//    @GetMapping("/release")
+//    public DataResult findRelease(@RequestParam(required = false) String id) {
+//        return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.findRelease(id));
+//    }
+
+
+    @ApiOperation(value = "获取布局配置", notes = "获取布局配置")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PostMapping("/find")
+    public DataResult<List<Layout>> find(@RequestBody LayoutCriteria layout) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.find(layout));
     }
 }

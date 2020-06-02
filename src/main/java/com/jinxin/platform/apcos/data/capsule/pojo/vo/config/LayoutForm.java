@@ -11,4 +11,6 @@ public class LayoutForm {
     private String id;
     private String layout;
     private String colNum;
+    private Integer status;
+    private String remark;
 }

@@ -1,8 +1,11 @@
 package com.jinxin.platform.apcos.data.capsule.mapper;
 
 import com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout;
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author Huang LingSong
@@ -13,6 +16,7 @@ public interface LayoutMapper {
 
     /**
      * 添加布局配置
+     *
      * @param layout
      * @return
      */
@@ -20,6 +24,7 @@ public interface LayoutMapper {
 
     /**
      * 编辑布局配置
+     *
      * @param layout
      * @return
      */
@@ -27,6 +32,7 @@ public interface LayoutMapper {
 
     /**
      * 删除布局配置
+     *
      * @param id
      * @return
      */
@@ -34,8 +40,24 @@ public interface LayoutMapper {
 
     /**
      * 获取用户布局配置
+     *
      * @param userId
      * @return
      */
-    Layout seleceByUserId(@Param("userId") String userId);
+    Layout selectByUserId(@Param("userId") String userId);
+
+    /**
+     * 获取布局
+     *
+     * @param status
+     * @return
+     */
+    List<Layout> selectByStatus(@Param("status") Integer status, @Param("id") String id);
+
+    /**
+     * 获取布局
+     * @param layoutCriteria
+     * @return
+     */
+    List<Layout> select(LayoutCriteria layoutCriteria);
 }

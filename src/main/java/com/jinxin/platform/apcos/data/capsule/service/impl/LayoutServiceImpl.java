@@ -2,12 +2,16 @@ package com.jinxin.platform.apcos.data.capsule.service.impl;
 
 import com.jinxin.platform.apcos.data.capsule.mapper.LayoutMapper;
 import com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout;
+import com.jinxin.platform.apcos.data.capsule.pojo.enumeration.StatusType;
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutForm;
 import com.jinxin.platform.apcos.data.capsule.service.LayoutService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Huang LingSong
@@ -20,13 +24,10 @@ public class LayoutServiceImpl implements LayoutService {
     @Autowired
     private LayoutMapper layoutMapper;
 
-    private String userId="user_id";
+    private String userId = "user_id";
 
     @Override
     public boolean add(LayoutForm layoutForm) {
-        if (layoutMapper.seleceByUserId(userId) != null) {
-            throw new RuntimeException("此用户已有一条布局配置信息");
-        }
         Layout layout = new Layout();
         BeanUtils.copyProperties(layoutForm, layout);
         layout.setUserId(userId);
@@ -55,7 +56,17 @@ public class LayoutServiceImpl implements LayoutService {
 
     @Override
     public Layout findByUserId() {
-        return layoutMapper.seleceByUserId(userId);
+        return layoutMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public List<Layout> findRelease(String id) {
+        return layoutMapper.selectByStatus(StatusType.RELEASE.getValue(), id);
+    }
+
+    @Override
+    public List<Layout> find(LayoutCriteria layout) {
+        return layoutMapper.select(layout);
     }
 }
 

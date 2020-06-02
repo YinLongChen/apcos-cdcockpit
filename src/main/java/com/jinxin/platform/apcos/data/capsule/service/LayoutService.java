@@ -1,7 +1,10 @@
 package com.jinxin.platform.apcos.data.capsule.service;
 
 import com.jinxin.platform.apcos.data.capsule.pojo.domain.Layout;
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.config.LayoutForm;
+
+import java.util.List;
 
 public interface LayoutService {
 
@@ -31,4 +34,19 @@ public interface LayoutService {
      * @return
      */
     Layout findByUserId();
+
+    /**
+     * 获取已发布的布局
+     * @param number
+     * @return
+     */
+    List<Layout> findRelease(String number);
+
+
+    /**
+     * 获取布局
+     * @param layout
+     * @return
+     */
+    List<Layout> find(LayoutCriteria layout);
 }

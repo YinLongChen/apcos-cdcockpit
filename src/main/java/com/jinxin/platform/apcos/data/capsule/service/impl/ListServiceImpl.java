@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,21 +28,27 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<Map<String, Object>> findByType(String type) {
 
-        Map<String, String> map =  listMapper.selectMap(type).stream().collect(Collectors.toMap(ListMap::getColumnOrl, ListMap::getColumnEn));
-
+        Map<String, String> map = listMapper.selectMap(type).stream().collect(Collectors.toMap(ListMap::getColumnOrl, ListMap::getColumnEn));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<Map<String, Object>> result = listMapper.selectByModelId(type).stream().map(u -> {
             Map<String, Object> temp = new HashMap<>();
+
             for (Map.Entry<String, Object> entry : u.entrySet()) {
+
                 String nameEn = map.get(entry.getKey());
-                temp.put(nameEn == null ? entry.getKey() : nameEn, entry.getValue());
+
+                if (entry.getValue() instanceof Date) {
+                    temp.put(nameEn == null ? entry.getKey() : nameEn, dateFormat.format((Date) entry.getValue()));
+                } else {
+                    temp.put(nameEn == null ? entry.getKey() : nameEn, entry.getValue());
+                }
+
             }
             return temp;
         }).collect(Collectors.toList());
 
         return result;
     }
-
-
 
 
 //

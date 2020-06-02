@@ -27,6 +27,6 @@ public interface ListMapper {
      * @param type
      * @return
      */
-    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn from ODS_LIST_MODEL_DATA_MAP where MODEL_ID = #{type}")
+    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn from ODS_LIST_MODEL_DATA_MAP where MODEL_ID = #{type} ORDER BY COLUMN_ORI ASC")
     List<ListMap> selectMap(@Param("type") String type);
 }

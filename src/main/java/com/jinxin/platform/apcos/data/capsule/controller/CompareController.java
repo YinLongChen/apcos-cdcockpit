@@ -1,7 +1,8 @@
 package com.jinxin.platform.apcos.data.capsule.controller;
 
+import com.jinxin.platform.apcos.data.capsule.pojo.vo.compare.CompareResult;
 import com.jinxin.platform.apcos.data.capsule.pojo.vo.result.DataResult;
-import com.jinxin.platform.apcos.data.capsule.service.RankingService;
+import com.jinxin.platform.apcos.data.capsule.service.CompareService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -13,24 +14,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 排行榜模型
  * @author Huang LingSong
- * 2020-05-15 14:43
+ * 2020-05-28 10:58
  */
 @RestController
-@RequestMapping("/capsule/rangking")
-public class RankingController {
+@RequestMapping("/capsule/compare")
+public class CompareController {
 
     @Autowired
-    private RankingService rankingService;
+    private CompareService compareService;
 
-    @ApiOperation(value = "根据模型id获取业务数据", notes = "根据模型id获取业务数据")
+    @ApiOperation(value = "根据模型id获取业务数据", notes = "month 月份（格式如：2019-12）")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @GetMapping
-    public DataResult findModelByType(@RequestParam String modelId) {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", rankingService.rankingByModelId(modelId));
+    public DataResult<CompareResult> findModelByType(@RequestParam String modelId, @RequestParam String month) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", compareService.compareByModelId(modelId,month));
     }
 }
