@@ -3,6 +3,18 @@ server:
   port: 9803
 
 spring:
+  redis:
+    host: 192.168.3.79
+    port: 6379
+    database: 10
+    password: 123456
+    timeout: 60000
+    lettuce:
+      pool:
+        max-active: 2000
+        max-idle: 500
+        min-idle: 200
+        max-wait: 60000
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@192.168.20.243:1521:orcl

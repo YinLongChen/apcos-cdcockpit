@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application.yml
+/src/main/resources/application-dev.yml
+/src/main/java/com/jinxin/platform/apcos/event/Application.java
