@@ -22,4 +22,9 @@ public class MonitorServiceImpl implements MonitorService {
     public List<MonitorModel> monitorByModelId(String modelId) {
         return monitorMapper.selectMonitorByModelId(modelId);
     }
+
+    @Override
+    public List<MonitorModel> findMonitorAll() {
+        return monitorMapper.selectMonitorAll();
+    }
 }

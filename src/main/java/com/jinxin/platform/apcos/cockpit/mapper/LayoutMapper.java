@@ -4,6 +4,7 @@ import com.jinxin.platform.apcos.cockpit.pojo.domain.Layout;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.LayoutCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public interface LayoutMapper {
      * @param userId
      * @return
      */
-    Layout selectByUserId(@Param("userId") String userId);
+    List<Layout> selectByUserId(@Param("userId") String userId);
 
     /**
      * 获取布局
@@ -60,4 +61,11 @@ public interface LayoutMapper {
      * @return
      */
     List<Layout> select(LayoutCriteria layoutCriteria);
+
+    /**
+     * 获取项目名称
+     * @return
+     */
+    @Select("SELECT DISTINCT PROJECT FROM ODS_LAYOUT_CONFIG")
+    List<String> getProjectName();
 }

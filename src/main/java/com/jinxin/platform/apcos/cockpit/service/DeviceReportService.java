@@ -24,4 +24,11 @@ public interface DeviceReportService {
      * @return
      */
     List<CountResult> reportCountByTime(int field,String type);
+
+    /**
+     * 设备上报类型统计
+     * @param field 5-天统计，3-周统计，2-月统计，1-年统计
+     * @return
+     */
+    List<CountResult> reportCountByType(int field);
 }

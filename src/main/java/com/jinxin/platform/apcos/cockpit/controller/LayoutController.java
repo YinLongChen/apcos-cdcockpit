@@ -89,4 +89,14 @@ public class LayoutController {
     public DataResult<List<Layout>> find(@RequestBody LayoutCriteria layout) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.find(layout));
     }
+
+    @ApiOperation(value = "获取项目名称", notes = "获取项目名称")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @GetMapping("/project")
+    public DataResult<String> getProName() {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.getProjectName());
+    }
 }

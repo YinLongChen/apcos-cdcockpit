@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class MonitorController {
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @GetMapping
-    public DataResult<List<MonitorModel>> findModeAlllByType(@RequestParam String modelId) {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", monitorService.monitorByModelId(modelId));
+    public DataResult<List<MonitorModel>> findModeAlll() {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", monitorService.findMonitorAll());
     }
 }

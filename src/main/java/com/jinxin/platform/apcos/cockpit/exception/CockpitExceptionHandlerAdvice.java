@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @Slf4j
 @RestControllerAdvice
-public class CapsuleExceptionHandlerAdvice {
+public class CockpitExceptionHandlerAdvice {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class LayoutForm {
     private String id;
+    private String name;
     private String layout;
     private String style;
     private String colNum;

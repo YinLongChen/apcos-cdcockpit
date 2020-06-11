@@ -3,6 +3,7 @@ package com.jinxin.platform.apcos.cockpit.service;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.Layout;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.LayoutForm;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface LayoutService {
      * 获取用户布局配置
      * @return
      */
-    Layout findByUserId();
+    List<Layout> findByUserId();
 
     /**
      * 获取已发布的布局
@@ -49,4 +50,10 @@ public interface LayoutService {
      * @return
      */
     List<Layout> find(LayoutCriteria layout);
+
+    /**
+     * 获取项目名称
+     * @return
+     */
+    String getProjectName();
 }

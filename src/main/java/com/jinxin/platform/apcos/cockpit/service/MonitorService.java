@@ -17,4 +17,10 @@ public interface MonitorService {
      * @return
      */
     List<MonitorModel> monitorByModelId(String modelId);
+
+    /**
+     * 获取所有的业务数据
+     * @return
+     */
+    List<MonitorModel> findMonitorAll();
 }

@@ -8,7 +8,7 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK")
+        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME")
         VALUES
         (
         #{id,jdbcType=VARCHAR},
@@ -19,7 +19,8 @@
         sysdate,
         sysdate,
         #{status,jdbcType=VARCHAR},
-        #{remark,jdbcType=VARCHAR}
+        #{remark,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -38,8 +39,11 @@
             <if test="status != null">
                 r.STATUS = #{status,jdbcType=VARCHAR},
             </if>
-            <if test="remark != null">
+            <if test="remark != null and remark !=''" >
                 r.REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name !=''" >
+                r.NAME = #{name,jdbcType=VARCHAR},
             </if>
             r.UPDATE_TIME = sysdate
         </set>
@@ -53,6 +57,7 @@
     <select id="selectByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.apcos.cockpit.pojo.domain.Layout">
         SELECT
         r.ID,
+        r.NAME,
         r.USER_ID as userId,
         r.LAYOUT,
         r.STYLE,
@@ -69,6 +74,7 @@
     <select id="selectByStatus" parameterType="java.lang.Integer" resultType="com.jinxin.platform.apcos.cockpit.pojo.domain.Layout">
         SELECT
         r.ID,
+        r.NAME,
         r.USER_ID as userId,
         r.LAYOUT,
         r.STYLE,
@@ -84,6 +90,7 @@
     <select id="select" parameterType="java.lang.Integer" resultType="com.jinxin.platform.apcos.cockpit.pojo.domain.Layout">
         SELECT
         r.ID,
+        r.NAME,
         r.USER_ID as userId,
         r.LAYOUT,
         r.STYLE,

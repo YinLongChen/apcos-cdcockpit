@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class LayoutServiceImpl implements LayoutService {
     }
 
     @Override
-    public Layout findByUserId() {
+    public List<Layout> findByUserId() {
         return layoutMapper.selectByUserId(supportService.getWebCurrUser().getUserId());
     }
 
@@ -71,6 +72,17 @@ public class LayoutServiceImpl implements LayoutService {
     @Override
     public List<Layout> find(LayoutCriteria layout) {
         return layoutMapper.select(layout);
+    }
+
+    @Override
+    public String getProjectName() {
+        final String[] name = {null};
+        layoutMapper.getProjectName().forEach(s -> {
+            if (!StringUtils.isEmpty(s)) {
+                name[0] = s;
+            }
+        });
+        return StringUtils.isEmpty(name[0]) ? "请配置项目名称" : name[0];
     }
 }
 

@@ -45,4 +45,23 @@ public class ListModelController {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findNameMapByType(modelId));
     }
 
+    @ApiOperation(value = "根据业务类型获取数据表格操作", notes = "根据业务类型获取数据表格操作")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @GetMapping("/operation")
+    public DataResult findOperationByModelId(@RequestParam String modelId) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findOperationByModelId(modelId));
+    }
+
+//    @ApiOperation(value = "查询设备上报数据", notes = "根据modelId和 上报时间范围(field 上报时间范围 5-一天之内，3-一周之内) 查询设备上报数据（设备上报数据列表专用）")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "成功"),
+//            @ApiResponse(code = 500, message = "服务器内部错误")
+//    })
+//    @GetMapping("/report")
+//    public DataResult findReportByType(@RequestParam String modelId, @RequestParam Integer field) {
+//        return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findReportByType(modelId, field));
+//    }
 }

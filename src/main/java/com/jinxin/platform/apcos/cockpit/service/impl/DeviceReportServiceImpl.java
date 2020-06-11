@@ -105,4 +105,43 @@ public class DeviceReportServiceImpl implements DeviceReportService {
 
         return countResults;
     }
+
+    @Override
+    public List<CountResult> reportCountByType(int field) {
+        Calendar c = Calendar.getInstance();
+        switch (field) {
+            case Calendar.DATE:
+                c.add(Calendar.DATE, -1);
+                break;
+            case Calendar.WEEK_OF_YEAR:
+                c.add(Calendar.DATE, -7);
+                break;
+            case Calendar.MONTH:
+                c.add(Calendar.MONTH, -1);
+                break;
+            case Calendar.YEAR:
+                c.add(Calendar.YEAR, -1);
+                break;
+            default:
+                return null;
+
+        }
+        //获取数据
+        List<DeviceReport> reports = reportMapper.selectReport(ReportCriteria.builder()
+                .startTime(c.getTime())
+                .build());
+
+        Map<String, List<DeviceReport>> map = reports.stream()
+                .filter(u -> u.getReportTime() != null)
+                .collect(Collectors.groupingBy(DeviceReport::getCmdName));
+
+
+        List<CountResult> countResults = new ArrayList<>();
+
+        for (Map.Entry<String, List<DeviceReport>> entry : map.entrySet()) {
+            countResults.add(CountResult.builder().name(entry.getKey()).value(entry.getValue().size()).build());
+        }
+
+        return countResults;
+    }
 }
