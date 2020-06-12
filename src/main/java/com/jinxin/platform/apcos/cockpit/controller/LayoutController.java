@@ -99,4 +99,16 @@ public class LayoutController {
     public DataResult<String> getProName() {
         return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.getProjectName());
     }
+
+    @ApiOperation(value = "修改项目名称", notes = "修改获取项目名称")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PutMapping("/project")
+    public ResponseResult updateProName(@RequestParam("name")String name) {
+        return layoutService.updateProjectName(name) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+
+    }
 }

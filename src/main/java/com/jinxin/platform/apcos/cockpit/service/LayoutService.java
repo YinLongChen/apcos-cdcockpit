@@ -56,4 +56,11 @@ public interface LayoutService {
      * @return
      */
     String getProjectName();
+
+    /**
+     * 更新项目名
+     * @param name
+     * @return
+     */
+    boolean updateProjectName(String name);
 }

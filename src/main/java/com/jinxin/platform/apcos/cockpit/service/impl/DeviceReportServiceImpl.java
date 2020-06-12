@@ -2,6 +2,7 @@ package com.jinxin.platform.apcos.cockpit.service.impl;
 
 import com.jinxin.platform.apcos.cockpit.mapper.DeviceReportMapper;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.DeviceReport;
+import com.jinxin.platform.apcos.cockpit.pojo.domain.ReportOperation;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.device.ReportCriteria;
 import com.jinxin.platform.apcos.cockpit.service.DeviceReportService;
@@ -143,5 +144,15 @@ public class DeviceReportServiceImpl implements DeviceReportService {
         }
 
         return countResults;
+    }
+
+    @Override
+    public List<ReportOperation> findOperation() {
+        return reportMapper.selectOpreation();
+    }
+
+    @Override
+    public List<DeviceReport> findReport(ReportCriteria criteria) {
+        return reportMapper.selectReport(criteria);
     }
 }

@@ -1,13 +1,13 @@
 #Server
 server:
-  port: 9103
+  port: 9803
 
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.30.243:1521:beoneaut1
-    username: SW_WGBZUEFNNJBQB
-    password: SW_FGZLTIDGUJVRC
+    url: jdbc:oracle:thin:@192.168.3.78:1521:ORCL
+    username: platform
+    password: Platform2020
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 1
     minIdle: 3

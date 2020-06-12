@@ -18,6 +18,6 @@ import java.util.Date;
 public class ReportCriteria {
     private String productCode;
     private Date startTime;
-    private String modelId;
+//    private String modelId;
     private String cmdName;
 }

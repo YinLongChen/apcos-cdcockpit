@@ -13,7 +13,7 @@
             REGIST_TIME as registTime,
             USER_CELLPHONE_NO as phone,
             USER_ADDRESS as address
-        from ODS_DEVICE_CENTER_INFO where 1=1
+        from V_ODS_DEVICE_CENTER_INFO where 1=1
         <if test="productCode != null and productCode !=''">and PRODUCT_CODE = #{productCode}</if>
         <if test="startTime != null">and REGIST_TIME &gt;= #{startTime}</if>
         order by REGIST_TIME

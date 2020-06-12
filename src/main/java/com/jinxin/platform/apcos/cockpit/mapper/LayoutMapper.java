@@ -68,4 +68,7 @@ public interface LayoutMapper {
      */
     @Select("SELECT DISTINCT PROJECT FROM ODS_LAYOUT_CONFIG")
     List<String> getProjectName();
+
+    @Select("UPDATE ODS_LAYOUT_CONFIG SET PROJECT = #{name}")
+    void updateProjectName(String name);
 }

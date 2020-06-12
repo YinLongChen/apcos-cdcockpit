@@ -1,6 +1,9 @@
 package com.jinxin.platform.apcos.cockpit.service;
 
+import com.jinxin.platform.apcos.cockpit.pojo.domain.DeviceReport;
+import com.jinxin.platform.apcos.cockpit.pojo.domain.ReportOperation;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.device.ReportCriteria;
 
 import java.util.List;
 
@@ -31,4 +34,17 @@ public interface DeviceReportService {
      * @return
      */
     List<CountResult> reportCountByType(int field);
+
+    /**
+     * 根据业务类型获取数据表格操作
+     * @return
+     */
+    List<ReportOperation> findOperation();
+
+    /**
+     * 查询上报数据列表
+     * @param criteria
+     * @return
+     */
+    List<DeviceReport> findReport(ReportCriteria criteria);
 }

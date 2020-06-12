@@ -84,6 +84,12 @@ public class LayoutServiceImpl implements LayoutService {
         });
         return StringUtils.isEmpty(name[0]) ? "请配置项目名称" : name[0];
     }
+
+    @Override
+    public boolean updateProjectName(String name) {
+        layoutMapper.updateProjectName(name);
+        return true;
+    }
 }
 
 
