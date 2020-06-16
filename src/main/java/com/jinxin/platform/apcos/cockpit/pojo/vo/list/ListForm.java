@@ -2,13 +2,21 @@ package com.jinxin.platform.apcos.cockpit.pojo.vo.list;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author Huang LingSong
  * 2020-05-22 10:36
  */
 @Data
 public class ListForm {
-   private Integer current = 1;
-   private Integer size = 10;
-   private String type;
+
+   private String modelId;
+
+   private List<Where> wheres;
+   /**
+    * group by 字段(传map_id)
+    */
+   private String groupBy;
+
 }

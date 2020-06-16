@@ -13,5 +13,6 @@ public class ListMap {
     private String columnOrl;
     private String columnEn;
     private String columnCn;
+    private Integer dataType;
 }
 

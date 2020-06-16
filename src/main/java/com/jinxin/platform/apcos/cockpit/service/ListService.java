@@ -1,7 +1,11 @@
 package com.jinxin.platform.apcos.cockpit.service;
 
+import com.jinxin.platform.apcos.cockpit.pojo.domain.ListMap;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListOperation;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.ListForm;
+import org.apache.ibatis.annotations.Param;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ public interface ListService {
      * @param modelId
      * @return
      */
+    @Deprecated
     List<Map<String, Object>> findByType(String modelId);
 
     /**
@@ -27,6 +32,7 @@ public interface ListService {
      * @param modelId
      * @return
      */
+    @Deprecated
     Map<String, String> findNameMapByType(String modelId);
 
     /**
@@ -36,11 +42,42 @@ public interface ListService {
      */
     List<ListOperation> findOperationByModelId(String modelId);
 
-//    /**
-//     * 根据modelId和 上报时间范围 查询设备上报数据（设备上报数据列表专用）
-//     * @param modelId
-//     * @param field 上报时间范围 5-一天之内，3-一周之内，2-一月之内，1-一年之内 ,上报时间需要放置在 COLUMN_15中
-//     * @return
-//     */
-//    List<Map<String, Object>> findReportByType(String modelId,Integer field);
+    /**
+     * 获取约束条件(where/group by)
+     * @param modelId
+     * @return
+     */
+    List<ListMap> findColumnByModelId(String modelId);
+
+    /**
+     * 获取约束条件(where)参数
+     * @param mapId
+     * @return
+     */
+    List<Object> findValueInColumn(String mapId);
+
+    /**
+     * 获取数据
+     * @param form
+     * @return
+     */
+    @Deprecated
+    List<Map<String, Object>> findData(ListForm form);
+
+    /**
+     * 获取数据
+     * @param form
+     * @return
+     */
+    List<Map<String, Object>> findViewData(ListForm form);
+
+
+    /**
+     * 根据业务类型获取字段名中英文映射关系
+     *
+     * @param modelId
+     * @return
+     */
+    Map<String, String> findNameMapByModelId(String modelId);
+
 }
