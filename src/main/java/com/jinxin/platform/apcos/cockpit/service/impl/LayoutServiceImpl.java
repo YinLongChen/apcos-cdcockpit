@@ -36,6 +36,9 @@ public class LayoutServiceImpl implements LayoutService {
         Layout layout = new Layout();
         BeanUtils.copyProperties(layoutForm, layout);
         layout.setUserId(supportService.getWebCurrUser().getUserId());
+        if (layout.getStatus() == null) {
+            layout.setStatus(StatusType.DRAFT.getValue());
+        }
         return layoutMapper.save(layout);
     }
 

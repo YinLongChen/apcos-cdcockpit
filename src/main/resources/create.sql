@@ -22,16 +22,24 @@ SELECT T.SERIAL_NUM, --设备序列号
 
 
 CREATE OR REPLACE FORCE VIEW V_ODS_DEVICE_REPORT AS
-SELECT '' AS MODEL_ID,--模型ID
-       T.SERIAL_NUM, --设备序列号
-       T1.DEVICE_MAC, --设备mac地址
-       T.PRODUCT_CODE, --设备类型
-       T.CREATED_TIME AS REPORT_TIME, --上报时间
-       T1.DEVICE_NAME, --设备名称
-       T.CMD_NAME --上报类型
-  FROM DEV_SBMSG T
-  JOIN DEV_SBGL T1
-    ON T.SERIAL_NUM = T1.SERIAL_NUM;
+SELECT
+	'DeviceReport' AS MODEL_ID,--模型ID
+	T.SERIAL_NUM,--设备序列号
+	T.ACCOUNT,
+	T.CMD_NAME, --上报类型
+	t.CREATED_TIME AS REPORT_TIME, --上报时间
+	T1.DEVICE_NAME,--设备名称
+	T1.DEVICE_MAC,--设备mac地址
+	T2.SBLX_MLMC AS PRODUCT_CODE_NAME,
+	T.PRODUCT_CODE,--设备类型
+	'' AS POSITION,--设备位置
+	'' AS STATE,--设备状态
+	'' AS SPARE--备用字段
+ FROM
+	DEV_SBMSG T
+	LEFT JOIN DEV_SBGL T1 ON T.SERIAL_NUM = T1.SERIAL_NUM
+	LEFT JOIN DEV_SBLX T2 ON T.PRODUCT_CODE = T2.SBLX_MLDM
+
 
 CREATE OR REPLACE FORCE VIEW V_ODS_USER_CENTER_INFO AS
 SELECT T.USER_ID, --用户id
@@ -52,242 +60,223 @@ SELECT T.USER_ID, --用户id
 
 
 
-create table ODS_COMPARE_MODEL_DATA
-(
-  id       VARCHAR2(36) not null,
-  model_id VARCHAR2(36) not null,
-  month    VARCHAR2(11),
-  value    NUMBER(11),
-  unit     VARCHAR2(50)
-)
-;
-comment on column ODS_COMPARE_MODEL_DATA.id
-  is 'id';
-comment on column ODS_COMPARE_MODEL_DATA.model_id
-  is '模型id';
-comment on column ODS_COMPARE_MODEL_DATA.month
-  is '月份（格式如：2019-12）';
-comment on column ODS_COMPARE_MODEL_DATA.value
-  is '数量';
-comment on column ODS_COMPARE_MODEL_DATA.unit
-  is '单位（数据单位，如：KW·h）';
-alter table ODS_COMPARE_MODEL_DATA
-  add primary key (ID);
 
+CREATE TABLE "ODS_COMPARE_MODEL_DATA" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MONTH" VARCHAR2(11 BYTE) ,
+  "VALUE" NUMBER(11) ,
+  "UNIT" VARCHAR2(50 BYTE)
+);
+COMMENT ON COLUMN "ODS_COMPARE_MODEL_DATA"."ID" IS 'id';
+COMMENT ON COLUMN "ODS_COMPARE_MODEL_DATA"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_COMPARE_MODEL_DATA"."MONTH" IS '月份（格式如：2019-12）';
+COMMENT ON COLUMN "ODS_COMPARE_MODEL_DATA"."VALUE" IS '数量';
+COMMENT ON COLUMN "ODS_COMPARE_MODEL_DATA"."UNIT" IS '单位（数据单位，如：KW·h）';
 
-create table ODS_LAYOUT_CONFIG
-(
-  id          VARCHAR2(36) not null,
-  user_id     VARCHAR2(36) not null,
-  layout      VARCHAR2(2000) not null,
-  update_time DATE not null,
-  create_time DATE not null,
-  col_num     VARCHAR2(200) not null,
-  status      NUMBER(11) not null,
-  remark      VARCHAR2(255),
-  style       VARCHAR2(2000)
-)
-;
-comment on column ODS_LAYOUT_CONFIG.id
-  is '主键id';
-comment on column ODS_LAYOUT_CONFIG.user_id
-  is '用户id';
-comment on column ODS_LAYOUT_CONFIG.layout
-  is '布局配置信息';
-comment on column ODS_LAYOUT_CONFIG.update_time
-  is '更新时间';
-comment on column ODS_LAYOUT_CONFIG.create_time
-  is '创建时间';
-comment on column ODS_LAYOUT_CONFIG.col_num
-  is '布局列数';
-comment on column ODS_LAYOUT_CONFIG.status
-  is '状态（0 草稿，1 发布）';
-comment on column ODS_LAYOUT_CONFIG.remark
-  is '备注';
-comment on column ODS_LAYOUT_CONFIG.style
-  is '布局风格';
-alter table ODS_LAYOUT_CONFIG
-  add primary key (ID);
+-- ----------------------------
+-- Table structure for ODS_KV_MODEL_DATA
+-- ----------------------------
+CREATE TABLE "ODS_KV_MODEL_DATA" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "NAME" VARCHAR2(200 BYTE) NOT NULL ,
+  "KEY" VARCHAR2(200 BYTE) NOT NULL ,
+  "VALUE" VARCHAR2(200 BYTE) NOT NULL ,
+  "REMARK" VARCHAR2(200 BYTE)
+);
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."NAME" IS '名称';
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."KEY" IS 'key';
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."VALUE" IS '值';
+COMMENT ON COLUMN "ODS_KV_MODEL_DATA"."REMARK" IS '备注';
 
+-- ----------------------------
+-- Table structure for ODS_LAYOUT_CONFIG
+-- ----------------------------
+CREATE TABLE "ODS_LAYOUT_CONFIG" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "USER_ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "LAYOUT" VARCHAR2(4000 BYTE) NOT NULL ,
+  "UPDATE_TIME" DATE NOT NULL ,
+  "CREATE_TIME" DATE NOT NULL ,
+  "COL_NUM" VARCHAR2(200 BYTE) NOT NULL ,
+  "STATUS" NUMBER(11) NOT NULL ,
+  "REMARK" VARCHAR2(255 BYTE) ,
+  "STYLE" VARCHAR2(2000 BYTE) ,
+  "NAME" VARCHAR2(200 BYTE) ,
+  "PROJECT" VARCHAR2(200 BYTE)
+);
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."USER_ID" IS '用户id';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."LAYOUT" IS '布局配置信息';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."UPDATE_TIME" IS '更新时间';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."CREATE_TIME" IS '创建时间';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."COL_NUM" IS '布局列数';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."STATUS" IS '状态（0 草稿，1 发布）';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."REMARK" IS '备注';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."STYLE" IS '布局风格';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."NAME" IS '配置名称';
+COMMENT ON COLUMN "ODS_LAYOUT_CONFIG"."PROJECT" IS '所属项目';
 
-create table ODS_LINK_MODEL_DATA
-(
-  id       VARCHAR2(36) not null,
-  model_id VARCHAR2(36),
-  name     VARCHAR2(255) not null,
-  link_url VARCHAR2(255) not null
-)
-;
-comment on column ODS_LINK_MODEL_DATA.id
-  is '主键id';
-comment on column ODS_LINK_MODEL_DATA.model_id
-  is '模型id';
-comment on column ODS_LINK_MODEL_DATA.name
-  is '名称';
-comment on column ODS_LINK_MODEL_DATA.link_url
-  is '链接URL';
-alter table ODS_LINK_MODEL_DATA
-  add primary key (ID);
+-- ----------------------------
+-- Table structure for ODS_LINK_MODEL_DATA
+-- ----------------------------
+CREATE TABLE "ODS_LINK_MODEL_DATA" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) ,
+  "NAME" VARCHAR2(255 BYTE) NOT NULL ,
+  "LINK_URL" VARCHAR2(255 BYTE) NOT NULL
+);
+COMMENT ON COLUMN "ODS_LINK_MODEL_DATA"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_LINK_MODEL_DATA"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_LINK_MODEL_DATA"."NAME" IS '名称';
+COMMENT ON COLUMN "ODS_LINK_MODEL_DATA"."LINK_URL" IS '链接URL';
 
+-- ----------------------------
+-- Table structure for ODS_LIST_MODEL_DATA
+-- ----------------------------
+CREATE TABLE "ODS_LIST_MODEL_DATA" (
+  "MODEL_ID" VARCHAR2(32 BYTE) NOT NULL ,
+  "COLUMN_1" VARCHAR2(64 BYTE) ,
+  "COLUMN_2" VARCHAR2(64 BYTE) ,
+  "COLUMN_3" VARCHAR2(64 BYTE) ,
+  "COLUMN_4" VARCHAR2(64 BYTE) ,
+  "COLUMN_5" VARCHAR2(64 BYTE) ,
+  "COLUMN_6" VARCHAR2(64 BYTE) ,
+  "COLUMN_7" VARCHAR2(64 BYTE) ,
+  "COLUMN_8" VARCHAR2(64 BYTE) ,
+  "COLUMN_9" VARCHAR2(64 BYTE) ,
+  "COLUMN_10" VARCHAR2(64 BYTE) ,
+  "COLUMN_11" NUMBER ,
+  "COLUMN_12" NUMBER ,
+  "COLUMN_13" NUMBER ,
+  "COLUMN_14" NUMBER ,
+  "COLUMN_15" DATE ,
+  "COLUMN_16" DATE ,
+  "INSERT_TIME" DATE NOT NULL
+);
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."MODEL_ID" IS '报表模型id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_1" IS '字符字段1';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_2" IS '字符字段2';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_3" IS '字符字段3';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_4" IS '字符字段4';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_5" IS '字符字段5';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_6" IS '字符字段6';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_7" IS '字符字段7';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_8" IS '字符字段8';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_9" IS '字符字段9';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_10" IS '字符字段10';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_11" IS '数值字段11';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_12" IS '数值字段12';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_13" IS '数值字段13';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_14" IS '数值字段14';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_15" IS '日期字段15';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."COLUMN_16" IS '日期字段16';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA"."INSERT_TIME" IS '数据插入时间';
+COMMENT ON TABLE "ODS_LIST_MODEL_DATA" IS '报表模型数据表';
 
-create table ODS_LIST_MODEL_DATA
-(
-  model_id    VARCHAR2(32) not null,
-  column_1    VARCHAR2(64),
-  column_2    VARCHAR2(64),
-  column_3    VARCHAR2(64),
-  column_4    VARCHAR2(64),
-  column_5    VARCHAR2(64),
-  column_6    VARCHAR2(64),
-  column_7    VARCHAR2(64),
-  column_8    VARCHAR2(64),
-  column_9    VARCHAR2(64),
-  column_10   VARCHAR2(64),
-  column_11   NUMBER,
-  column_12   NUMBER,
-  column_13   NUMBER,
-  column_14   NUMBER,
-  column_15   DATE,
-  column_16   DATE,
-  insert_time DATE not null
-)
-;
-comment on table ODS_LIST_MODEL_DATA
-  is '报表模型数据表';
-comment on column ODS_LIST_MODEL_DATA.model_id
-  is '报表模型id';
-comment on column ODS_LIST_MODEL_DATA.column_1
-  is '字符字段1';
-comment on column ODS_LIST_MODEL_DATA.column_2
-  is '字符字段2';
-comment on column ODS_LIST_MODEL_DATA.column_3
-  is '字符字段3';
-comment on column ODS_LIST_MODEL_DATA.column_4
-  is '字符字段4';
-comment on column ODS_LIST_MODEL_DATA.column_5
-  is '字符字段5';
-comment on column ODS_LIST_MODEL_DATA.column_6
-  is '字符字段6';
-comment on column ODS_LIST_MODEL_DATA.column_7
-  is '字符字段7';
-comment on column ODS_LIST_MODEL_DATA.column_8
-  is '字符字段8';
-comment on column ODS_LIST_MODEL_DATA.column_9
-  is '字符字段9';
-comment on column ODS_LIST_MODEL_DATA.column_10
-  is '字符字段10';
-comment on column ODS_LIST_MODEL_DATA.column_11
-  is '数值字段11';
-comment on column ODS_LIST_MODEL_DATA.column_12
-  is '数值字段12';
-comment on column ODS_LIST_MODEL_DATA.column_13
-  is '数值字段13';
-comment on column ODS_LIST_MODEL_DATA.column_14
-  is '数值字段14';
-comment on column ODS_LIST_MODEL_DATA.column_15
-  is '日期字段15';
-comment on column ODS_LIST_MODEL_DATA.column_16
-  is '日期字段16';
-comment on column ODS_LIST_MODEL_DATA.insert_time
-  is '数据插入时间';
+-- ----------------------------
+-- Table structure for ODS_LIST_MODEL_DATA_MAP
+-- ----------------------------
+CREATE TABLE "ODS_LIST_MODEL_DATA_MAP" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(255 BYTE) NOT NULL ,
+  "COLUMN_ORI" VARCHAR2(255 BYTE) NOT NULL ,
+  "COLUMN_EN" VARCHAR2(255 BYTE) NOT NULL ,
+  "COLUMN_CN" VARCHAR2(255 BYTE) NOT NULL ,
+  "DATA_TYPE" NUMBER(11) NOT NULL
+);
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."COLUMN_ORI" IS '原始列名';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."COLUMN_EN" IS '英文名';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."COLUMN_CN" IS '中文名';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_MAP"."DATA_TYPE" IS '数据类型 (0：日期类型，1：其他)';
 
+-- ----------------------------
+-- Table structure for ODS_LIST_MODEL_DATA_OPERATION
+-- ----------------------------
+CREATE TABLE "ODS_LIST_MODEL_DATA_OPERATION" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "NAME" VARCHAR2(200 BYTE) NOT NULL ,
+  "URL" VARCHAR2(200 BYTE) NOT NULL ,
+  "METHOD" VARCHAR2(200 BYTE) NOT NULL ,
+  "PARAM" VARCHAR2(200 BYTE)
+);
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."NAME" IS '名称';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."URL" IS '接口地址';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."METHOD" IS '请求方法';
+COMMENT ON COLUMN "ODS_LIST_MODEL_DATA_OPERATION"."PARAM" IS '参数';
 
-create table ODS_LIST_MODEL_DATA_MAP
-(
-  id         VARCHAR2(36) not null,
-  model_id   VARCHAR2(255) not null,
-  column_ori VARCHAR2(255) not null,
-  column_en  VARCHAR2(255) not null,
-  column_cn  VARCHAR2(255)
-)
-;
-comment on column ODS_LIST_MODEL_DATA_MAP.id
-  is '主键id';
-comment on column ODS_LIST_MODEL_DATA_MAP.model_id
-  is '模型id';
-comment on column ODS_LIST_MODEL_DATA_MAP.column_ori
-  is '原始列名';
-comment on column ODS_LIST_MODEL_DATA_MAP.column_en
-  is '英文名';
-comment on column ODS_LIST_MODEL_DATA_MAP.column_cn
-  is '中文名';
-alter table ODS_LIST_MODEL_DATA_MAP
-  add primary key (ID);
+-- ----------------------------
+-- Table structure for ODS_LIST_MODEL_VIEW
+-- ----------------------------
+CREATE TABLE "ODS_LIST_MODEL_VIEW" (
+  "MODEL_ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "VIEW_NAME" VARCHAR2(36 BYTE) NOT NULL ,
+  "REMARK" VARCHAR2(200 BYTE)
+);
+COMMENT ON COLUMN "ODS_LIST_MODEL_VIEW"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_LIST_MODEL_VIEW"."VIEW_NAME" IS '视图名称';
+COMMENT ON COLUMN "ODS_LIST_MODEL_VIEW"."REMARK" IS '备注';
 
+-- ----------------------------
+-- Table structure for ODS_MODEL_CONFIG
+-- ----------------------------
+CREATE TABLE "ODS_MODEL_CONFIG" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_NAME" VARCHAR2(255 BYTE) NOT NULL ,
+  "TYPE_ID" VARCHAR2(36 BYTE) NOT NULL
+);
+COMMENT ON COLUMN "ODS_MODEL_CONFIG"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_MODEL_CONFIG"."MODEL_NAME" IS '模型名称';
+COMMENT ON COLUMN "ODS_MODEL_CONFIG"."TYPE_ID" IS '模型类型id';
 
-create table ODS_MODEL_CONFIG
-(
-  id         VARCHAR2(36) not null,
-  model_name VARCHAR2(255) not null,
-  type_id    VARCHAR2(36) not null
-)
-;
-comment on column ODS_MODEL_CONFIG.id
-  is '主键id';
-comment on column ODS_MODEL_CONFIG.model_name
-  is '模型名称';
-comment on column ODS_MODEL_CONFIG.type_id
-  is '模型类型id';
-alter table ODS_MODEL_CONFIG
-  add primary key (ID);
+-- ----------------------------
+-- Table structure for ODS_MODEL_TYPE_CONFIG
+-- ----------------------------
+CREATE TABLE "ODS_MODEL_TYPE_CONFIG" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "TYPE_NAME" VARCHAR2(200 BYTE) NOT NULL
+);
+COMMENT ON COLUMN "ODS_MODEL_TYPE_CONFIG"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_MODEL_TYPE_CONFIG"."TYPE_NAME" IS '类型名称';
 
+-- ----------------------------
+-- Table structure for ODS_MONITOR_MODEL_DATA
+-- ----------------------------
+CREATE TABLE "ODS_MONITOR_MODEL_DATA" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) ,
+  "DEVICE_NAME" VARCHAR2(200 BYTE) NOT NULL ,
+  "POSITION" VARCHAR2(200 BYTE) ,
+  "STATUS" VARCHAR2(200 BYTE) ,
+  "RTMP_URL" VARCHAR2(200 BYTE) NOT NULL ,
+  "DEVICE_ID" VARCHAR2(36 BYTE) NOT NULL
+);
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."ID" IS 'id';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."MODEL_ID" IS '模型id';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."DEVICE_NAME" IS '设备名称';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."POSITION" IS '位置';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."STATUS" IS '1在线 0离线';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."RTMP_URL" IS '转换流地址';
+COMMENT ON COLUMN "ODS_MONITOR_MODEL_DATA"."DEVICE_ID" IS '设备id';
 
-create table ODS_MODEL_TYPE_CONFIG
-(
-  id        VARCHAR2(36) not null,
-  type_name VARCHAR2(200) not null
-)
-;
-comment on column ODS_MODEL_TYPE_CONFIG.id
-  is '主键id';
-comment on column ODS_MODEL_TYPE_CONFIG.type_name
-  is '类型名称';
-alter table ODS_MODEL_TYPE_CONFIG
-  add primary key (ID);
-
-
-create table ODS_MONITOR_MODEL_DATA
-(
-  id          VARCHAR2(36) not null,
-  model_id    VARCHAR2(36),
-  device_name VARCHAR2(200) not null,
-  position    VARCHAR2(200),
-  status      VARCHAR2(200),
-  rtmp_url    VARCHAR2(200) not null,
-  device_id   VARCHAR2(36) not null
-)
-;
-comment on column ODS_MONITOR_MODEL_DATA.id
-  is 'id';
-comment on column ODS_MONITOR_MODEL_DATA.model_id
-  is '模型id';
-comment on column ODS_MONITOR_MODEL_DATA.device_name
-  is '设备名称';
-comment on column ODS_MONITOR_MODEL_DATA.position
-  is '位置';
-comment on column ODS_MONITOR_MODEL_DATA.status
-  is '1在线 0离线';
-comment on column ODS_MONITOR_MODEL_DATA.rtmp_url
-  is '转换流地址';
-comment on column ODS_MONITOR_MODEL_DATA.device_id
-  is '设备id';
-
-
-create table ODS_RANKING_MODEL_DATA
-(
-  id       VARCHAR2(36) not null,
-  name     VARCHAR2(200) not null,
-  value    NUMBER(11) not null,
-  model_id VARCHAR2(36) not null
-)
-;
-comment on column ODS_RANKING_MODEL_DATA.id
-  is '主键id';
-comment on column ODS_RANKING_MODEL_DATA.name
-  is '名称';
-comment on column ODS_RANKING_MODEL_DATA.value
-  is '数量';
-comment on column ODS_RANKING_MODEL_DATA.model_id
-  is '模型id';
-alter table ODS_RANKING_MODEL_DATA
-  add primary key (ID);
+-- ----------------------------
+-- Table structure for ODS_RANKING_MODEL_DATA
+-- ----------------------------
+CREATE TABLE "ODS_RANKING_MODEL_DATA" (
+  "ID" VARCHAR2(36 BYTE) NOT NULL ,
+  "NAME" VARCHAR2(200 BYTE) NOT NULL ,
+  "VALUE" NUMBER(11) NOT NULL ,
+  "MODEL_ID" VARCHAR2(36 BYTE) NOT NULL
+);
+COMMENT ON COLUMN "ODS_RANKING_MODEL_DATA"."ID" IS '主键id';
+COMMENT ON COLUMN "ODS_RANKING_MODEL_DATA"."NAME" IS '名称';
+COMMENT ON COLUMN "ODS_RANKING_MODEL_DATA"."VALUE" IS '数量';
+COMMENT ON COLUMN "ODS_RANKING_MODEL_DATA"."MODEL_ID" IS '模型id';

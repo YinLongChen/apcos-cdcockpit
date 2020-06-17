@@ -47,4 +47,11 @@ public interface DeviceReportService {
      * @return
      */
     List<DeviceReport> findReport(ReportCriteria criteria);
+
+    /**
+     * 查询每个设备的最新上报记录
+     * @param criteria
+     * @return
+     */
+    List<DeviceReport> findMaxTimeReport(ReportCriteria criteria);
 }

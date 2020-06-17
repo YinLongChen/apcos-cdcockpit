@@ -71,6 +71,7 @@ public class ListModelController {
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
+    @Deprecated
     @GetMapping("/findValue")
     public DataResult findValue(@RequestParam String mapId) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findValueInColumn(mapId));
@@ -97,6 +98,15 @@ public class ListModelController {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findNameMapByModelId(modelId));
     }
 
+    @ApiOperation(value = "获取约束条件(where)参数", notes = "获取约束条件(where)参数")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @GetMapping("/view_value")
+    public DataResult findViewValue(@RequestParam String mapId) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findValueInViewColumn(mapId));
+    }
     @ApiOperation(value = "获取数据", notes = "获取数据")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),

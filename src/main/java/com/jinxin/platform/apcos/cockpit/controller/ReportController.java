@@ -54,15 +54,15 @@ public class ReportController {
     }
 
 
-    @ApiOperation(value = "获取数据表格操作", notes = "获取数据表格操作")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 500, message = "服务器内部错误")
-    })
-    @GetMapping("/operation")
-    public DataResult findOperation() {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", reportService.findOperation());
-    }
+//    @ApiOperation(value = "获取数据表格操作", notes = "获取数据表格操作")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "成功"),
+//            @ApiResponse(code = 500, message = "服务器内部错误")
+//    })
+//    @GetMapping("/operation")
+//    public DataResult findOperation() {
+//        return new DataResult<>(HttpStatus.OK.value(), "成功", reportService.findOperation());
+//    }
     @ApiOperation(value = "获取数据列表", notes = "获取数据列表")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
@@ -71,5 +71,15 @@ public class ReportController {
     @PostMapping("/list")
     public DataResult findReport(@RequestBody ReportCriteria criteria){
         return new DataResult(HttpStatus.OK.value(), "成功", reportService.findReport(criteria));
+    }
+
+    @ApiOperation(value = "获取数据列表", notes = "获取数据列表")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PostMapping("/max")
+    public DataResult findMaxTimeReport(@RequestBody ReportCriteria criteria){
+        return new DataResult(HttpStatus.OK.value(), "成功", reportService.findMaxTimeReport(criteria));
     }
 }

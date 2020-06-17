@@ -54,6 +54,7 @@ public interface ListService {
      * @param mapId
      * @return
      */
+    @Deprecated
     List<Object> findValueInColumn(String mapId);
 
     /**
@@ -80,4 +81,10 @@ public interface ListService {
      */
     Map<String, String> findNameMapByModelId(String modelId);
 
+    /**
+     * 获取视图约束条件(where)参数
+     * @param mapId
+     * @return
+     */
+    List<Object> findValueInViewColumn(String mapId);
 }

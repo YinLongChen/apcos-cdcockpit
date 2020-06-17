@@ -135,7 +135,7 @@ public class ListServiceImpl implements ListService {
 
                     where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
                 } else {
-                    int index = findValueInViewColumn(view, w.getColumn()).indexOf(w.getParam());
+                    int index = findValueInViewColumn(w.getColumn()).indexOf(w.getParam());
                     if (index == -1) {
                         throw new RuntimeException("参数[" + w.getParam() + "]不存在");
                     }
@@ -158,11 +158,16 @@ public class ListServiceImpl implements ListService {
                 }).collect(Collectors.toMap(ListMap::getColumnOrl, ListMap::getColumnCn));
     }
 
-    public List<Object> findValueInViewColumn(String view, String mapId) {
+    @Override
+    public List<Object> findValueInViewColumn(String mapId) {
         List<Object> list;
-        String column = getMap(mapId).getColumnOrl();
+        ListMap listMap = getMap(mapId);
+        String view = listMapper.selectViewByModelId(listMap.getModelId());
+        if (StringUtils.isEmpty(view)) {
+            throw new RuntimeException("没有找到view");
+        }
         try {
-            list = listMapper.selectValueInViewColumn(view, column);
+            list = listMapper.selectValueInViewColumn(view, listMap.getColumnOrl());
         } catch (Exception e) {
             throw new RuntimeException("无效的参数");
         }

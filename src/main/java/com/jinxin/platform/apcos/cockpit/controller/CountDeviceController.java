@@ -46,6 +46,7 @@ public class CountDeviceController {
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
+    @Deprecated
     @GetMapping("/findReportType")
     public DataResult findReportType() {
         return new DataResult<>(HttpStatus.OK.value(), "成功", reportService.findReportType());
@@ -56,6 +57,7 @@ public class CountDeviceController {
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
+    @Deprecated
     @GetMapping("/countReportByTime")
     public DataResult<List<CountResult>> reportCountByTime(@RequestParam Integer field, @RequestParam String type) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", reportService.reportCountByTime(field, type));

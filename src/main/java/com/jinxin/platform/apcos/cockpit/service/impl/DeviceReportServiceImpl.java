@@ -29,7 +29,7 @@ public class DeviceReportServiceImpl implements DeviceReportService {
     }
 
     @Override
-    public List<CountResult> reportCountByTime(int field,String type) {
+    public List<CountResult> reportCountByTime(int field, String type) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat;
         switch (field) {
@@ -154,5 +154,13 @@ public class DeviceReportServiceImpl implements DeviceReportService {
     @Override
     public List<DeviceReport> findReport(ReportCriteria criteria) {
         return reportMapper.selectReport(criteria);
+    }
+
+    @Override
+    public List<DeviceReport> findMaxTimeReport(ReportCriteria criteria) {
+        Set<DeviceReport> reportSet = new HashSet<>(reportMapper.selectMaxTimeReport(criteria));
+        List<DeviceReport> list = new ArrayList<>(reportSet);
+
+        return list;
     }
 }

@@ -5,7 +5,8 @@
 <mapper namespace="com.jinxin.platform.apcos.cockpit.mapper.DeviceReportMapper">
 
     <select id="selectReport" resultType="com.jinxin.platform.apcos.cockpit.pojo.domain.DeviceReport">
-        select SERIAL_NUM as serialNum,
+        select MODEL_ID as modelId,
+               SERIAL_NUM as serialNum,
                DEVICE_NAME as deviceName,
                DEVICE_MAC as deviceMac,
                PRODUCT_CODE as productCode,
@@ -23,6 +24,29 @@
         order by REPORT_TIME
     </select>
 
+
+    <select id="selectMaxTimeReport" resultType="com.jinxin.platform.apcos.cockpit.pojo.domain.DeviceReport">
+        SELECT
+        v.MODEL_ID as modelId,
+        v.SERIAL_NUM as serialNum,
+        v.DEVICE_NAME as deviceName,
+        v.DEVICE_MAC as deviceMac,
+        v.PRODUCT_CODE as productCode,
+        v.REPORT_TIME as reportTime,
+        v.CMD_NAME as cmdName,
+        v."POSITION" as position,
+        v.STATE as state,
+        v.SPARE as spare,
+        v.PRODUCT_CODE_NAME as productCodeName
+        FROM
+        V_ODS_DEVICE_REPORT v
+        RIGHT JOIN ( SELECT SERIAL_NUM, MAX( REPORT_TIME ) REPORT_TIME FROM V_ODS_DEVICE_REPORT GROUP BY SERIAL_NUM ) t
+        ON v.SERIAL_NUM = t.SERIAL_NUM AND v.REPORT_TIME = t.REPORT_TIME where 1=1
+        <if test="productCode != null and productCode !=''">and v.PRODUCT_CODE = #{productCode}</if>
+        <if test="cmdName != null and cmdName !=''">and v.CMD_NAME = #{cmdName}</if>
+        <if test="startTime != null">and v.REPORT_TIME &gt;= #{startTime}</if>
+        order by v.REPORT_TIME
+    </select>
 
 
 </mapper>

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Huang LingSong
@@ -29,4 +30,21 @@ public class DeviceReport {
     private String spare;
     private String productCodeName;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DeviceReport that = (DeviceReport) o;
+        return serialNum.equals(that.serialNum) &&
+                reportTime.equals(that.reportTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serialNum, reportTime);
+    }
 }

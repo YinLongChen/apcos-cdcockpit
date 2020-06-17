@@ -33,4 +33,11 @@ public interface DeviceReportMapper {
      */
     @Select("SELECT ID,NAME,URL,METHOD,PARAM FROM V_ODS_DEVICE_REPORT_OPERATION")
     List<ReportOperation> selectOpreation();
+
+    /**
+     * 查询每个设备的最新上报记录(当同一设备上报时间相同的会有重复记录)
+     * @param reportCriteria
+     * @return
+     */
+    List<DeviceReport> selectMaxTimeReport(ReportCriteria reportCriteria);
 }
