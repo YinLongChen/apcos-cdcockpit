@@ -69,8 +69,8 @@ public interface ListMapper {
     List<Map<String, Object>> selectData(@Param("sql") String sql);
 
     @Deprecated
-    @Select("select ${column} as name,count(${column}) as value from ODS_LIST_MODEL_DATA ${where} group by ${column}")
-    List<Map<String, Object>> selectDataCount(@Param("column") String column, @Param("where") String where);
+    @Select("select ${groupBy} as name,count(${groupBy}) as value from ODS_LIST_MODEL_DATA ${where} group by ${groupBy}")
+    List<Map<String, Object>> selectDataCount(@Param("groupBy") String groupBy, @Param("where") String where);
 
     @Select("SELECT VIEW_NAME as viewName FROM ODS_LIST_MODEL_VIEW WHERE MODEL_ID = #{modelId}")
     String selectViewByModelId(@Param("modelId") String modelId);
@@ -78,9 +78,9 @@ public interface ListMapper {
     @Select("select * from ${view} ${sql} ")
     List<Map<String, Object>> selectViewData(@Param("view") String view, @Param("sql") String sql);
 
-    @Select("select ${column} as name,count(${column}) as value from ${view} ${where} group by ${column}")
-    List<Map<String, Object>> selectViewDataCount(@Param("view") String view, @Param("column") String column, @Param("where") String where);
+    @Select("select ${groupBy} as name,count(${groupBy}) as value from ${view} ${where} group by ${groupBy}")
+    List<Map<String, Object>> selectViewDataCount(@Param("view") String view, @Param("groupBy") String groupBy, @Param("where") String where);
 
     @Select("select DISTINCT ${column} FROM ${view}")
-    List<Object> selectValueInViewColumn(@Param("view") String view,@Param("column") String column);
+    List<String> selectValueInViewColumn(@Param("view") String view, @Param("column") String column);
 }

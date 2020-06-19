@@ -1,5 +1,6 @@
 package com.jinxin.platform.apcos.cockpit.controller;
 
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.CubeForm;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.list.ListForm;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.result.DataResult;
 import com.jinxin.platform.apcos.cockpit.service.ListService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/capsule/list")
-public class ListModelController {
+public class ListController {
 
 
     @Autowired
@@ -62,7 +63,7 @@ public class ListModelController {
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @GetMapping("/findColumn")
-    public DataResult findColumn(@RequestParam String modelId){
+    public DataResult findColumn(@RequestParam String modelId) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findColumnByModelId(modelId));
     }
 
@@ -84,7 +85,7 @@ public class ListModelController {
     })
     @PostMapping("/data")
     @Deprecated
-    public DataResult findData(@RequestBody ListForm form)  {
+    public DataResult findData(@RequestBody ListForm form) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findData(form));
     }
 
@@ -107,13 +108,24 @@ public class ListModelController {
     public DataResult findViewValue(@RequestParam String mapId) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findValueInViewColumn(mapId));
     }
+
     @ApiOperation(value = "获取数据", notes = "获取数据")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @PostMapping("/view_data")
-    public DataResult findViewData(@RequestBody ListForm form)  {
+    public DataResult findViewData(@RequestBody ListForm form) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findViewData(form));
+    }
+
+    @ApiOperation(value = "获取多维数据", notes = "获取多维数据(field:3-周统计，2-月统计，1-年统计)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PostMapping("/view_cube_data")
+    public DataResult findViewCubeData(@RequestBody CubeForm form) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findViewCubeData(form));
     }
 }

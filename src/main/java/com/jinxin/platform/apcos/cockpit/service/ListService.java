@@ -2,6 +2,8 @@ package com.jinxin.platform.apcos.cockpit.service;
 
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListMap;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListOperation;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.CubeForm;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.CubeResult;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.list.ListForm;
 import org.apache.ibatis.annotations.Param;
 
@@ -72,6 +74,12 @@ public interface ListService {
      */
     List<Map<String, Object>> findViewData(ListForm form);
 
+    /**
+     * 获取多维数据
+     * @param form
+     * @return
+     */
+    CubeResult findViewCubeData(CubeForm form);
 
     /**
      * 根据业务类型获取字段名中英文映射关系
@@ -86,5 +94,6 @@ public interface ListService {
      * @param mapId
      * @return
      */
-    List<Object> findValueInViewColumn(String mapId);
+    List<String> findValueInViewColumn(String mapId);
+
 }

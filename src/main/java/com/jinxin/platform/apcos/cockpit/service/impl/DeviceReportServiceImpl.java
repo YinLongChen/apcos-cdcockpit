@@ -6,8 +6,12 @@ import com.jinxin.platform.apcos.cockpit.pojo.domain.ReportOperation;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.device.ReportCriteria;
 import com.jinxin.platform.apcos.cockpit.service.DeviceReportService;
+import com.jinxin.platform.apcos.cockpit.utils.StringUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
  * @author Huang LingSong
  * 2020-05-19 16:25
  */
+@Slf4j
 @Service
 public class DeviceReportServiceImpl implements DeviceReportService {
 
@@ -160,7 +165,12 @@ public class DeviceReportServiceImpl implements DeviceReportService {
     public List<DeviceReport> findMaxTimeReport(ReportCriteria criteria) {
         Set<DeviceReport> reportSet = new HashSet<>(reportMapper.selectMaxTimeReport(criteria));
         List<DeviceReport> list = new ArrayList<>(reportSet);
+        return list.stream().map(u -> {
+            if (!StringUtils.isEmpty(u.getSerialNum())) {
+                u.setDatas(reportMapper.selectReportData(u.getSerialNum()));
+            }
+            return u;
+        }).collect(Collectors.toList());
 
-        return list;
     }
 }
