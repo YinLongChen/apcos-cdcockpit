@@ -1,10 +1,14 @@
 package com.jinxin.platform.apcos.cockpit.mapper;
 
 import com.jinxin.platform.apcos.cockpit.pojo.domain.Device;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.device.DeviceCriteria;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Huang LingSong
@@ -15,9 +19,22 @@ public interface DeviceMapper {
 
     /**
      * 查询设备
+     *
      * @param deviceCriteria
      * @return
      */
     List<Device> selectDevice(DeviceCriteria deviceCriteria);
+
+    @Select("SELECT COUNT(*) FROM V_ODS_DEVICE_CENTER_INFO")
+    Integer sumDev();
+
+    @Select("select DISTINCT ${column} FROM V_ODS_DEVICE_REPAIR")
+    List<String> selectValueInColumn(@Param("column") String column);
+
+    @Select("select ${groupBy} as name,count(${groupBy}) as value from V_ODS_DEVICE_REPAIR ${where} group by ${groupBy}")
+    List<CountResult> selectViewDataCount(@Param("groupBy") String groupBy, @Param("where") String where);
+
+    @Select("select * from V_ODS_DEVICE_REPAIR ${where}")
+    List<Map<String,Object>> selectViewData(@Param("where") String where);
 
 }

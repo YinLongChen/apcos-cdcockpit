@@ -4,11 +4,9 @@ import com.jinxin.platform.apcos.cockpit.mapper.ListMapper;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListMap;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListOperation;
 import com.jinxin.platform.apcos.cockpit.pojo.enumeration.DataType;
+import com.jinxin.platform.apcos.cockpit.pojo.enumeration.ShowType;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.Series;
-import com.jinxin.platform.apcos.cockpit.pojo.vo.list.CubeForm;
-import com.jinxin.platform.apcos.cockpit.pojo.vo.list.CubeResult;
-import com.jinxin.platform.apcos.cockpit.pojo.vo.list.ListForm;
-import com.jinxin.platform.apcos.cockpit.pojo.vo.list.Where;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.*;
 import com.jinxin.platform.apcos.cockpit.service.ListService;
 import com.jinxin.platform.apcos.cockpit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +51,7 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public List<ListMap> findColumnByModelId(String modelId) {
-        return listMapper.selectMap(modelId);
+        return listMapper.selectMaps(ListMapCriteria.builder().modelId(modelId).show(ShowType.SHOW.getValue()).build());
     }
 
     @Override
@@ -118,31 +116,7 @@ public class ListServiceImpl implements ListService {
         if (StringUtils.isEmpty(view)) {
             throw new RuntimeException("没有找到view");
         }
-        String where = " where 1 = 1 ";
-        if (form.getWheres() != null && !form.getWheres().isEmpty()) {
-            for (Where w : form.getWheres()) {
-                ListMap listMap = getMap(w.getColumn());
-                if (DataType.DATE.getValue().equals(listMap.getDataType())) {
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-                    Date startTime;
-                    try {
-                        startTime = sdf.parse(w.getParam());
-                    } catch (ParseException e) {
-                        throw new RuntimeException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
-                    }
-
-                    where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
-                } else {
-                    int index = findValueInViewColumn(w.getColumn()).indexOf(w.getParam());
-                    if (index == -1) {
-                        throw new RuntimeException("参数[" + w.getParam() + "]不存在");
-                    }
-                    where += " and " + listMap.getColumnOrl() + " = '" + w.getParam() + "'";
-                }
-            }
-        }
+        String where = buildWhere(form.getWheres(), view);
         if (!StringUtils.isEmpty(form.getGroupBy())) {
             ListMap listMap = getMap(form.getGroupBy());
             if (DataType.DATE.getValue().equals(listMap.getDataType())) {
@@ -174,9 +148,9 @@ public class ListServiceImpl implements ListService {
             xAxisDateMap = transformXAxisName(form.getField(), xAxisMap.getColumnOrl());
         }
 
-        //x轴的刻度值
+        //x轴的刻度数值
         List<String> xAxis;
-        //维度的刻度值
+        //维度的刻度数值
         List<String> cube;
 
         try {
@@ -197,16 +171,17 @@ public class ListServiceImpl implements ListService {
             series.add(Series.builder().name(c).data(new String[xAxis.size()]).build());
         });
 
+        String where = buildWhere(form.getWhere(), view);
         for (int i = 0; i < xAxis.size(); i++) {
 
             List<Map<String, Object>> data;
             if (DataType.DATE.getValue().equals(xAxisMap.getDataType())) {
-                data = listMapper.selectViewDataCount(view, cubeMap.getColumnOrl(), xAxisDateMap.get(xAxis.get(i)));
+                data = listMapper.selectViewDataCount(view, cubeMap.getColumnOrl(), where + xAxisDateMap.get(xAxis.get(i)));
             } else {
-                data = listMapper.selectViewDataCount(view, cubeMap.getColumnOrl(), "where " + xAxisMap.getColumnOrl() + "='" + xAxis.get(i) + "'");
+                data = listMapper.selectViewDataCount(view, cubeMap.getColumnOrl(), where + " and " + xAxisMap.getColumnOrl() + "='" + xAxis.get(i) + "'");
             }
 
-            //把X-data 转换为Cube-data
+            //把X-data 转换为 Cube-data
             for (int j = 0; j < data.size(); j++) {
 
                 int index = series.indexOf(Series.builder().name(data.get(j).get("NAME").toString()).build());
@@ -263,7 +238,7 @@ public class ListServiceImpl implements ListService {
                     String key = dateFormat.format(c.getTime());
                     String start = c.get(Calendar.YEAR) + "-" + key + " 00:00:00";
                     String end = c.get(Calendar.YEAR) + "-" + key + " 23:59:59";
-                    String where = " where " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
+                    String where = " and " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
                     xAxis.put(key, where);
                     c.add(Calendar.DATE, 1);
                 }
@@ -275,7 +250,7 @@ public class ListServiceImpl implements ListService {
                     String key = dateFormat.format(c.getTime());
                     String start = c.get(Calendar.YEAR) + "-" + key + " 00:00:00";
                     String end = c.get(Calendar.YEAR) + "-" + key + " 23:59:59";
-                    String where = " where " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
+                    String where = " and " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
                     xAxis.put(key, where);
                     c.add(Calendar.DATE, 1);
                 }
@@ -288,7 +263,7 @@ public class ListServiceImpl implements ListService {
                     c.getActualMaximum(Calendar.DAY_OF_MONTH);
                     String start = key + "-01" + " 00:00:00";
                     String end = key + "-" + c.getActualMaximum(Calendar.DAY_OF_MONTH) + " 23:59:59";
-                    String where = " where " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
+                    String where = " and " + column + " > to_date( '" + start + "','yyyy-mm-dd hh24:mi:ss') and " + column + " <= to_date( '" + end + "','yyyy-mm-dd hh24:mi:ss')";
                     xAxis.put(key, where);
                     c.add(Calendar.MONTH, 1);
                 }
@@ -347,6 +322,34 @@ public class ListServiceImpl implements ListService {
         }).collect(Collectors.toList());
 
         return result;
+    }
+
+    public String buildWhere(List<Where> wheres, String view) {
+        String where = " where 1 = 1 ";
+        if (wheres != null && !wheres.isEmpty()) {
+            for (Where w : wheres) {
+                ListMap listMap = getMap(w.getColumn());
+                if (DataType.DATE.getValue().equals(listMap.getDataType())) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    Date startTime;
+                    try {
+                        startTime = sdf.parse(w.getParam());
+                    } catch (ParseException e) {
+                        throw new RuntimeException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
+                    }
+
+                    where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
+                } else {
+                    int index = listMapper.selectValueInViewColumn(view, listMap.getColumnOrl()).indexOf(w.getParam());
+                    if (index == -1) {
+                        throw new RuntimeException("参数[" + w.getParam() + "]不存在");
+                    }
+                    where += " and " + listMap.getColumnOrl() + " = '" + w.getParam() + "'";
+                }
+            }
+        }
+        return where;
     }
 
 }

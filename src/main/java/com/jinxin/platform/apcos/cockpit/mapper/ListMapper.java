@@ -3,6 +3,7 @@ package com.jinxin.platform.apcos.cockpit.mapper;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListMap;
 import com.jinxin.platform.apcos.cockpit.pojo.domain.ListOperation;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.list.ListMapCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -39,8 +40,16 @@ public interface ListMapper {
      * @param modelId
      * @return
      */
+    @Deprecated
     @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType from ODS_LIST_MODEL_DATA_MAP where MODEL_ID = #{modelId} ORDER BY COLUMN_ORI ASC")
     List<ListMap> selectMap(@Param("modelId") String modelId);
+
+    /**
+     * 查询数据于具体业务名称映射关系
+     * @param criteria
+     * @return
+     */
+    List<ListMap> selectMaps(ListMapCriteria criteria);
 
     /**
      * 根据id查询数据于具体业务名称映射关系

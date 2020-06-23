@@ -2,7 +2,9 @@ package com.jinxin.platform.apcos.cockpit.service;
 
 import com.jinxin.platform.apcos.cockpit.pojo.domain.Device;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountResult;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.config.CountStrResult;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.device.DeviceForm;
+import com.jinxin.platform.apcos.cockpit.pojo.vo.device.RepairForm;
 import com.jinxin.platform.apcos.cockpit.pojo.vo.result.Paging;
 
 import java.util.List;
@@ -38,4 +40,17 @@ public interface DeviceService {
      * @return
      */
     List<CountResult> deviceCountByProductCode();
+
+    /**
+     * 查询设备总数
+     * @return
+     */
+    CountResult sumDev();
+
+    /**
+     * 设备维修情况
+     * @param form
+     * @return
+     */
+    List<CountStrResult> deviceRepair(RepairForm form);
 }
