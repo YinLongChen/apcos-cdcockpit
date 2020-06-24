@@ -33,7 +33,7 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jinxin.platform.apcos.cockpit.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jinxin.platform.cdcockpit.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
