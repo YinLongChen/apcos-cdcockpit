@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.cdcockpit.mapper.KvMapper">
+
+
+    <select id="selectByModelIds" resultType="com.jinxin.platform.cdcockpit.pojo.domain.KvModel">
+        SELECT "ID","MODEL_ID" as modelId,"NAME","KEY","VALUE","REMARK" FROM ODS_KV_MODEL_DATA
+        <where>
+            MODEL_ID in
+            <foreach item="item" collection="list" separator="," open="(" close=")" index="">#{item, jdbcType=VARCHAR}</foreach>
+        </where>
+    </select>
+
+</mapper>
