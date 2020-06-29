@@ -2,7 +2,9 @@ package com.jinxin.platform.cdcockpit.controller;
 
 import com.jinxin.platform.cdcockpit.pojo.vo.list.CubeForm;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.ListForm;
+import com.jinxin.platform.cdcockpit.pojo.vo.list.ListOperationVo;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.DataResult;
+import com.jinxin.platform.cdcockpit.pojo.vo.result.ResponseResult;
 import com.jinxin.platform.cdcockpit.service.ListService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -109,7 +111,7 @@ public class ListController {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findValueInViewColumn(mapId));
     }
 
-    @ApiOperation(value = "获取数据", notes = "获取数据")
+    @ApiOperation(value = "获取数据", notes = "当 groupBy 为时间类型时 field 必传，3-周统计，2-月统计，1-年统计,当所传field不符合要求时按周统计")
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误")
@@ -127,5 +129,16 @@ public class ListController {
     @PostMapping("/view_cube_data")
     public DataResult findViewCubeData(@RequestBody CubeForm form) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", listService.findViewCubeData(form));
+    }
+
+    @ApiOperation(value = "添加表格操作", notes = "添加表格操作")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PostMapping("/operation")
+    public ResponseResult addOperation(@RequestBody ListOperationVo operationVo) {
+        return listService.addOperation(operationVo) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
     }
 }

@@ -14,6 +14,4 @@ public class ListOperation {
     private String url;
     private String method;
     private String param;
-
-
 }

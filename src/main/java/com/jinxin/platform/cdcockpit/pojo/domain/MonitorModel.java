@@ -9,10 +9,11 @@ import lombok.Data;
 @Data
 public class MonitorModel {
     private String id;
-    private String modelId;
-    private String deviceId;
     private String deviceName;
+    private String deviceNum;
     private String position;
-    private String status;
-    private String rtmpUrl;
+    private Integer status;
+    private String rtmp;
+    private String rtsp;
+
 }

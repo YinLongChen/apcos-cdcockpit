@@ -1,10 +1,10 @@
 package com.jinxin.platform.cdcockpit.service;
 
 import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListOperation;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.CubeForm;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.CubeResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.ListForm;
+import com.jinxin.platform.cdcockpit.pojo.vo.list.ListOperationVo;
 
 import java.util.List;
 import java.util.Map;
@@ -36,11 +36,18 @@ public interface ListService {
     Map<String, String> findNameMapByType(String modelId);
 
     /**
+     * 添加数据表格操作
+     * @param operationVo
+     * @return
+     */
+    boolean addOperation(ListOperationVo operationVo);
+
+    /**
      * 根据业务类型获取数据表格操作
      * @param modelId
      * @return
      */
-    List<ListOperation> findOperationByModelId(String modelId);
+    List<ListOperationVo> findOperationByModelId(String modelId);
 
     /**
      * 获取约束条件(where/group by)

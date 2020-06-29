@@ -2,6 +2,7 @@ package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.UserMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.User;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.GenderType;
@@ -206,11 +207,11 @@ public class CountUserServiceImpl implements CountUserService {
                 ages[i] = Integer.valueOf(ageStr[i]);
             }
             if (ages[0] > ages[1]) {
-                throw new RuntimeException("参数错误 ageGroup：" + ageGroup);
+                throw new CockpitException("参数错误 ageGroup：" + ageGroup);
             }
             return ages;
         }
-        throw new RuntimeException("参数错误 ageGroup：" + ageGroup);
+        throw new CockpitException("参数错误 ageGroup：" + ageGroup);
     }
 
 }

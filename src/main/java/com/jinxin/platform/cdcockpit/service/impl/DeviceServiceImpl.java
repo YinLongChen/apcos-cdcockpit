@@ -2,6 +2,7 @@ package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.DeviceMapper;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.Device;
@@ -183,7 +184,7 @@ public class DeviceServiceImpl implements DeviceService {
     public List<CountStrResult> deviceRepair(RepairForm form) {
         String where = buildWhere(form.getWheres());
         if (StringUtils.isEmpty(form.getXAxis())) {
-            throw new RuntimeException("Group By不能为空");
+            throw new CockpitException("Group By不能为空");
         }
 
         ListMap listMap = getMap(form.getXAxis());
@@ -243,14 +244,14 @@ public class DeviceServiceImpl implements DeviceService {
                     try {
                         startTime = sdf.parse(w.getParam());
                     } catch (ParseException e) {
-                        throw new RuntimeException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
+                        throw new CockpitException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
                     }
 
                     where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
                 } else {
                     int index = findValueInViewColumn(listMap.getColumnOrl()).indexOf(w.getParam());
                     if (index == -1) {
-                        throw new RuntimeException("参数[" + w.getParam() + "]不存在");
+                        throw new CockpitException("参数[" + w.getParam() + "]不存在");
                     }
                     where += " and " + listMap.getColumnOrl() + " = '" + w.getParam() + "'";
                 }
@@ -262,7 +263,7 @@ public class DeviceServiceImpl implements DeviceService {
     private ListMap getMap(String mapId) {
         ListMap listMap = listMapper.getMapById(mapId);
         if (listMap == null) {
-            throw new RuntimeException("找不到 map_id:[" + mapId + "]对应的记录");
+            throw new CockpitException("找不到 map_id:[" + mapId + "]对应的记录");
         }
         return listMap;
     }
@@ -272,7 +273,7 @@ public class DeviceServiceImpl implements DeviceService {
         try {
             list = deviceMapper.selectValueInColumn(column);
         } catch (Exception e) {
-            throw new RuntimeException("无效的参数");
+            throw new CockpitException("无效的参数");
         }
         return list;
     }

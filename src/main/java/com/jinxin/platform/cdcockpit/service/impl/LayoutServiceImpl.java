@@ -1,5 +1,6 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
+import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.LayoutMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.Layout;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.StatusType;
@@ -48,7 +49,7 @@ public class LayoutServiceImpl implements LayoutService {
         layout.setUserId(supportService.getWebCurrUser().getUserId());
 
         if (1 != layoutMapper.update(layout)) {
-            throw new RuntimeException("未找到记录");
+            throw new CockpitException("未找到记录");
         }
         return true;
     }
@@ -56,7 +57,7 @@ public class LayoutServiceImpl implements LayoutService {
     @Override
     public boolean delete(String id) {
         if (1 != layoutMapper.delete(id)) {
-            throw new RuntimeException("未找到记录");
+            throw new CockpitException("未找到记录");
         }
         return true;
     }

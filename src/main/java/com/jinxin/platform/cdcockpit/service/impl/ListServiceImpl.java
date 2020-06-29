@@ -1,15 +1,21 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
 import com.jinxin.platform.cdcockpit.pojo.domain.ListOperation;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.DataType;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.ShowType;
+import com.jinxin.platform.cdcockpit.pojo.vo.config.CountStrResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.Series;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.*;
 import com.jinxin.platform.cdcockpit.service.ListService;
+import com.jinxin.platform.cdcockpit.utils.ResultUtil;
 import com.jinxin.platform.cdcockpit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -45,8 +51,27 @@ public class ListServiceImpl implements ListService {
     }
 
     @Override
-    public List<ListOperation> findOperationByModelId(String modelId) {
-        return listMapper.selectOpreation(modelId);
+    public boolean addOperation(ListOperationVo operationVo) {
+        ListOperation operation = new ListOperation();
+        BeanUtils.copyProperties(operationVo, operation);
+        operation.setParam(JSON.toJSONString(operationVo.getParam()));
+        return listMapper.saveOpreation(operation);
+    }
+
+    @Override
+    public List<ListOperationVo> findOperationByModelId(String modelId) {
+        final ListOperationVo[] operationVo = {null};
+        return listMapper.selectOpreation(modelId).stream().map(m -> {
+            operationVo[0] = new ListOperationVo();
+            BeanUtils.copyProperties(m, operationVo[0]);
+            List<ListOperationParam> params = JSONObject.parseArray(m.getParam(), ListOperationParam.class);
+            if (params == null) {
+                operationVo[0].setParam(new ArrayList<>());
+            } else {
+                operationVo[0].setParam(params);
+            }
+            return operationVo[0];
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -61,7 +86,7 @@ public class ListServiceImpl implements ListService {
         try {
             list = listMapper.selectValueInColumn(column);
         } catch (Exception e) {
-            throw new RuntimeException("无效的参数");
+            throw new CockpitException("无效的参数");
         }
         return list;
     }
@@ -69,7 +94,7 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<Map<String, Object>> findData(ListForm form) {
         if (StringUtils.isEmpty(form.getModelId())) {
-            throw new RuntimeException("model_id不能为空");
+            throw new CockpitException("model_id不能为空");
         }
         String where = "where MODEL_ID = '" + form.getModelId() + "'";
         if (form.getWheres() != null && !form.getWheres().isEmpty()) {
@@ -82,7 +107,7 @@ public class ListServiceImpl implements ListService {
                     try {
                         startTime = sdf.parse(w.getParam());
                     } catch (ParseException e) {
-                        throw new RuntimeException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
+                        throw new CockpitException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
                     }
 
                     where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
@@ -90,7 +115,7 @@ public class ListServiceImpl implements ListService {
                 } else {
                     int index = findValueInColumn(w.getColumn()).indexOf(w.getParam());
                     if (index == -1) {
-                        throw new RuntimeException("参数[" + w.getParam() + "]不存在");
+                        throw new CockpitException("参数[" + w.getParam() + "]不存在");
                     }
                     where += " and " + listMap.getColumnOrl() + " = '" + w.getParam() + "'";
                 }
@@ -110,36 +135,62 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<Map<String, Object>> findViewData(ListForm form) {
         if (StringUtils.isEmpty(form.getModelId())) {
-            throw new RuntimeException("model_id不能为空");
+            throw new CockpitException("model_id不能为空");
         }
+
         String view = listMapper.selectViewByModelId(form.getModelId());
         if (StringUtils.isEmpty(view)) {
-            throw new RuntimeException("没有找到view");
+            throw new CockpitException("没有找到view");
         }
+
         String where = buildWhere(form.getWheres(), view);
-        if (!StringUtils.isEmpty(form.getGroupBy())) {
-            ListMap listMap = getMap(form.getGroupBy());
-            if (DataType.DATE.getValue().equals(listMap.getDataType())) {
-                throw new RuntimeException("Group By不能为时间类型");
+
+        if (StringUtils.isEmpty(form.getGroupBy())) {
+            //列表模型
+            return transformColumnName(listMapper.selectViewData(view, where));
+        }
+
+        ListMap listMap = getMap(form.getGroupBy());
+        if (DataType.DATE.getValue().equals(listMap.getDataType())) {
+            //x轴为 时间 的 非列表模型
+            if (form.getField() == null) {
+                throw new CockpitException("当groupBy为时间类型时field必传");
             }
+            Calendar c = ResultUtil.handleTime(form.getField());
+            SimpleDateFormat dateFormat = ResultUtil.buildDateFormatStr(form.getField());
+
+            Map<String, List<CountStrResult>> dataMap = listMapper.selectViewData(view, where).stream()
+                    .filter(f -> !StringUtils.isEmpty(f.get(listMap.getColumnOrl())))
+                    .filter(f -> c.getTime().before((Date) f.get(listMap.getColumnOrl())))
+                    .map(u -> CountStrResult.builder().name(dateFormat.format(u.get(listMap.getColumnOrl()))).build())
+                    .collect(Collectors.groupingBy(CountStrResult::getName));
+
+            List<CountStrResult> countStrResults = new ArrayList<>();
+            for (Map.Entry<String, List<CountStrResult>> entry : dataMap.entrySet()) {
+                countStrResults.add(CountStrResult.builder().name(entry.getKey()).value(String.valueOf(entry.getValue().size())).build());
+            }
+            return ResultUtil.fillInData(countStrResults, form.getField()).stream()
+                    .map(m -> JSONObject.parseObject(JSON.toJSONString(m)))
+                    .collect(Collectors.toList());
+        } else {
+            //x轴为 不为时间 的 非列表模型
             return transformColumnName(listMapper.selectViewDataCount(view, listMap.getColumnOrl(), where));
         }
-        return transformColumnName(listMapper.selectViewData(view, where));
     }
 
     @Override
     public CubeResult findViewCubeData(CubeForm form) {
         if (StringUtils.isEmpty(form.getModelId())) {
-            throw new RuntimeException("model_id不能为空");
+            throw new CockpitException("model_id不能为空");
         }
         String view = listMapper.selectViewByModelId(form.getModelId());
         if (StringUtils.isEmpty(view)) {
-            throw new RuntimeException("没有找到view");
+            throw new CockpitException("没有找到view");
         }
         //维度
         ListMap cubeMap = getMap(form.getCube());
         if (DataType.DATE.getValue().equals(cubeMap.getDataType())) {
-            throw new RuntimeException("维度不能为时间类型");
+            throw new CockpitException("维度不能为时间类型");
         }
         //x轴
         ListMap xAxisMap = getMap(form.getXAxis());
@@ -162,7 +213,7 @@ public class ListServiceImpl implements ListService {
             }
             cube = listMapper.selectValueInViewColumn(view, cubeMap.getColumnOrl());
         } catch (Exception e) {
-            throw new RuntimeException("无效的参数");
+            throw new CockpitException("无效的参数");
         }
 
         List<Series> series = new ArrayList<>();
@@ -213,12 +264,12 @@ public class ListServiceImpl implements ListService {
         ListMap listMap = getMap(mapId);
         String view = listMapper.selectViewByModelId(listMap.getModelId());
         if (StringUtils.isEmpty(view)) {
-            throw new RuntimeException("没有找到view");
+            throw new CockpitException("没有找到view");
         }
         try {
             list = listMapper.selectValueInViewColumn(view, listMap.getColumnOrl());
         } catch (Exception e) {
-            throw new RuntimeException("无效的参数");
+            throw new CockpitException("无效的参数");
         }
         return list;
     }
@@ -228,7 +279,7 @@ public class ListServiceImpl implements ListService {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat;
         if (field == null) {
-            throw new RuntimeException("X轴为时间类型时field必填");
+            throw new CockpitException("X轴为时间类型时field必填");
         }
         switch (field) {
             case Calendar.WEEK_OF_YEAR:
@@ -278,7 +329,7 @@ public class ListServiceImpl implements ListService {
     private ListMap getMap(String mapId) {
         ListMap listMap = listMapper.getMapById(mapId);
         if (listMap == null) {
-            throw new RuntimeException("找不到 map_id:[" + mapId + "]对应的记录");
+            throw new CockpitException("找不到 map_id:[" + mapId + "]对应的记录");
         }
         return listMap;
     }
@@ -336,14 +387,14 @@ public class ListServiceImpl implements ListService {
                     try {
                         startTime = sdf.parse(w.getParam());
                     } catch (ParseException e) {
-                        throw new RuntimeException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
+                        throw new CockpitException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
                     }
 
                     where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
                 } else {
                     int index = listMapper.selectValueInViewColumn(view, listMap.getColumnOrl()).indexOf(w.getParam());
                     if (index == -1) {
-                        throw new RuntimeException("参数[" + w.getParam() + "]不存在");
+                        throw new CockpitException("参数[" + w.getParam() + "]不存在");
                     }
                     where += " and " + listMap.getColumnOrl() + " = '" + w.getParam() + "'";
                 }

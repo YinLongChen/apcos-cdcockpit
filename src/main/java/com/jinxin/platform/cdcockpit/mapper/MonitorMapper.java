@@ -14,10 +14,12 @@ import java.util.List;
 @Mapper
 public interface MonitorMapper {
 
-    @Select("SELECT ID,MODEL_ID as modelId,DEVICE_ID as deviceId, DEVICE_NAME as deviceName,POSITION,STATUS,RTMP_URL as rtmpUrl FROM ODS_MONITOR_MODEL_DATA WHERE MODEL_ID = #{modelId}")
-    List<MonitorModel> selectMonitorByModelId(@Param("modelId") String modelId);
+    @Select("SELECT ID,DEVICE_NUM as deviceNum, DEVICE_NAME as deviceName,POSITION,STATUS,RTMP, RTSP FROM ODS_MONITOR_MODEL_DATA WHERE ID = #{id}")
+    MonitorModel selectMonitorById(@Param("id") String id);
 
 
-    @Select("SELECT ID,MODEL_ID as modelId,DEVICE_ID as deviceId, DEVICE_NAME as deviceName,POSITION,STATUS,RTMP_URL as rtmpUrl FROM ODS_MONITOR_MODEL_DATA")
+    @Select("SELECT ID,DEVICE_NUM as deviceNum, DEVICE_NAME as deviceName,POSITION,STATUS,RTMP, RTSP FROM ODS_MONITOR_MODEL_DATA")
     List<MonitorModel> selectMonitorAll();
+
+    boolean update(MonitorModel monitorModel);
 }

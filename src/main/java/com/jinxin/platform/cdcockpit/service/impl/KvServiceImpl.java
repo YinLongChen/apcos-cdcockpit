@@ -24,6 +24,9 @@ public class KvServiceImpl implements KvService {
 
     @Override
     public Map<String, List<KvModel>> findByModelIds(List<String> ids) {
+        if (ids.isEmpty()) {
+            return null;
+        }
         return kvMapper.selectByModelIds(ids).stream().collect(Collectors.groupingBy(KvModel::getModelId));
     }
 }

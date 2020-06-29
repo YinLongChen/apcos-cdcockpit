@@ -14,5 +14,20 @@
         ORDER BY COLUMN_ORI ASC
     </select>
 
+    <insert id="saveOpreation" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.ListOperation">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select sys_guid() from dual
+        </selectKey>
+        INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM")
+        VALUES
+        (
+        #{id,jdbcType=VARCHAR},
+        #{modelId,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{url,jdbcType=VARCHAR},
+        #{method,jdbcType=VARCHAR},
+        #{param,jdbcType=VARCHAR}
+        )
+    </insert>
 
 </mapper>

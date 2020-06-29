@@ -1,5 +1,6 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
+import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.CompareMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.CompareModel;
 import com.jinxin.platform.cdcockpit.pojo.vo.compare.CompareResult;
@@ -32,7 +33,7 @@ public class CompareServiceImpl implements CompareService {
         try {
             param = dateFormat.parse(month);
         } catch (ParseException e) {
-            throw new RuntimeException("参数格式错误[" + month + "]");
+            throw new CockpitException("参数格式错误[" + month + "]");
         }
         Calendar c = Calendar.getInstance();
         c.setTime(param);

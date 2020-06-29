@@ -19,4 +19,9 @@ public class ListForm {
     */
    private String groupBy;
 
+   /**
+    * 当 groupBy 为时间类型时必传，3-周统计，2-月统计，1-年统计
+    */
+   private Integer field;
+
 }

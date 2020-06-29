@@ -68,6 +68,7 @@ public interface ListMapper {
     @Select("SELECT ID,MODEL_ID as modelId,NAME,URL,METHOD,PARAM FROM ODS_LIST_MODEL_DATA_OPERATION WHERE MODEL_ID = #{modelId}")
     List<ListOperation> selectOpreation(@Param("modelId") String modelId);
 
+    boolean saveOpreation(ListOperation operation);
 
     @Select("select DISTINCT ${column} FROM ODS_LIST_MODEL_DATA")
     List<Object> selectValueInColumn(@Param("column") String column);

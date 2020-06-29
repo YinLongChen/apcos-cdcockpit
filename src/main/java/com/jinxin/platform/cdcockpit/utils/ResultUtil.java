@@ -27,7 +27,7 @@ public class ResultUtil {
                 c.add(Calendar.YEAR, -1);
                 break;
             default:
-
+                c.add(Calendar.DATE, -7);
         }
         return c;
     }
