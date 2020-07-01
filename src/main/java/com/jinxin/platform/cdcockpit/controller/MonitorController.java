@@ -47,6 +47,6 @@ public class MonitorController {
     @GetMapping("/refresh/{id}")
     public ResponseResult refreshStream(@PathVariable("id") String id) {
         return monitorService.refreshStream(id) ? new ResponseResult(HttpStatus.OK.value(), "成功")
-                : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+                : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败,设备离线");
     }
 }
