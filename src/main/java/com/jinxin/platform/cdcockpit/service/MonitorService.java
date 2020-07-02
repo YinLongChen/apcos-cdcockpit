@@ -18,7 +18,7 @@ public interface MonitorService {
      * @param form
      * @return
      */
-    boolean add(MonitorForm form);
+    MonitorModel add(MonitorForm form);
 
     /**
      * 编辑
@@ -41,6 +41,7 @@ public interface MonitorService {
      */
     List<MonitorModel> findMonitorAll();
 
+    MonitorModel getById(String id);
 
     boolean refreshStream(String id);
 }

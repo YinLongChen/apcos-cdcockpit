@@ -33,9 +33,8 @@ public class MonitorController {
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @PostMapping
-    public ResponseResult add(@RequestBody MonitorForm form) {
-        return monitorService.add(form) ?
-                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+    public DataResult<MonitorModel> add(@RequestBody MonitorForm form) {
+        return new DataResult(HttpStatus.OK.value(), "成功", monitorService.add(form));
     }
 
 
@@ -61,6 +60,15 @@ public class MonitorController {
                 new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
     }
 
+    @ApiOperation(value = "获取摄像头", notes = "获取摄像头")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @GetMapping("/{id}")
+    public DataResult<MonitorModel> get(@PathVariable String id) {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", monitorService.getById(id));
+    }
 
     @ApiOperation(value = "摄像头列表", notes = "摄像头列表")
     @ApiResponses({
@@ -68,7 +76,7 @@ public class MonitorController {
             @ApiResponse(code = 500, message = "服务器内部错误")
     })
     @GetMapping
-    public DataResult<List<MonitorModel>> findModeAlll() {
+    public DataResult<List<MonitorModel>> list() {
         return new DataResult<>(HttpStatus.OK.value(), "成功", monitorService.findMonitorAll());
     }
 

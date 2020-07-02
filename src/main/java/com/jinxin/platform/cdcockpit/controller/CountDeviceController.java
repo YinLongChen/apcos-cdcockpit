@@ -119,3 +119,5 @@ public class CountDeviceController {
         return new DataResult<>(HttpStatus.OK.value(), "成功", deviceService.deviceRepair(form));
     }
 }
+
+

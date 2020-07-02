@@ -30,4 +30,7 @@ public interface MonitorMapper {
 
     @Delete("DELETE FROM ODS_MONITOR_MODEL_DATA WHERE ID = #{id}")
     boolean delete(@Param("id") String id);
+
+    @Select("SELECT ID,DEVICE_NUM as deviceName,POSITION,STATUS,RTMP,RTSP,DEVICE_NUM FROM ODS_MONITOR_MODEL_DATA WHERE ID = #{id}")
+    MonitorModel getOne(@Param("id") String id);
 }

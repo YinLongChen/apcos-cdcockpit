@@ -34,12 +34,18 @@ public class MonitorServiceImpl implements MonitorService {
     @Autowired
     private ExecutorService taskExecutor;
 
-//        private String rtmp = "rtmp://113.204.9.70:1935/live/";
-    private String rtmp = "rtmp://192.168.3.76:1935/live/";
+    private String rtmp = "rtmp://113.204.9.70:1935/live/";
+//    private String rtmp = "rtmp://192.168.3.76:1935/live/";
 
     @Override
-    public boolean add(MonitorForm form) {
-        return monitorMapper.save(form);
+    public MonitorModel add(MonitorForm form) {
+        if (!monitorMapper.save(form)) {
+            return null;
+        }
+        MonitorModel monitorModel = new MonitorModel();
+        BeanUtils.copyProperties(form, monitorModel);
+        refresh(monitorModel);
+        return monitorModel;
     }
 
     @Override
@@ -65,6 +71,12 @@ public class MonitorServiceImpl implements MonitorService {
                     return m;
                 }).collect(Collectors.toList());
     }
+
+    @Override
+    public MonitorModel getById(String id) {
+        return monitorMapper.getOne(id);
+    }
+
 
     @Override
     public boolean refreshStream(String id) {
