@@ -30,10 +30,12 @@ INSERT INTO "ODS_LIST_MODEL_VIEW"("MODEL_ID", "VIEW_NAME", "REMARK", "TYPE") VAL
 INSERT INTO "ODS_LIST_MODEL_VIEW"("MODEL_ID", "VIEW_NAME", "REMARK", "TYPE") VALUES ('HKSALARM_ALARM_LIST', 'V_ODS_HKSALARM_ALARM_HISTORY', '海克斯报警表', '业务表');
 
 
-INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('1', 'HKSALARM_ALARM_LIST', '删除', 'http://www', 'DELETE', 'id');
-INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('2', 'HKSALARM_ALARM_LIST', '处理', 'http://www', 'POST', 'id');
-INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('3', 'HKSRTIPT_EVENT_LIST', '删除', 'http://www', 'DELETE', 'id');
-INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('4', 'HKSRTIPT_EVENT_LIST', '处理', 'http://www', 'POST', 'id');
+INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('54e0cff5-e0b9-4709-8f2f-99d312c4e2e1', 'HKSALARM_ALARM_LIST', '处理', 'http://192.168.60.251:9803/capsule/operation-test', 'GET', '[{"name":"id","nameCh":"序列号","source":"id","type":"list"},{"name":"content","nameCh":"内容","source":"","type":"input"}]');
+INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('2846d696-b784-4d26-af8d-139e481446f0', 'HKSRTIPT_EVENT_LIST', '处理', 'http://192.168.60.251:9803/capsule/operation-test', 'GET', '[{"name":"id","nameCh":"序列号","source":"eventName","type":"list"},{"name":"content","nameCh":"内容","source":"processingUser","type":"input"}]');
+INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('fff0f60e-c2ec-49ad-9559-d2dae45990f1', 'HKSALARM_ALARM_LIST', '详情', 'http://192.168.60.251:9803/capsule/operation-test', 'POST', '[{"name":"userId","nameCh":"用户id","source":"id","type":"list"},{"name":"userName","nameCh":"用户名","source":"","type":"input"}]');
+INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM") VALUES ('4913386a-7bb3-4f8a-a21c-4c429e07b7f6', 'HKSRTIPT_EVENT_LIST', '详情', 'http://192.168.60.251:9803/capsule/operation-test', 'POST', '[{"name":"userId","nameCh":"用户id","source":"eventName","type":"list"},{"name":"userName","nameCh":"用户名","source":"processingUser","type":"input"}]');
+
+
 
 
 
