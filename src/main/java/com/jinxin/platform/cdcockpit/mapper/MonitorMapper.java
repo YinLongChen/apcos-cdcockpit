@@ -1,6 +1,9 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
 import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
+import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
+import com.jinxin.platform.cdcockpit.utils.StringUtil;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -22,4 +25,9 @@ public interface MonitorMapper {
     List<MonitorModel> selectMonitorAll();
 
     boolean update(MonitorModel monitorModel);
+
+    boolean save(MonitorForm form);
+
+    @Delete("DELETE FROM ODS_MONITOR_MODEL_DATA WHERE ID = #{id}")
+    boolean delete(@Param("id") String id);
 }

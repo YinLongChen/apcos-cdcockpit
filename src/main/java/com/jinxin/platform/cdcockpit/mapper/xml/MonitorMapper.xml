@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jinxin.platform.cdcockpit.mapper.MonitorMapper">
 
+    <insert id="save" parameterType="com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select sys_guid() from dual
+        </selectKey>
+        INSERT INTO "ODS_MONITOR_MODEL_DATA"("ID", "DEVICE_NAME", "POSITION", "RTSP")
+        VALUES (#{id,jdbcType=VARCHAR},#{deviceName,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{rtsp,jdbcType=VARCHAR})
+    </insert>
 
     <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel">
         UPDATE "ODS_MONITOR_MODEL_DATA" r

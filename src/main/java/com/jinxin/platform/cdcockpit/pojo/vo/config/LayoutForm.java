@@ -15,4 +15,5 @@ public class LayoutForm {
     private String colNum;
     private Integer status;
     private String remark;
+    private Integer order;
 }

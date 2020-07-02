@@ -3,16 +3,21 @@ package com.jinxin.platform.cdcockpit.service.impl;
 import com.jinxin.platform.cdcockpit.mapper.MonitorMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.MonitorStatus;
+import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
 import com.jinxin.platform.cdcockpit.service.MonitorService;
 import com.jinxin.platform.cdcockpit.utils.RTMPGrabberRecorderTask;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +34,25 @@ public class MonitorServiceImpl implements MonitorService {
     @Autowired
     private ExecutorService taskExecutor;
 
+//        private String rtmp = "rtmp://113.204.9.70:1935/live/";
+    private String rtmp = "rtmp://192.168.3.76:1935/live/";
+
+    @Override
+    public boolean add(MonitorForm form) {
+        return monitorMapper.save(form);
+    }
+
+    @Override
+    public boolean edit(MonitorForm form) {
+        MonitorModel monitorModel = new MonitorModel();
+        BeanUtils.copyProperties(form, monitorModel);
+        return monitorMapper.update(monitorModel);
+    }
+
+    @Override
+    public boolean delete(String id) {
+        return monitorMapper.delete(id);
+    }
 
     @Override
     public List<MonitorModel> findMonitorAll() {
@@ -36,10 +60,7 @@ public class MonitorServiceImpl implements MonitorService {
                 .filter(f -> !StringUtils.isEmpty(f.getRtsp()))
                 .map(m -> {
                     if (StringUtils.isEmpty(m.getRtmp())) {
-                        m.setRtmp("rtmp://113.204.9.70:1935/live/" + UUID.randomUUID().toString().replaceAll("-", ""));
-                        log.info("摄像头[{}-{}]推流", m.getDeviceName(), m.getDeviceNum());
                         refresh(m);
-                        monitorMapper.update(m);
                     }
                     return m;
                 }).collect(Collectors.toList());
@@ -48,7 +69,6 @@ public class MonitorServiceImpl implements MonitorService {
     @Override
     public boolean refreshStream(String id) {
         MonitorModel m = monitorMapper.selectMonitorById(id);
-        log.info("摄像头[{}-{}]流刷新", m.getDeviceName(), m.getDeviceNum());
         return refresh(m);
     }
 
@@ -58,15 +78,28 @@ public class MonitorServiceImpl implements MonitorService {
      * @param monitorModel
      */
     private boolean refresh(MonitorModel monitorModel) {
+
+        if (StringUtils.isEmpty(monitorModel.getRtmp())) {
+            monitorModel.setRtmp(this.rtmp + UUID.randomUUID().toString().replaceAll("-", ""));
+        }
+
+
         Future<Boolean> future = taskExecutor.submit(new RTMPGrabberRecorderTask(monitorModel.getRtmp(), monitorModel.getRtsp()));
+
+
         try {
             future.get(5, TimeUnit.SECONDS);
-            monitorModel.setStatus(MonitorStatus.OFFLINE.getValue());
+        } catch (TimeoutException e) {
+            log.info("摄像头[{}]流刷新成功", monitorModel.getDeviceName());
+            monitorModel.setStatus(MonitorStatus.ONLINE.getValue());
             monitorMapper.update(monitorModel);
-            return false;
+            return true;
         } catch (Exception e) {
-            log.info("摄像头[{}-{}]流刷新成功", monitorModel.getDeviceName(), monitorModel.getDeviceNum());
+            log.info("摄像头[{}]流刷新失败", monitorModel.getDeviceName());
+            e.printStackTrace();
         }
-        return true;
+        monitorModel.setStatus(MonitorStatus.OFFLINE.getValue());
+        monitorMapper.update(monitorModel);
+        return false;
     }
 }

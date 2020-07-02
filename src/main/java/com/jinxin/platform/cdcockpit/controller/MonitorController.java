@@ -1,6 +1,8 @@
 package com.jinxin.platform.cdcockpit.controller;
 
 import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
+import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutForm;
+import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.DataResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.ResponseResult;
 import com.jinxin.platform.cdcockpit.service.MonitorService;
@@ -10,10 +12,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +26,40 @@ public class MonitorController {
 
     @Autowired
     private MonitorService monitorService;
+
+    @ApiOperation(value = "添加", notes = "添加")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PostMapping
+    public ResponseResult add(@RequestBody MonitorForm form) {
+        return monitorService.add(form) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+    }
+
+
+    @ApiOperation(value = "编辑", notes = "编辑")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @PutMapping
+    public ResponseResult edit(@RequestBody MonitorForm layout) {
+        return monitorService.edit(layout) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+    }
+
+    @ApiOperation(value = "删除", notes = "删除")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseResult delete(@PathVariable String id) {
+        return monitorService.delete(id) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+    }
 
 
     @ApiOperation(value = "摄像头列表", notes = "摄像头列表")
@@ -47,6 +80,6 @@ public class MonitorController {
     @GetMapping("/refresh/{id}")
     public ResponseResult refreshStream(@PathVariable("id") String id) {
         return monitorService.refreshStream(id) ? new ResponseResult(HttpStatus.OK.value(), "成功")
-                : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败,设备离线");
+                : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
     }
 }

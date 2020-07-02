@@ -8,7 +8,7 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME")
+        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME","ORDER")
         VALUES
         (
         #{id,jdbcType=VARCHAR},
@@ -20,7 +20,8 @@
         sysdate,
         #{status,jdbcType=VARCHAR},
         #{remark,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR}
+        #{name,jdbcType=VARCHAR},
+        #{order,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -45,6 +46,9 @@
             <if test="name != null and name !=''" >
                 r.NAME = #{name,jdbcType=VARCHAR},
             </if>
+            <if test="order != null">
+                r."ORDER" = #{order,jdbcType=VARCHAR},
+            </if>
             r.UPDATE_TIME = sysdate
         </set>
         WHERE ID = #{id,jdbcType=VARCHAR}
@@ -63,12 +67,13 @@
         r.STYLE,
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
-        r.UPDATE_TIME as updateTime
+        r.UPDATE_TIME as updateTime,
+        r."ORDER"
         FROM ODS_LAYOUT_CONFIG r
         <where>
             <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
         </where>
-        ORDER BY CREATE_TIME DESC
+        ORDER BY "ORDER"
     </select>
 
     <select id="selectByStatus" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
@@ -80,11 +85,11 @@
         r.STYLE,
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
-        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
         FROM ODS_LAYOUT_CONFIG r
         where r.STATUS = #{status}
         <if test="id != null and id !='' ">AND  r.ID = #{id}</if>
-        ORDER BY CREATE_TIME DESC
+        ORDER BY "ORDER"
     </select>
 
     <select id="select" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
@@ -96,14 +101,14 @@
         r.STYLE,
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
-        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
         FROM ODS_LAYOUT_CONFIG r
         <where>
             <if test="id != null and id !='' ">AND r.ID = #{userId}</if>
             <if test="status != null">AND r.STATUS = #{status}</if>
             <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
         </where>
-        ORDER BY CREATE_TIME DESC
+        ORDER BY "ORDER"
     </select>
 
 </mapper>

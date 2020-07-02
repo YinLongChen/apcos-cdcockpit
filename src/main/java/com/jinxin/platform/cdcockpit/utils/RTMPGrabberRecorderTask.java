@@ -100,7 +100,8 @@ public class RTMPGrabberRecorderTask implements Callable<Boolean> {
             recorder.release();
             log.info("停止推流{}----> {}", rtspPath, rtmpPath);
         } catch (Exception e) {
-            log.error("转换失败--{}", e);
+            log.error("转流失败--{}", e);
+//            throw new CockpitException("转流失败");
         }
         return false;
     }
