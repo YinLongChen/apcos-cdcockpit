@@ -16,4 +16,5 @@ public class MonitorForm {
     private String deviceName;
     private String position;
     private String rtsp;
+    private String rtmp;
 }

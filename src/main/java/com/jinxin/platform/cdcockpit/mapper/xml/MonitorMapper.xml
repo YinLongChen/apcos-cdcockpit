@@ -8,8 +8,8 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_MONITOR_MODEL_DATA"("ID", "DEVICE_NAME", "POSITION", "RTSP")
-        VALUES (#{id,jdbcType=VARCHAR},#{deviceName,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{rtsp,jdbcType=VARCHAR})
+        INSERT INTO "ODS_MONITOR_MODEL_DATA"("ID", "DEVICE_NAME", "POSITION", "RTSP", "RTMP")
+        VALUES (#{id,jdbcType=VARCHAR},#{deviceName,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{rtsp,jdbcType=VARCHAR},#{rtmp,jdbcType=VARCHAR})
     </insert>
 
     <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel">

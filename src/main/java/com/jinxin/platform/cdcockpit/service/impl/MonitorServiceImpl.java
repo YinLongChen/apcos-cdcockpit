@@ -63,7 +63,6 @@ public class MonitorServiceImpl implements MonitorService {
     @Override
     public List<MonitorModel> findMonitorAll() {
         return monitorMapper.selectMonitorAll().stream()
-                .filter(f -> !StringUtils.isEmpty(f.getRtsp()))
                 .map(m -> {
                     if (StringUtils.isEmpty(m.getRtmp())) {
                         refresh(m);
@@ -90,6 +89,10 @@ public class MonitorServiceImpl implements MonitorService {
      * @param monitorModel
      */
     private boolean refresh(MonitorModel monitorModel) {
+
+        if (StringUtils.isEmpty(monitorModel.getRtsp())) {
+            return false;
+        }
 
         if (StringUtils.isEmpty(monitorModel.getRtmp())) {
             monitorModel.setRtmp(this.rtmp + UUID.randomUUID().toString().replaceAll("-", ""));
