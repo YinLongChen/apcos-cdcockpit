@@ -171,3 +171,24 @@ CASE
   CREATE_DATE as TIME
 FROM
   HKSDEVMT_DEVRE
+-- ----------------------------
+-- Table structure for V_ODS_PRO_MODE 模式
+-- ----------------------------
+CREATE OR REPLACE VIEW V_ODS_PRO_MODE AS
+SELECT ID,
+       YMSID,
+       MODE_NAME,
+       ACCOUNT,
+       ENABLE_MODE,
+       AREA_CODE1,
+       AREA_CODE2,
+       AREA_CODE3,
+       DETAIL_ADDRESS,
+       MS_ORDER,
+       CREATE_ID,
+       CREATE_DATE,
+       EDIT_ID,
+       EDIT_DATE,
+       MODE_README,
+	   '/product_mode/msControl' as MS_CONTROL
+  FROM PRO_MODE T
