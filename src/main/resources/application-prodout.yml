@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@10.10.10.130:1521:ORCL
+    url: jdbc:oracle:thin:@beonelife.cn:2622:ORCL
     username: platform
     password: Platform2020
     type: com.alibaba.druid.pool.DruidDataSource

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.cdcockpit.mapper.LayoutMapper">
+
+    <insert id="save" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select sys_guid() from dual
+        </selectKey>
+        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME","ORDER")
+        VALUES
+        (
+        #{id,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
+        #{layout,jdbcType=VARCHAR},
+        #{style,jdbcType=VARCHAR},
+        #{colNum,jdbcType=VARCHAR},
+        sysdate,
+        sysdate,
+        #{status,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{order,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+        UPDATE ODS_LAYOUT_CONFIG r
+        <set>
+            <if test="layout != null and layout !=''">
+                r.LAYOUT = #{layout,jdbcType=VARCHAR},
+            </if>
+            <if test="style != null and style !=''">
+                r.STYLE = #{style,jdbcType=VARCHAR},
+            </if>
+            <if test="colNum != null">
+                r.COL_NUM = #{colNum,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                r.STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark !=''" >
+                r.REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name !=''" >
+                r.NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                r."ORDER" = #{order,jdbcType=VARCHAR},
+            </if>
+            r.UPDATE_TIME = sysdate
+        </set>
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM ODS_LAYOUT_CONFIG WHERE ID  = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+        SELECT
+        r.ID,
+        r.NAME,
+        r.USER_ID as userId,
+        r.LAYOUT,
+        r.STYLE,
+        r.COL_NUM as colNum,
+        r.CREATE_TIME as createTime,
+        r.UPDATE_TIME as updateTime,
+        r."ORDER"
+        FROM ODS_LAYOUT_CONFIG r
+        <where>
+            <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
+        </where>
+        ORDER BY "ORDER"
+    </select>
+
+    <select id="selectByStatus" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+        SELECT
+        r.ID,
+        r.NAME,
+        r.USER_ID as userId,
+        r.LAYOUT,
+        r.STYLE,
+        r.COL_NUM as colNum,
+        r.CREATE_TIME as createTime,
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
+        FROM ODS_LAYOUT_CONFIG r
+        where r.STATUS = #{status}
+        <if test="id != null and id !='' ">AND  r.ID = #{id}</if>
+        ORDER BY "ORDER"
+    </select>
+
+    <select id="select" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+        SELECT
+        r.ID,
+        r.NAME,
+        r.USER_ID as userId,
+        r.LAYOUT,
+        r.STYLE,
+        r.COL_NUM as colNum,
+        r.CREATE_TIME as createTime,
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
+        FROM ODS_LAYOUT_CONFIG r
+        <where>
+            <if test="id != null and id !='' ">AND r.ID = #{userId}</if>
+            <if test="status != null">AND r.STATUS = #{status}</if>
+            <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
+        </where>
+        ORDER BY "ORDER"
+    </select>
+
+</mapper>

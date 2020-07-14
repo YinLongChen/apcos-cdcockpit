@@ -13,6 +13,6 @@ import java.util.List;
 @Mapper
 public interface ModeMapper {
 
-    @Select("SELECT ID,MODE_NAME AS modeName,ACCOUNT,ENABLE_MODE AS enableMode,MS_ORDER msOrder,MODE_README AS modeReadme,MS_CONTROL as msControl FROM V_ODS_PRO_MODE")
+    @Select("SELECT ID,YMSID,MODE_NAME AS modeName,ACCOUNT,ENABLE_MODE AS enableMode,MS_ORDER msOrder,MODE_README AS modeReadme,MS_CONTROL as msControl FROM V_ODS_PRO_MODE")
     List<ModeModel> getAll();
 }

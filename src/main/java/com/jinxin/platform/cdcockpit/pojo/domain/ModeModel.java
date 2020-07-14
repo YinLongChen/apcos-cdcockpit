@@ -3,7 +3,6 @@ package com.jinxin.platform.cdcockpit.pojo.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Primary;
 
 /**
  * @author Huang LingSong
@@ -14,6 +13,7 @@ import org.springframework.context.annotation.Primary;
 @NoArgsConstructor
 public class ModeModel {
     private String id;
+    private String ymsid;
     private String modeName;
     private String account;
     private String enableMode;
