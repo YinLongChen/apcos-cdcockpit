@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -340,9 +341,19 @@ public class ListServiceImpl implements ListService {
             Map<String, Object> temp = new HashMap<>();
             for (Map.Entry<String, Object> entry : u.entrySet()) {
                 String nameEn = StringUtil.toFirstLetterUpper(entry.getKey());
+
                 if (entry.getValue() instanceof Date) {
                     // 如果是时间类型格式化再输出
                     temp.put(nameEn, dateFormat.format((Date) entry.getValue()));
+                } else if (entry.getValue() instanceof oracle.sql.TIMESTAMP) {
+                    // 处理 oracle.sql.TIMESTAMP 时间类型
+                    oracle.sql.TIMESTAMP timestamp = (oracle.sql.TIMESTAMP) entry.getValue();
+                    try {
+                        temp.put(nameEn, dateFormat.format(new Date(timestamp.dateValue().getTime())));
+                    } catch (SQLException e) {
+                        temp.put(nameEn, timestamp.stringValue());
+                        e.printStackTrace();
+                    }
                 } else {
                     temp.put(nameEn, entry.getValue());
                 }
