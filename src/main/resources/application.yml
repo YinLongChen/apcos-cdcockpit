@@ -13,7 +13,7 @@ spring:
   session:
     store-type: redis
   profiles:
-    active: prod
+    active: new
   thymeleaf:
     enabled: false
   mvc:

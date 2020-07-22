@@ -6,8 +6,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@192.168.10.150:1521:orcl
-    username: SW_FGTXSNNSNAPIO
-    password: SW_EISMQXOBIIMTP
+    username: SW_MRMBCJYNQZCSW
+    password: SW_QLGTKRNAYVZDE
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 1
     minIdle: 3

@@ -32,23 +32,12 @@ SELECT 'DEVICE_REPORT' AS MODEL_ID, --模型ID
        T1.DEVICE_MAC, --设备mac地址
        T2.TYPE_NAME AS PRODUCT_CODE_NAME,
        T.PRODUCT_CODE, --设备类型
-       T4.AREA_NAME AS POSITION, --设备位置
-       CASE
-         WHEN T3.DEVICE_STATE = '0' THEN
-          '正常'
-         WHEN T3.DEVICE_STATE = '1' THEN
-          '故障'
-         WHEN T3.DEVICE_STATE = '2' THEN
-          '报警'
-         WHEN T3.DEVICE_STATE = '3' THEN
-          '异常'
-       END AS STATE, --设备状态
-       T3.DEVICE_NAME AS SPARE --设备名称
+       'POSITION' AS POSITION, --设备位置
+       'STATE' AS STATE, --设备状态
+       'SPARE' AS SPARE --设备名称
   FROM PRO_REPORT T
   LEFT JOIN PRO_PRODUCT T1  ON T.SERIAL_NUM = T1.SERIAL_NUM
   LEFT JOIN PRO_PRODUCT_TYPE T2 ON T.PRODUCT_CODE = T2.PRODUCT_CODE
-  LEFT JOIN HKSFIREDEV_DEVICE_INFO T3  ON T.SERIAL_NUM = T3.PARENT_DEVICE_ID
-  LEFT JOIN ORG_AREA T4 ON T3.AREA_ID = T4.AREA_ID
 
 
 -- ----------------------------

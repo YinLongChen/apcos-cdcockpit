@@ -24,4 +24,8 @@ public class ListForm {
     */
    private Integer field;
 
+   private Integer current = 1;
+
+   private Integer size = 5;
+
 }

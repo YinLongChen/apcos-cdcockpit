@@ -2,6 +2,7 @@ package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
 import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -148,6 +148,7 @@ public class ListServiceImpl implements ListService {
 
         if (StringUtils.isEmpty(form.getGroupBy())) {
             //列表模型
+            PageHelper.startPage(form.getCurrent(), form.getSize());
             return transformColumnName(listMapper.selectViewData(view, where));
         }
 
@@ -345,16 +346,18 @@ public class ListServiceImpl implements ListService {
                 if (entry.getValue() instanceof Date) {
                     // 如果是时间类型格式化再输出
                     temp.put(nameEn, dateFormat.format((Date) entry.getValue()));
-                } else if (entry.getValue() instanceof oracle.sql.TIMESTAMP) {
-                    // 处理 oracle.sql.TIMESTAMP 时间类型
-                    oracle.sql.TIMESTAMP timestamp = (oracle.sql.TIMESTAMP) entry.getValue();
-                    try {
-                        temp.put(nameEn, dateFormat.format(new Date(timestamp.dateValue().getTime())));
-                    } catch (SQLException e) {
-                        temp.put(nameEn, timestamp.stringValue());
-                        e.printStackTrace();
-                    }
-                } else {
+                }
+//                else if (entry.getValue() instanceof oracle.sql.TIMESTAMP) {
+//                    // 处理 oracle.sql.TIMESTAMP 时间类型
+//                    oracle.sql.TIMESTAMP timestamp = (oracle.sql.TIMESTAMP) entry.getValue();
+//                    try {
+//                        temp.put(nameEn, dateFormat.format(new Date(timestamp.dateValue().getTime())));
+//                    } catch (SQLException e) {
+//                        temp.put(nameEn, timestamp.stringValue());
+//                        e.printStackTrace();
+//                    }
+//                }
+                else {
                     temp.put(nameEn, entry.getValue());
                 }
             }
