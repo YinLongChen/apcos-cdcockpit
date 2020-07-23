@@ -148,8 +148,9 @@ public class ListServiceImpl implements ListService {
 
         if (StringUtils.isEmpty(form.getGroupBy())) {
             //列表模型
+            String order = buildOrder(form.getOrder());
             PageHelper.startPage(form.getCurrent(), form.getSize());
-            return transformColumnName(listMapper.selectViewData(view, where));
+            return transformColumnName(listMapper.selectViewData(view, where + order));
         }
 
         ListMap listMap = getMap(form.getGroupBy());
@@ -415,6 +416,15 @@ public class ListServiceImpl implements ListService {
             }
         }
         return where;
+    }
+
+    public String buildOrder(String order) {
+        if (StringUtils.isEmpty(order)) {
+            return "";
+        } else {
+            ListMap listMap = getMap(order);
+            return " ORDER BY " + listMap.getColumnOrl() + " DESC ";
+        }
     }
 
 }

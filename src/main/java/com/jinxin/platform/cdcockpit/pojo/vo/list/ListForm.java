@@ -19,6 +19,8 @@ public class ListForm {
     */
    private String groupBy;
 
+   private String order;
+
    /**
     * 当 groupBy 为时间类型时必传，3-周统计，2-月统计，1-年统计
     */
@@ -26,6 +28,6 @@ public class ListForm {
 
    private Integer current = 1;
 
-   private Integer size = 5;
+   private Integer size = 10;
 
 }
