@@ -19,6 +19,8 @@ public class ListForm {
     */
    private String groupBy;
 
+   private String sum;
+
    private String order;
 
    /**

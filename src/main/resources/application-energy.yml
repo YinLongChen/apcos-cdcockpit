@@ -1,0 +1,49 @@
+#Server
+server:
+  port: 9203
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.10.150:1521:orcl
+    username: SW_BZOURKOMCUUCF
+    password: SW_BYMBRZGRETECZ
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    validationQuery: select 1 from dual
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,slf4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+#日志配置
+logging:
+  level:
+    com.jinxin: debug
+    org.springframework: warn
+    org.apache.ibatis.logging: debug
+
+log:
+  path: /home/jinxin/dev/logs
+
+serviceIp: http://192.168.40.214:9876
+
+d3url: http://113.204.9.70:9080/3dwebgl
+
+dgj_api_url: http://39.100.137.39:20083
+
+cd_api_url: http://39.100.252.32:9527
+
+back_url: http://192.168.40.214:9876/devBcca/backMothod
+
+kf_api_url: http://47.92.198.108:20003
+
+jxservice_url: http://47.98.119.20:9530/bcca2-middle-sapi/sapiReadme

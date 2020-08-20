@@ -56,6 +56,7 @@ public interface ListMapper {
      * @param mapId
      * @return
      */
+    @Deprecated
     @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn from ODS_LIST_MODEL_DATA_MAP where ID = #{mapId}")
     List<ListMap> selectMapById(@Param("mapId") String mapId);
 
@@ -89,6 +90,9 @@ public interface ListMapper {
 
     @Select("select ${groupBy} as name,count(${groupBy}) as value from ${view} ${where} group by ${groupBy}")
     List<Map<String, Object>> selectViewDataCount(@Param("view") String view, @Param("groupBy") String groupBy, @Param("where") String where);
+
+    @Select("select ${groupBy} as name,sum(${sum}) as value from ${view} ${where} group by ${groupBy}")
+    List<Map<String, Object>> selectViewDataSum(@Param("view") String view, @Param("groupBy") String groupBy,@Param("sum") String sum, @Param("where") String where);
 
     @Select("select DISTINCT ${column} FROM ${view}")
     List<String> selectValueInViewColumn(@Param("view") String view, @Param("column") String column);

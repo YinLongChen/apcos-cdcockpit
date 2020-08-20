@@ -15,6 +15,7 @@ import com.jinxin.platform.cdcockpit.pojo.vo.list.*;
 import com.jinxin.platform.cdcockpit.service.ListService;
 import com.jinxin.platform.cdcockpit.utils.ResultUtil;
 import com.jinxin.platform.cdcockpit.utils.StringUtil;
+import jdk.nashorn.internal.ir.ReturnNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * @author Huang LingSong
@@ -177,6 +179,18 @@ public class ListServiceImpl implements ListService {
                     .collect(Collectors.toList());
         } else {
             //x轴为 不为时间 的 非列表模型
+            if (!StringUtils.isEmpty(form.getSum())) {
+                ListMap sumMap = getMap(form.getSum());
+                List<Map<String, Object>> mapList = listMapper.selectViewDataSum(view, listMap.getColumnOrl(), sumMap.getColumnOrl(), where);
+                double sum = mapList.stream().mapToDouble(m -> Double.parseDouble(m.get("VALUE").toString())).sum();
+                List<Map<String, Object>> result = mapList.stream().map(m -> {
+                    m.put("rate", String.format("%.2f", Double.parseDouble(m.get("VALUE").toString()) / sum * 100) + "%");
+                    m.put("sum", sum);
+                    return m;
+                }).collect(Collectors.toList());
+
+                return transformColumnName(result);
+            }
             return transformColumnName(listMapper.selectViewDataCount(view, listMap.getColumnOrl(), where));
         }
     }
