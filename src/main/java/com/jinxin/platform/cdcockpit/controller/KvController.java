@@ -3,8 +3,6 @@ package com.jinxin.platform.cdcockpit.controller;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.DataResult;
 import com.jinxin.platform.cdcockpit.service.KvService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,10 +25,6 @@ public class KvController {
 
 
     @ApiOperation(value = "根据modelIds获取业务数据", notes = "根据modelIds获取业务数据")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 500, message = "服务器内部错误")
-    })
     @PostMapping
     public DataResult findByType(@RequestBody List<String> modelIds) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", kvService.findByModelIds(modelIds));
