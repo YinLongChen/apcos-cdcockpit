@@ -179,6 +179,7 @@ public class ListServiceImpl implements ListService {
                     .collect(Collectors.toList());
         } else {
             //x轴为 不为时间 的 非列表模型
+
             if (!StringUtils.isEmpty(form.getSum())) {
                 ListMap sumMap = getMap(form.getSum());
                 List<Map<String, Object>> mapList = listMapper.selectViewDataSum(view, listMap.getColumnOrl(), sumMap.getColumnOrl(), where);

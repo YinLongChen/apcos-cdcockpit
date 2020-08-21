@@ -86,7 +86,7 @@ SELECT ID,
 -- ----------------------------
 CREATE OR REPLACE VIEW V_ODS_ELECTRIC_CONSUMPTION AS
 SELECT
-	to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS TIME,
+	to_date( CONCAT( BUSI_MONTH, '01 00:00:01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS TIME,
 	ENERGY_USAGE_TYPE as NAME,
 	ENERGY_USAGE as VALUE,
 	ENERGY_UNIT as UNIT
@@ -100,7 +100,7 @@ WHERE
 -- ----------------------------
 CREATE OR REPLACE VIEW V_ODS_WATER_CONSUMPTION AS
 SELECT
-	to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS TIME,
+	to_date( CONCAT( BUSI_MONTH, '01 00:00:01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS TIME,
 	ENERGY_USAGE_TYPE as NAME,
 	ENERGY_USAGE as VALUE,
 	ENERGY_UNIT as UNIT

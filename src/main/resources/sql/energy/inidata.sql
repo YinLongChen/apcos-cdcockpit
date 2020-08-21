@@ -40,7 +40,7 @@ INSERT INTO "ODS_LIST_MODEL_DATA_MAP"("ID", "MODEL_ID", "COLUMN_ORI", "COLUMN_EN
 
 
 
-INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('1', 'BASE_DATA', '总人数', 'total_pople', '0', '基础数据');
-INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('2', 'BASE_DATA', '总面积', 'total_area', '0', '基础数据');
-INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('3', 'ENERGY_CONSUMPTION', '累计水能耗', 'total_water', '0', '累计能耗');
-INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('4', 'ENERGY_CONSUMPTION', '累计电能耗', 'total_electric', '0', '累计能耗');
+INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('1', 'BASE_DATA', '总人数', 'total_pople', '0', '人');
+INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('2', 'BASE_DATA', '总面积', 'total_area', '0', '㎡');
+INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('3', 'ENERGY_CONSUMPTION', '累计水能耗', 'total_water', '0', 'T');
+INSERT INTO "ODS_KV_MODEL_DATA"("ID", "MODEL_ID", "NAME", "KEY", "VALUE", "REMARK") VALUES ('4', 'ENERGY_CONSUMPTION', '累计电能耗', 'total_electric', '0', 'KW·h');
