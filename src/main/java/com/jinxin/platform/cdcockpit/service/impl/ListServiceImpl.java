@@ -186,7 +186,7 @@ public class ListServiceImpl implements ListService {
                 double sum = mapList.stream().mapToDouble(m -> Double.parseDouble(m.get("VALUE").toString())).sum();
                 List<Map<String, Object>> result = mapList.stream().map(m -> {
                     m.put("rate", String.format("%.2f", Double.parseDouble(m.get("VALUE").toString()) / sum * 100) + "%");
-                    m.put("sum", sum);
+                    m.put("sum", String.format("%.2f", sum));
                     return m;
                 }).collect(Collectors.toList());
 

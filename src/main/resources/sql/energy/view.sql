@@ -93,7 +93,7 @@ SELECT
 FROM
 	ODS_ENERGY_USETYPE_DATA
 WHERE
-	ENERGY_TYPE = 'electric'
+	ENERGY_TYPE = '电'
 
 -- ----------------------------
 -- Table structure for V_ODS_WATER_CONSUMPTION 用水表
@@ -107,7 +107,7 @@ SELECT
 FROM
 	ODS_ENERGY_USETYPE_DATA
 WHERE
-	ENERGY_TYPE = 'water'
+	ENERGY_TYPE = '水'
 
 -- ----------------------------
 -- Table structure for V_ODS_ENERGY_COST 能源费用表
@@ -126,8 +126,8 @@ FROM
 		w.wtime,
 		e.etime
 	FROM
-		( SELECT ENERGY_AMOUNT AS ELECTRIC_AMOUNT, BUSI_MONTH, to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS etime FROM ODS_ENERGY_PAY_DATA WHERE ENERGY_TYPE = 'electric' ) e FULL OUTER
-	JOIN ( SELECT ENERGY_AMOUNT AS WATER_AMOUNT, BUSI_MONTH, to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS wtime FROM ODS_ENERGY_PAY_DATA WHERE ENERGY_TYPE = 'water' ) w ON e.BUSI_MONTH = w.BUSI_MONTH
+		( SELECT ENERGY_AMOUNT AS ELECTRIC_AMOUNT, BUSI_MONTH, to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS etime FROM ODS_ENERGY_PAY_DATA WHERE ENERGY_TYPE = '电' ) e FULL OUTER
+	JOIN ( SELECT ENERGY_AMOUNT AS WATER_AMOUNT, BUSI_MONTH, to_date( CONCAT( BUSI_MONTH, '01' ), 'yyyy-MM-dd HH24:mi:ss' ) AS wtime FROM ODS_ENERGY_PAY_DATA WHERE ENERGY_TYPE = '水' ) w ON e.BUSI_MONTH = w.BUSI_MONTH
 	) T
 
 -- ----------------------------
@@ -142,7 +142,7 @@ SELECT
 FROM
 	ODS_ENERGY_USAGE_DATA
 WHERE
-	ENERGY_TYPE = 'electric' ORDER BY time
+	ENERGY_TYPE = '电' ORDER BY time
 
 -- ----------------------------
 -- Table structure for V_ODS_ENERGY_WATER 用水分析
@@ -156,6 +156,6 @@ SELECT
 FROM
 	ODS_ENERGY_USAGE_DATA
 WHERE
-	ENERGY_TYPE = 'water' ORDER BY time
+	ENERGY_TYPE = '水' ORDER BY time
 
 
