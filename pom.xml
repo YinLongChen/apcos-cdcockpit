@@ -219,7 +219,7 @@
                 <configuration>
                     <!-- 指定打包的jar包输出路径-->
                     <outputDirectory>
-                        E:\work\platform\lib
+                        C:\Users\hling\Desktop
                     </outputDirectory>
                 </configuration>
             </plugin>
