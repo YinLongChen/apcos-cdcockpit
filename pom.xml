@@ -12,7 +12,7 @@
 
     <groupId>com.jinxin.platform</groupId>
     <artifactId>apcos-cdcockpit</artifactId>
-    <version>1.2</version>
+    <version>1.7</version>
 
 
     <properties>
