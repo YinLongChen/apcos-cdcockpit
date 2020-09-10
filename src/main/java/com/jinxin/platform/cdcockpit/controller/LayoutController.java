@@ -81,4 +81,14 @@ public class LayoutController {
                 new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
 
     }
+
+    @ApiOperation(value = "修改项目logo", notes = "修改获取项目logo")
+    @PutMapping("/logo")
+    public ResponseResult updateLogo(@RequestParam("name")String url) {
+        return layoutService.updateLogo(url) ?
+                new ResponseResult(HttpStatus.OK.value(), "成功") : new ResponseResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "失败");
+
+    }
+
+
 }

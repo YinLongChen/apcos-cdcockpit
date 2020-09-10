@@ -12,4 +12,7 @@ public interface HistoryMapper {
 
     @Select("select * from ${view} where time >= #{startTime} and time < #{endTime}")
     List<Map<String, Object>> selectHistoryData(@Param("view") String view, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    @Select("select * from ${view} ${where} and time >= #{startTime} and time < #{endTime}")
+    List<Map<String, Object>> selectHistory(@Param("view") String view,@Param("where") String where,@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

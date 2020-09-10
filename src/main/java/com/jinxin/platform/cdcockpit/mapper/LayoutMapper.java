@@ -71,4 +71,7 @@ public interface LayoutMapper {
 
     @Select("UPDATE ODS_LAYOUT_CONFIG SET PROJECT = #{name}")
     void updateProjectName(String name);
+
+    @Select("UPDATE ODS_LAYOUT_CONFIG SET LOGO = #{url}")
+    void updateLogo(String url);
 }

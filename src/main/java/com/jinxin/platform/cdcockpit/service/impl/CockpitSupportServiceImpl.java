@@ -30,6 +30,7 @@ public class CockpitSupportServiceImpl implements CockpitSupportService {
         return LoginUser.builder()
                 .userId("user_id")
                 .userName("userName")
+                .orgId("1")
                 .build();
 
 //        this.cfg.setFunName("getWebCurrUser");
@@ -46,10 +47,12 @@ public class CockpitSupportServiceImpl implements CockpitSupportService {
 //        log.info("----------------------------");
 //        log.info("JSON:{}", jsonObject);
 //        log.info("userId:{}", jsonObject.getString("userId"));
+//        log.info("orgId:{}", jsonObject.getString("orgId"));
 //        log.info("userName:{}", jsonObject.getString("userName"));
 //
 //        return LoginUser.builder()
 //                .userId(jsonObject.getString("userId"))
+//                .orgId(jsonObject.getString("orgId"))
 //                .userName(jsonObject.getString("userName"))
 //                .build();
     }

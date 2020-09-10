@@ -62,4 +62,6 @@ public interface LayoutService {
      * @return
      */
     boolean updateProjectName(String name);
+
+    boolean updateLogo(String url);
 }

@@ -93,6 +93,12 @@ public class LayoutServiceImpl implements LayoutService {
         layoutMapper.updateProjectName(name);
         return true;
     }
+
+    @Override
+    public boolean updateLogo(String url) {
+        layoutMapper.updateLogo(url);
+        return true;
+    }
 }
 
 

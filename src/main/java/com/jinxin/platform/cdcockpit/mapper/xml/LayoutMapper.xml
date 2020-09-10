@@ -68,7 +68,8 @@
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
         r.UPDATE_TIME as updateTime,
-        r."ORDER"
+        r."ORDER",
+        r."LOGO"
         FROM ODS_LAYOUT_CONFIG r
         <where>
             <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
@@ -85,7 +86,7 @@
         r.STYLE,
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
-        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER", r."LOGO"
         FROM ODS_LAYOUT_CONFIG r
         where r.STATUS = #{status}
         <if test="id != null and id !='' ">AND  r.ID = #{id}</if>
@@ -101,7 +102,7 @@
         r.STYLE,
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
-        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER"
+        r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER", r."LOGO"
         FROM ODS_LAYOUT_CONFIG r
         <where>
             <if test="id != null and id !='' ">AND r.ID = #{userId}</if>

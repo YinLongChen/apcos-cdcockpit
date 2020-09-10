@@ -28,4 +28,5 @@ public class Layout {
     private Date updateTime;
     private String name;
     private Integer order;
+    private String logo;
 }

@@ -1,10 +1,7 @@
 package com.jinxin.platform.cdcockpit.service;
 
 import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
-import com.jinxin.platform.cdcockpit.pojo.vo.list.CubeForm;
-import com.jinxin.platform.cdcockpit.pojo.vo.list.CubeResult;
-import com.jinxin.platform.cdcockpit.pojo.vo.list.ListForm;
-import com.jinxin.platform.cdcockpit.pojo.vo.list.ListOperationVo;
+import com.jinxin.platform.cdcockpit.pojo.vo.list.*;
 
 import java.util.List;
 import java.util.Map;
@@ -100,5 +97,5 @@ public interface ListService {
      * @return
      */
     List<String> findValueInViewColumn(String mapId);
-
+    String buildWhere(List<Where> wheres, String view);
 }

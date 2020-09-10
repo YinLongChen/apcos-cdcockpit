@@ -185,7 +185,8 @@ public class ListServiceImpl implements ListService {
                 List<Map<String, Object>> mapList = listMapper.selectViewDataSum(view, listMap.getColumnOrl(), sumMap.getColumnOrl(), where);
                 double sum = mapList.stream().mapToDouble(m -> Double.parseDouble(m.get("VALUE").toString())).sum();
                 List<Map<String, Object>> result = mapList.stream().map(m -> {
-                    m.put("rate", String.format("%.2f", Double.parseDouble(m.get("VALUE").toString()) / sum * 100) + "%");
+                    String rate = sum == 0 ? "0%" : String.format("%.2f", Double.parseDouble(m.get("VALUE").toString()) / sum * 100) + "%";
+                    m.put("rate", rate);
                     m.put("sum", String.format("%.2f", sum));
                     return m;
                 }).collect(Collectors.toList());
@@ -405,6 +406,7 @@ public class ListServiceImpl implements ListService {
         return result;
     }
 
+    @Override
     public String buildWhere(List<Where> wheres, String view) {
         String where = " where 1 = 1 ";
         if (wheres != null && !wheres.isEmpty()) {

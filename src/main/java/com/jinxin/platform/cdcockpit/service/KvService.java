@@ -12,4 +12,6 @@ import java.util.Map;
 public interface KvService {
 
     Map<String, List<KvModel>> findByModelIds(List<String> ids);
+
+    Map<String, List<KvModel>> findByModelIds(List<String> ids, String filter);
 }
