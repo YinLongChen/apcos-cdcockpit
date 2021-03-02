@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.ModeModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModeModel;
 
 import java.util.List;
 

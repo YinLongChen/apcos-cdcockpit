@@ -1,9 +1,7 @@
 package com.jinxin.platform.cdcockpit.utils;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountStrResult;
 import lombok.extern.slf4j.Slf4j;
-import sun.rmi.runtime.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -25,7 +23,12 @@ public class ResultUtil {
                 c.add(Calendar.DATE, -7);
                 break;
             case Calendar.MONTH:
-                c.add(Calendar.MONTH, -1);
+                c.add(Calendar.MONTH, 0);
+                c.set(Calendar.DAY_OF_MONTH, 1);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
                 break;
             case Calendar.YEAR:
                 c.add(Calendar.YEAR, -1);
@@ -112,7 +115,7 @@ public class ResultUtil {
 
         data.addAll(fill);
 
-        Collections.sort(data, Comparator.comparing(o -> ((String) o.get("TIME_STR"))));
+        data.sort(Comparator.comparing(o -> ((String) o.get("TIME_STR"))));
 
         return data;
     }

@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.User;
+import com.jinxin.platform.cdcockpit.pojo.domains.User;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.user.UserCriteria;
 import org.apache.ibatis.annotations.Mapper;

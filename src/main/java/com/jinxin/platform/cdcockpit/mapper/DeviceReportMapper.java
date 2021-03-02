@@ -1,8 +1,8 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.DeviceReport;
-import com.jinxin.platform.cdcockpit.pojo.domain.DeviceReportData;
-import com.jinxin.platform.cdcockpit.pojo.domain.ReportOperation;
+import com.jinxin.platform.cdcockpit.pojo.domains.DeviceReport;
+import com.jinxin.platform.cdcockpit.pojo.domains.DeviceReportData;
+import com.jinxin.platform.cdcockpit.pojo.domains.ReportOperation;
 import com.jinxin.platform.cdcockpit.pojo.vo.device.ReportCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

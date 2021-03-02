@@ -1,7 +1,7 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.mapper.MonitorMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.MonitorModel;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.MonitorStatus;
 import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
 import com.jinxin.platform.cdcockpit.service.MonitorService;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class MonitorServiceImpl implements MonitorService {
 
-    @Autowired
+    @Resource
     private MonitorMapper monitorMapper;
 
     @Autowired

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinxin.platform.cdcockpit.mapper.CdcockpitTitleMapper">
+
+    <resultMap type="com.jinxin.platform.cdcockpit.pojo.domains.CdcockpitTitle" id="CdcockpitTitleMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="logo" column="LOGO" jdbcType="VARCHAR"/>
+        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="orgId" column="ORG_ID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CdcockpitTitleMap">
+        select
+          ID, TITLE, LOGO, URL, ORG_ID
+        from CDCOCKPIT_TITLE
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CdcockpitTitleMap">
+        select
+          ID, TITLE, LOGO, URL, ORG_ID
+        from CDCOCKPIT_TITLE
+        
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CdcockpitTitleMap">
+        select
+        ID, TITLE, LOGO, URL, ORG_ID
+        from CDCOCKPIT_TITLE
+        <where>
+            <if test="id != null and id != ''">
+                and ID = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and TITLE = #{title}
+            </if>
+            <if test="logo != null and logo != ''">
+                and LOGO = #{logo}
+            </if>
+            <if test="url != null and url != ''">
+                and URL = #{url}
+            </if>
+            <if test="orgId != null and orgId != ''">
+                and ORG_ID = #{orgId}
+            </if>
+        </where>
+        ORDER BY ID DESC
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+            select SYS_GUID() as id from DUAL
+        </selectKey>
+        insert into CDCOCKPIT_TITLE(ID, TITLE, LOGO, URL, ORG_ID)
+        values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        #{orgId,jdbcType=VARCHAR})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update CDCOCKPIT_TITLE
+        <set>
+            <if test="title != null and title != ''">
+                TITLE = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null and logo != ''">
+                LOGO = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url != ''">
+                URL = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null and orgId != ''">
+                ORG_ID = #{orgId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from CDCOCKPIT_TITLE where ID = #{id}
+    </delete>
+
+</mapper>

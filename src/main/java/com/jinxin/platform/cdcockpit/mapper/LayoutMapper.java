@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.Layout;
+import com.jinxin.platform.cdcockpit.pojo.domains.Layout;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

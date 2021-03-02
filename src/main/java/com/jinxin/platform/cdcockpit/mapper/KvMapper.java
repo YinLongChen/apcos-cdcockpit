@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.KvModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.KvModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,6 +15,6 @@ public interface KvMapper {
 
     List<KvModel> selectByModelIds(List<String> modelIds);
 
-    @Select("SELECT \"ID\",\"MODEL_ID\" as modelId,\"NAME\",\"KEY\",\"VALUE\",\"REMARK\" FROM ODS_KV_MODEL_DATA where FILTER = #{filter, jdbcType=VARCHAR} and MODEL_ID = #{modelId, jdbcType=VARCHAR}")
+    @Select("SELECT \"ID\",\"MODEL_ID\" as modelId,\"NAME\",\"KEY\",\"VALUE\",\"REMARK\" FROM ODS_KV_MODEL_DATA where FILTER = #{filter, jdbcType=VARCHAR} and MODEL_ID = #{modelId, jdbcType=VARCHAR} order by id ")
     List<KvModel> selectByModelId(String modelId,String filter);
 }

@@ -1,4 +1,4 @@
-package com.jinxin.platform.cdcockpit.pojo.domain;
+package com.jinxin.platform.cdcockpit.pojo.domains;
 
 import lombok.Data;
 
@@ -7,9 +7,8 @@ import lombok.Data;
  * 2020-06-10 10:24
  */
 @Data
-public class ListOperation {
+public class ReportOperation {
     private String id;
-    private String modelId;
     private String name;
     private String url;
     private String method;

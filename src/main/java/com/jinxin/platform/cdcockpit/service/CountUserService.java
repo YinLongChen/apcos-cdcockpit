@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.User;
+import com.jinxin.platform.cdcockpit.pojo.domains.User;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.Paging;
 import com.jinxin.platform.cdcockpit.pojo.vo.user.UserForm;

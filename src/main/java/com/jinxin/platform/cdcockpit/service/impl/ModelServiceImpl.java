@@ -1,12 +1,12 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.mapper.ModelMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.CountModel;
-import com.jinxin.platform.cdcockpit.pojo.domain.ModelType;
+import com.jinxin.platform.cdcockpit.pojo.domains.CountModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModelType;
 import com.jinxin.platform.cdcockpit.service.ModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class ModelServiceImpl implements ModelService {
 
-    @Autowired
+    @Resource
     private ModelMapper modelMapper;
     @Override
     public List<ModelType> findModelType() {

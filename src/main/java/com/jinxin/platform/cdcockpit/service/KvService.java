@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.KvModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.KvModel;
 
 import java.util.List;
 import java.util.Map;

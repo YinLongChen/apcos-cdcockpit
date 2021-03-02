@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.CompareModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.CompareModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

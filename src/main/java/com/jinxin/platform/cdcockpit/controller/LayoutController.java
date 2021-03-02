@@ -1,12 +1,16 @@
 package com.jinxin.platform.cdcockpit.controller;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.Layout;
+import com.jinxin.platform.cdcockpit.pojo.domains.CdcockpitTitle;
+import com.jinxin.platform.cdcockpit.pojo.domains.Layout;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutForm;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.DataResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.ResponseResult;
+import com.jinxin.platform.cdcockpit.pojo.vo.user.LoginUser;
+import com.jinxin.platform.cdcockpit.service.CdcockpitTitleService;
+import com.jinxin.platform.cdcockpit.service.CockpitSupportService;
 import com.jinxin.platform.cdcockpit.service.LayoutService;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +20,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/capsule/config")
+@CrossOrigin
 public class LayoutController {
 
     @Autowired
     private LayoutService layoutService;
 
-    @ApiOperation(value = "添加", notes = "添加[ status 状态（0 草稿，1 发布）]")
+    @Autowired
+    private CdcockpitTitleService cdcockpitTitleService;
+
+    @Autowired
+    private CockpitSupportService cockpitSupportService;
+
     @PostMapping
     public ResponseResult add(@RequestBody LayoutForm layout) {
         return layoutService.add(layout) ?
@@ -29,7 +39,6 @@ public class LayoutController {
     }
 
 
-    @ApiOperation(value = "编辑", notes = "编辑[ status 状态（0 草稿，1 发布）]")
     @PutMapping
     public ResponseResult edit(@RequestBody LayoutForm layout) {
         return layoutService.edit(layout) ?
@@ -37,7 +46,6 @@ public class LayoutController {
     }
 
 
-    @ApiOperation(value = "删除", notes = "删除")
     @DeleteMapping("/{id}")
     public ResponseResult delete(@PathVariable String id) {
         return layoutService.delete(id) ?
@@ -45,7 +53,6 @@ public class LayoutController {
     }
 
 
-    @ApiOperation(value = "根据用户获取布局配置", notes = "根据用户获取布局配置")
     @GetMapping
     public DataResult findByUserId() {
         return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.findByUserId());
@@ -62,19 +69,29 @@ public class LayoutController {
 //    }
 
 
-    @ApiOperation(value = "获取布局配置", notes = "获取布局配置")
     @PostMapping("/find")
     public DataResult<List<Layout>> find(@RequestBody LayoutCriteria layout) {
         return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.find(layout));
     }
 
-    @ApiOperation(value = "获取项目名称", notes = "获取项目名称")
     @GetMapping("/project")
-    public DataResult<String> getProName() {
-        return new DataResult<>(HttpStatus.OK.value(), "成功", layoutService.getProjectName());
+    public DataResult<CdcockpitTitle> getProName() {
+        return new DataResult<>(HttpStatus.OK.value(), "成功", cdcockpitTitleService.queryAll(new CdcockpitTitle()).get(0));
     }
 
-    @ApiOperation(value = "修改项目名称", notes = "修改获取项目名称")
+    @PostMapping("/saveTitle")
+    public ResponseResult saveTitle(@RequestBody  CdcockpitTitle cdcockpitTitle){
+        List<CdcockpitTitle> cdcockpitTitles = cdcockpitTitleService.queryAll(new CdcockpitTitle());
+        if (cdcockpitTitles.size()>0){
+            CdcockpitTitle temp = cdcockpitTitles.get(0);
+            BeanUtils.copyProperties(cdcockpitTitle,temp);
+            cdcockpitTitleService.update(temp);
+        }else {
+            cdcockpitTitleService.insert(cdcockpitTitle);
+        }
+        return new ResponseResult(HttpStatus.OK.value(), "成功");
+    }
+
     @PutMapping("/project")
     public ResponseResult updateProName(@RequestParam("name")String name) {
         return layoutService.updateProjectName(name) ?
@@ -82,7 +99,6 @@ public class LayoutController {
 
     }
 
-    @ApiOperation(value = "修改项目logo", notes = "修改获取项目logo")
     @PutMapping("/logo")
     public ResponseResult updateLogo(@RequestParam("name")String url) {
         return layoutService.updateLogo(url) ?

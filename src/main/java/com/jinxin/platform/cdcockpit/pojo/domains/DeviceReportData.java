@@ -1,4 +1,4 @@
-package com.jinxin.platform.cdcockpit.pojo.domain;
+package com.jinxin.platform.cdcockpit.pojo.domains;
 
 import lombok.Data;
 

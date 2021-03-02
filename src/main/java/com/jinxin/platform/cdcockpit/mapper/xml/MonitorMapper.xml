@@ -12,7 +12,7 @@
         VALUES (#{id,jdbcType=VARCHAR},#{deviceName,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{rtsp,jdbcType=VARCHAR},#{rtmp,jdbcType=VARCHAR})
     </insert>
 
-    <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel">
+    <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domains.MonitorModel">
         UPDATE "ODS_MONITOR_MODEL_DATA" r
         <set>
             <if test="deviceName != null and deviceName !=''">

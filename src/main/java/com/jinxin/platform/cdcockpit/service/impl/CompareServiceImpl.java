@@ -2,13 +2,13 @@ package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.CompareMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.CompareModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.CompareModel;
 import com.jinxin.platform.cdcockpit.pojo.vo.compare.CompareResult;
 import com.jinxin.platform.cdcockpit.service.CompareService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Service
 public class CompareServiceImpl implements CompareService {
 
-    @Autowired
+    @Resource
     private CompareMapper compareMapper;
 
 

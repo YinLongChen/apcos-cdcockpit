@@ -1,7 +1,7 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.CountModel;
-import com.jinxin.platform.cdcockpit.pojo.domain.ModelType;
+import com.jinxin.platform.cdcockpit.pojo.domains.CountModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModelType;
 
 import java.util.List;
 

@@ -5,8 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.DeviceMapper;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.Device;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
+import com.jinxin.platform.cdcockpit.pojo.domains.Device;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListMap;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.DataType;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountStrResult;
@@ -19,10 +19,10 @@ import com.jinxin.platform.cdcockpit.service.DeviceService;
 import com.jinxin.platform.cdcockpit.utils.Phone;
 import com.jinxin.platform.cdcockpit.utils.PhoneUtil;
 import com.jinxin.platform.cdcockpit.utils.ResultUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 @Service
 public class DeviceServiceImpl implements DeviceService {
 
-    @Autowired
+    @Resource
     private DeviceMapper deviceMapper;
 
-    @Autowired
+    @Resource
     private ListMapper listMapper;
 
 

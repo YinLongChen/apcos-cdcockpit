@@ -1,7 +1,7 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.DeviceReport;
-import com.jinxin.platform.cdcockpit.pojo.domain.ReportOperation;
+import com.jinxin.platform.cdcockpit.pojo.domains.DeviceReport;
+import com.jinxin.platform.cdcockpit.pojo.domains.ReportOperation;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.device.ReportCriteria;
 

@@ -8,10 +8,10 @@ import com.jinxin.platform.base.common.support.BusinessDelegate;
 import com.jinxin.platform.cdcockpit.pojo.vo.user.LoginUser;
 import com.jinxin.platform.cdcockpit.service.CockpitSupportService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 
 /**
@@ -22,8 +22,8 @@ import java.util.HashMap;
 @Service
 public class CockpitSupportServiceImpl implements CockpitSupportService {
 
-    @Autowired
-    private BusinessDelegate businessDelegate;
+ /*   @Resource
+    private BusinessDelegate businessDelegate;*/
 
     private InvokeCfg cfg;
 
@@ -35,52 +35,47 @@ public class CockpitSupportServiceImpl implements CockpitSupportService {
 
     @Override
     public LoginUser getWebCurrUser() {
-
         return LoginUser.builder()
                 .userId("user_id")
                 .userName("userName")
-                .orgId("1")
+                .orgId("94012409978683392")
                 .build();
-//
-//        this.cfg.setFunName("getWebCurrUser");
-//        this.cfg.setArgs(new HashMap<String, Object>() {{
-//        }});
-//
-//
-//        JsonResult jsonResult = businessDelegate.invoke(this.cfg);
-//        if (jsonResult.getStatus() != HttpStatus.OK.value()) {
-//            log.info("调用模块接口错误：{}", jsonResult.getMsg());
-//            return null;
-//        }
-//        JSONObject jsonObject = (JSONObject) JSON.parse(jsonResult.getData().toString());
-//        log.info("----------------------------");
-//        log.info("JSON:{}", jsonObject);
-//        log.info("userId:{}", jsonObject.getString("userId"));
-//        log.info("userName:{}", jsonObject.getString("userName"));
-//
-//        return LoginUser.builder()
-//                .userId(jsonObject.getString("userId"))
-//                .orgId(getOrgId(jsonObject.getString("userId")))
-//                .userName(jsonObject.getString("userName"))
-//                .build();
+
+
+       /* this.cfg.setFunName("getWebCurrUser");
+       JsonResult jsonResult = businessDelegate.invoke(this.cfg);
+       if (jsonResult.getStatus() != HttpStatus.OK.value()) {
+           log.info("调用模块接口错误：{}", jsonResult.getMsg());
+           return null;
+       }
+       JSONObject jsonObject = (JSONObject) JSON.parse(jsonResult.getData().toString());
+       log.info("----------------------------");
+       log.info("JSON:{}", jsonObject);
+       log.info("userId:{}", jsonObject.getString("userId"));
+       log.info("userName:{}", jsonObject.getString("userName"));
+       return LoginUser.builder()
+               .userId(jsonObject.getString("userId"))
+               .orgId(getOrgId(jsonObject.getString("userId")))
+               .userName(jsonObject.getString("userName"))
+               .build();*/
     }
 
     public String getOrgId(String userId) {
-        return "123456";
-//        this.cfg.setFunName("getOrgId");
-//        this.cfg.setArgs(new HashMap<String, Object>() {{
-//            put("userId", userId);
-//        }});
-//        JsonResult jsonResult = businessDelegate.invoke(this.cfg);
-//        if (jsonResult.getStatus() != HttpStatus.OK.value()) {
-//            log.info("调用模块接口错误：{}", jsonResult.getMsg());
-//            return null;
-//        }
-//        JSONObject jsonObject = (JSONObject) JSON.parse(jsonResult.getData().toString());
-//        log.info("----------------------------");
-//        log.info("JSON:{}", jsonObject);
-//        log.info("orgId:{}", jsonObject.getString("orgId"));
-//        return jsonObject.getString("orgId");
+       return "123456";
+      /*this.cfg.setFunName("getOrgId");
+      this.cfg.setArgs(new HashMap<String, Object>() {{
+          put("userId", userId);
+      }});
+      JsonResult jsonResult = businessDelegate.invoke(this.cfg);
+      if (jsonResult.getStatus() != HttpStatus.OK.value()) {
+          log.info("调用模块接口错误：{}", jsonResult.getMsg());
+          return null;
+      }
+      JSONObject jsonObject = (JSONObject) JSON.parse(jsonResult.getData().toString());
+      log.info("----------------------------");
+      log.info("JSON:{}", jsonObject);
+      log.info("orgId:{}", jsonObject.getString("orgId"));
+      return jsonObject.getString("orgId");*/
     }
 }
 

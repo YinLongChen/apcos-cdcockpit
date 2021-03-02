@@ -3,7 +3,7 @@ package com.jinxin.platform.cdcockpit.service.impl;
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.HistoryMapper;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListMap;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.Line;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.ListForm;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.ListMapCriteria;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,12 +25,12 @@ import java.util.stream.Collectors;
 @Service
 public class HistoryServiceImpl implements HistoryService {
 
-    @Autowired
+    @Resource
     private ListMapper listMapper;
 
     @Autowired
     private ListService listService;
-    @Autowired
+    @Resource
     private HistoryMapper historyMapper;
 
     @Override

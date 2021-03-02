@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListMap;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.*;
 
 import java.util.List;

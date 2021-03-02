@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.ModeModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModeModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

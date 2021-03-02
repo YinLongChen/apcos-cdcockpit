@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.ListMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListOperation;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListMap;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListOperation;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.DataType;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.ShowType;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountStrResult;
@@ -15,18 +15,16 @@ import com.jinxin.platform.cdcockpit.pojo.vo.list.*;
 import com.jinxin.platform.cdcockpit.service.ListService;
 import com.jinxin.platform.cdcockpit.utils.ResultUtil;
 import com.jinxin.platform.cdcockpit.utils.StringUtil;
-import jdk.nashorn.internal.ir.ReturnNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 /**
  * @author Huang LingSong
@@ -36,7 +34,7 @@ import java.util.stream.LongStream;
 @Service
 public class ListServiceImpl implements ListService {
 
-    @Autowired
+    @Resource
     private ListMapper listMapper;
 
     @Override

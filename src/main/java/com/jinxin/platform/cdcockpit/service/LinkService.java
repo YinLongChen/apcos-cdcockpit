@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.LinkModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.LinkModel;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.UserMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.User;
+import com.jinxin.platform.cdcockpit.pojo.domains.User;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.GenderType;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.result.Paging;
@@ -14,10 +14,10 @@ import com.jinxin.platform.cdcockpit.service.CountUserService;
 import com.jinxin.platform.cdcockpit.utils.Phone;
 import com.jinxin.platform.cdcockpit.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 public class CountUserServiceImpl implements CountUserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Override

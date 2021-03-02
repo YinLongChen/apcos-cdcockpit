@@ -1,11 +1,11 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.mapper.ModeMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.ModeModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModeModel;
 import com.jinxin.platform.cdcockpit.service.ModeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ModeServiceImpl implements ModeService {
 
-    @Autowired
+    @Resource
     private ModeMapper modeMapper;
 
     @Override

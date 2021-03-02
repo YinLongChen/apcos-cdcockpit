@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jinxin.platform.cdcockpit.mapper.ListMapper">
 
-    <select id="selectMaps" resultType="com.jinxin.platform.cdcockpit.pojo.domain.ListMap">
+    <select id="selectMaps" resultType="com.jinxin.platform.cdcockpit.pojo.domains.ListMap">
         select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType
         from ODS_LIST_MODEL_DATA_MAP
         <where>
@@ -14,7 +14,7 @@
         ORDER BY COLUMN_ORI ASC
     </select>
 
-    <insert id="saveOpreation" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.ListOperation">
+    <insert id="saveOpreation" parameterType="com.jinxin.platform.cdcockpit.pojo.domains.ListOperation">
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>

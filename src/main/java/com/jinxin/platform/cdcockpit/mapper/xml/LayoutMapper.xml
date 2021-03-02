@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jinxin.platform.cdcockpit.mapper.LayoutMapper">
 
-    <insert id="save" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+    <insert id="save" parameterType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
@@ -25,7 +25,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+    <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
         UPDATE ODS_LAYOUT_CONFIG r
         <set>
             <if test="layout != null and layout !=''">
@@ -58,7 +58,7 @@
         DELETE FROM ODS_LAYOUT_CONFIG WHERE ID  = #{id,jdbcType=VARCHAR}
     </delete>
 
-    <select id="selectByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+    <select id="selectByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
         SELECT
         r.ID,
         r.NAME,
@@ -77,7 +77,7 @@
         ORDER BY "ORDER"
     </select>
 
-    <select id="selectByStatus" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+    <select id="selectByStatus" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
         SELECT
         r.ID,
         r.NAME,
@@ -93,7 +93,7 @@
         ORDER BY "ORDER"
     </select>
 
-    <select id="select" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domain.Layout">
+    <select id="select" parameterType="java.lang.Integer" resultType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
         SELECT
         r.ID,
         r.NAME,

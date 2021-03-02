@@ -5,11 +5,13 @@
 <mapper namespace="com.jinxin.platform.cdcockpit.mapper.KvMapper">
 
 
-    <select id="selectByModelIds" resultType="com.jinxin.platform.cdcockpit.pojo.domain.KvModel">
-        SELECT "ID","MODEL_ID" as modelId,"NAME","KEY","VALUE","REMARK" FROM ODS_KV_MODEL_DATA
+    <select id="selectByModelIds" resultType="com.jinxin.platform.cdcockpit.pojo.domains.KvModel">
+        SELECT "ID","MODEL_ID" as modelId,"NAME","KEY","VALUE","REMARK" FROM CDCOCKPIT_KV_MODEL_DATA
         <where>
             MODEL_ID in
-            <foreach item="item" collection="list" separator="," open="(" close=")" index="">#{item, jdbcType=VARCHAR}</foreach>
+            <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+            #{item, jdbcType=VARCHAR}
+            </foreach>
         </where>
     </select>
 

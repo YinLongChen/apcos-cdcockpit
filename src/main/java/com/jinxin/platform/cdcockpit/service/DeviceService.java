@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.Device;
+import com.jinxin.platform.cdcockpit.pojo.domains.Device;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountStrResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.device.DeviceForm;

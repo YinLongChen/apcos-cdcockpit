@@ -1,16 +1,16 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.mapper.DeviceReportMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.DeviceReport;
-import com.jinxin.platform.cdcockpit.pojo.domain.ReportOperation;
+import com.jinxin.platform.cdcockpit.pojo.domains.DeviceReport;
+import com.jinxin.platform.cdcockpit.pojo.domains.ReportOperation;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.device.ReportCriteria;
 import com.jinxin.platform.cdcockpit.service.DeviceReportService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class DeviceReportServiceImpl implements DeviceReportService {
 
-    @Autowired
+    @Resource
     private DeviceReportMapper reportMapper;
 
     @Override

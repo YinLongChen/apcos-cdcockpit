@@ -2,7 +2,7 @@ package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.exception.CockpitException;
 import com.jinxin.platform.cdcockpit.mapper.LayoutMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.Layout;
+import com.jinxin.platform.cdcockpit.pojo.domains.Layout;
 import com.jinxin.platform.cdcockpit.pojo.enumeration.StatusType;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutCriteria;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutForm;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 public class LayoutServiceImpl implements LayoutService {
 
-    @Autowired
+    @Resource
     private LayoutMapper layoutMapper;
 
     @Autowired

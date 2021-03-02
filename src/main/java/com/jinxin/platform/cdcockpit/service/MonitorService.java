@@ -1,9 +1,7 @@
 package com.jinxin.platform.cdcockpit.service;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
-import com.jinxin.platform.cdcockpit.pojo.vo.config.LayoutForm;
+import com.jinxin.platform.cdcockpit.pojo.domains.MonitorModel;
 import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
-import com.jinxin.platform.cdcockpit.utils.StringUtil;
 
 import java.util.List;
 

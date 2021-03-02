@@ -1,4 +1,4 @@
-package com.jinxin.platform.cdcockpit.pojo.domain;
+package com.jinxin.platform.cdcockpit.pojo.domains;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

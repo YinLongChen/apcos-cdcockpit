@@ -1,7 +1,7 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.ListMap;
-import com.jinxin.platform.cdcockpit.pojo.domain.ListOperation;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListMap;
+import com.jinxin.platform.cdcockpit.pojo.domains.ListOperation;
 import com.jinxin.platform.cdcockpit.pojo.vo.list.ListMapCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

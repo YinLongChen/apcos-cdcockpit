@@ -1,7 +1,7 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.CountModel;
-import com.jinxin.platform.cdcockpit.pojo.domain.ModelType;
+import com.jinxin.platform.cdcockpit.pojo.domains.CountModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.ModelType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

@@ -1,12 +1,12 @@
 package com.jinxin.platform.cdcockpit.service.impl;
 
 import com.jinxin.platform.cdcockpit.mapper.KvMapper;
-import com.jinxin.platform.cdcockpit.pojo.domain.KvModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.KvModel;
 import com.jinxin.platform.cdcockpit.service.KvService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class KvServiceImpl implements KvService {
 
-    @Autowired
+    @Resource
     private KvMapper kvMapper;
 
     @Override

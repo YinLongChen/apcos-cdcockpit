@@ -1,8 +1,7 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.MonitorModel;
+import com.jinxin.platform.cdcockpit.pojo.domains.MonitorModel;
 import com.jinxin.platform.cdcockpit.pojo.vo.monitor.MonitorForm;
-import com.jinxin.platform.cdcockpit.utils.StringUtil;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

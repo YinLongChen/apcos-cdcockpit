@@ -1,6 +1,6 @@
 package com.jinxin.platform.cdcockpit.mapper;
 
-import com.jinxin.platform.cdcockpit.pojo.domain.Device;
+import com.jinxin.platform.cdcockpit.pojo.domains.Device;
 import com.jinxin.platform.cdcockpit.pojo.vo.config.CountResult;
 import com.jinxin.platform.cdcockpit.pojo.vo.device.DeviceCriteria;
 import org.apache.ibatis.annotations.Mapper;

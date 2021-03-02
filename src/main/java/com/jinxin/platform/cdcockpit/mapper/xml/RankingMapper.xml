@@ -5,7 +5,7 @@
 <mapper namespace="com.jinxin.platform.cdcockpit.mapper.RankingMapper">
 
 
-    <select id="selectRankingByModelId" resultType="com.jinxin.platform.cdcockpit.pojo.domain.RankingModel">
+    <select id="selectRankingByModelId" resultType="com.jinxin.platform.cdcockpit.pojo.domains.RankingModel">
          SELECT
         	    m.id,
         	    m.name,
