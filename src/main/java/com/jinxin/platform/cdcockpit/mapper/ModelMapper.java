@@ -19,7 +19,7 @@ public interface ModelMapper {
      * 获取模型分类
      * @return
      */
-    @Select("SELECT ID AS id,TYPE_NAME AS typeName FROM ODS_MODEL_TYPE_CONFIG")
+    @Select("SELECT ID AS id,TYPE_NAME AS typeName FROM CDCOCKPIT_MODEL_TYPE_CONFIG")
     List<ModelType> selectModelType();
 
     /**
@@ -27,6 +27,6 @@ public interface ModelMapper {
      * @param typeId
      * @return
      */
-    @Select("SELECT m.ID,m.MODEL_NAME AS modelName,m.TYPE_ID AS typeId,c.TYPE_NAME AS typeName FROM ODS_MODEL_CONFIG m LEFT JOIN ODS_MODEL_TYPE_CONFIG c ON m.TYPE_ID = c.ID  WHERE c.ID = #{typeId}")
+    @Select("SELECT m.ID,m.MODEL_NAME AS modelName,m.TYPE_ID AS typeId,c.TYPE_NAME AS typeName FROM CDCOCKPIT_MODEL_CONFIG m LEFT JOIN CDCOCKPIT_MODEL_TYPE_CONFIG c ON m.TYPE_ID = c.ID  WHERE c.ID = #{typeId}")
     List<CountModel> selectModelByType(@Param("typeId") String typeId);
 }

@@ -6,7 +6,7 @@
 
     <select id="selectMaps" resultType="com.jinxin.platform.cdcockpit.pojo.domains.ListMap">
         select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType
-        from ODS_LIST_MODEL_DATA_MAP
+        from CDCOCKPIT_LIST_MODEL_DATA_MAP
         <where>
             <if test="modelId != null and modelId !=''">and MODEL_ID = #{modelId}</if>
             <if test="show != null">and SHOW_TYPE = #{show}</if>
@@ -18,7 +18,7 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_LIST_MODEL_DATA_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM")
+        INSERT INTO "CDCOCKPIT_LIST_MODEL_OPERATION"("ID", "MODEL_ID", "NAME", "URL", "METHOD", "PARAM")
         VALUES
         (
         #{id,jdbcType=VARCHAR},

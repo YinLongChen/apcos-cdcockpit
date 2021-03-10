@@ -18,6 +18,7 @@ import java.util.List;
 @Mapper
 public interface DeviceReportMapper {
 
+
     /**
      * 查询上报数据类型
      *
@@ -47,6 +48,6 @@ public interface DeviceReportMapper {
      */
     List<DeviceReport> selectMaxTimeReport(ReportCriteria reportCriteria);
 
-    @Select("select  SERIAL_NUM as serialNum,NAME,VALUE,UNIT from ODS_DEVICE_REPORT_DATA where SERIAL_NUM = #{serialNum}")
+    @Select("select  SERIAL_NUM as serialNum,NAME,VALUE,UNIT from CDCOCKPIT_DEVICE_REPORT_DATA where SERIAL_NUM = #{serialNum}")
     List<DeviceReportData> selectReportData(@Param("serialNum") String serialNum);
  }

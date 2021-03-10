@@ -11,6 +11,8 @@ public enum DataType {
 
     DATE(0, "日期类型"),
 
+    DATESTR(2, "日期字符串"),
+
     OTHER(1, "其他类型");
 
     private final Integer value;

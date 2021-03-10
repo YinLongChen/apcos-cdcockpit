@@ -421,7 +421,18 @@ public class ListServiceImpl implements ListService {
                     }
 
                     where += " and " + listMap.getColumnOrl() + " >= to_date( '" + sdf.format(startTime) + "','yyyy-mm-dd hh24:mi:ss')";
-                } else {
+                } else if(DataType.DATESTR.getValue().equals(listMap.getDataType())) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    Date startTime;
+                    try {
+                        startTime = sdf.parse(w.getParam());
+                    } catch (ParseException e) {
+                        throw new CockpitException("时间参数[" + w.getParam() + "]格式(yyyy-MM-dd HH:mm:ss)不正确");
+                    }
+                    where += " and " + listMap.getColumnOrl() + " >=  '" + sdf.format(startTime) + "' ";
+                }
+                else {
                     int index = listMapper.selectValueInViewColumn(view, listMap.getColumnOrl()).indexOf(w.getParam());
                     if (index == -1) {
                         throw new CockpitException("参数[" + w.getParam() + "]不存在");

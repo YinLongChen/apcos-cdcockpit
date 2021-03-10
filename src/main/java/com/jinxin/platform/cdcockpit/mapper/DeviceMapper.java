@@ -25,16 +25,17 @@ public interface DeviceMapper {
      */
     List<Device> selectDevice(DeviceCriteria deviceCriteria);
 
-    @Select("SELECT COUNT(*) FROM V_ODS_DEVICE_CENTER_INFO")
+
+    @Select("SELECT COUNT(*) FROM CDCOCKPIT_DEVICE_CENTER_INFO")
     Integer sumDev();
 
-    @Select("select DISTINCT ${column} FROM V_ODS_DEVICE_REPAIR")
+    @Select("select DISTINCT ${column} FROM CDCOCKPIT_DEVICE_REPAIR")
     List<String> selectValueInColumn(@Param("column") String column);
 
-    @Select("select ${groupBy} as name,count(${groupBy}) as value from V_ODS_DEVICE_REPAIR ${where} group by ${groupBy}")
+    @Select("select ${groupBy} as name,count(${groupBy}) as value from CDCOCKPIT_DEVICE_REPAIR ${where} group by ${groupBy}")
     List<CountResult> selectViewDataCount(@Param("groupBy") String groupBy, @Param("where") String where);
 
-    @Select("select * from V_ODS_DEVICE_REPAIR ${where}")
+    @Select("select * from CDCOCKPIT_DEVICE_REPAIR ${where}")
     List<Map<String,Object>> selectViewData(@Param("where") String where);
 
 }

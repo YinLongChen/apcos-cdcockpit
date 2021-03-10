@@ -6,19 +6,19 @@
 
     <select id="selectReport" resultType="com.jinxin.platform.cdcockpit.pojo.domains.DeviceReport">
         select MODEL_ID as modelId,
-               SERIAL_NUM as serialNum,
-               DEVICE_NAME as deviceName,
-               DEVICE_MAC as deviceMac,
-               PRODUCT_CODE as productCode,
-               REPORT_TIME as reportTime,
-               CMD_NAME as cmdName,
-               "POSITION" as position,
-               STATE as state,
-               SPARE as spare,
-               PRODUCT_CODE_NAME as productCodeName
-        from V_ODS_DEVICE_REPORT where 1=1
+        SERIAL_NUM as serialNum,
+        DEVICE_NAME as deviceName,
+        DEVICE_MAC as deviceMac,
+        PRODUCT_CODE as productCode,
+        REPORT_TIME as reportTime,
+        CMD_NAME as cmdName,
+        "POSITION" as position,
+        STATE as state,
+        SPARE as spare,
+        PRODUCT_CODE_NAME as productCodeName
+        from CDCOCKPIT_DEVICE_REPORT where 1=1
         <if test="productCode != null and productCode !=''">and PRODUCT_CODE = #{productCode}</if>
-<!--        <if test="modelId != null and modelId !=''">and MODEL_ID = #{modelId}</if>-->
+        <!--        <if test="modelId != null and modelId !=''">and MODEL_ID = #{modelId}</if>-->
         <if test="cmdName != null and cmdName !=''">and CMD_NAME = #{cmdName}</if>
         <if test="startTime != null">and REPORT_TIME &gt;= #{startTime}</if>
         order by REPORT_TIME
@@ -39,8 +39,8 @@
         v.SPARE as spare,
         v.PRODUCT_CODE_NAME as productCodeName
         FROM
-        V_ODS_DEVICE_REPORT v
-        RIGHT JOIN ( SELECT SERIAL_NUM, MAX( REPORT_TIME ) REPORT_TIME FROM V_ODS_DEVICE_REPORT GROUP BY SERIAL_NUM ) t
+        CDCOCKPIT_DEVICE_REPORT v
+        RIGHT JOIN ( SELECT SERIAL_NUM, MAX( REPORT_TIME ) REPORT_TIME FROM CDCOCKPIT_DEVICE_REPORT GROUP BY SERIAL_NUM ) t
         ON v.SERIAL_NUM = t.SERIAL_NUM AND v.REPORT_TIME = t.REPORT_TIME where 1=1
         <if test="productCode != null and productCode !=''">and v.PRODUCT_CODE = #{productCode}</if>
         <if test="cmdName != null and cmdName !=''">and v.CMD_NAME = #{cmdName}</if>

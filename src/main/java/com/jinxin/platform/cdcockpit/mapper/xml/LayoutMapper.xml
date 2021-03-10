@@ -8,7 +8,7 @@
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select sys_guid() from dual
         </selectKey>
-        INSERT INTO "ODS_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME","ORDER")
+        INSERT INTO "CDCOCKPIT_LAYOUT_CONFIG"("ID", "USER_ID", "LAYOUT","STYLE","COL_NUM","CREATE_TIME", "UPDATE_TIME","STATUS","REMARK","NAME","ORDER")
         VALUES
         (
         #{id,jdbcType=VARCHAR},
@@ -26,7 +26,7 @@
     </insert>
 
     <update id="update" parameterType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
-        UPDATE ODS_LAYOUT_CONFIG r
+        UPDATE CDCOCKPIT_LAYOUT_CONFIG r
         <set>
             <if test="layout != null and layout !=''">
                 r.LAYOUT = #{layout,jdbcType=VARCHAR},
@@ -55,7 +55,7 @@
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM ODS_LAYOUT_CONFIG WHERE ID  = #{id,jdbcType=VARCHAR}
+        DELETE FROM CDCOCKPIT_LAYOUT_CONFIG WHERE ID  = #{id,jdbcType=VARCHAR}
     </delete>
 
     <select id="selectByUserId" parameterType="java.lang.String" resultType="com.jinxin.platform.cdcockpit.pojo.domains.Layout">
@@ -70,7 +70,7 @@
         r.UPDATE_TIME as updateTime,
         r."ORDER",
         r."LOGO"
-        FROM ODS_LAYOUT_CONFIG r
+        FROM CDCOCKPIT_LAYOUT_CONFIG r
         <where>
             <if test="userId != null and userId !='' ">AND r.USER_ID = #{userId}</if>
         </where>
@@ -87,7 +87,7 @@
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
         r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER", r."LOGO"
-        FROM ODS_LAYOUT_CONFIG r
+        FROM CDCOCKPIT_LAYOUT_CONFIG r
         where r.STATUS = #{status}
         <if test="id != null and id !='' ">AND  r.ID = #{id}</if>
         ORDER BY "ORDER"
@@ -103,7 +103,7 @@
         r.COL_NUM as colNum,
         r.CREATE_TIME as createTime,
         r.UPDATE_TIME as updateTime,r.STATUS,r.REMARK,r."ORDER", r."LOGO"
-        FROM ODS_LAYOUT_CONFIG r
+        FROM CDCOCKPIT_LAYOUT_CONFIG r
         <where>
             <if test="id != null and id !='' ">AND r.ID = #{userId}</if>
             <if test="status != null">AND r.STATUS = #{status}</if>

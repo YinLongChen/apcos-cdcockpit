@@ -21,7 +21,7 @@ public interface ListMapper {
      * @param modelId
      * @return
      */
-    @Select("select * from ODS_LIST_MODEL_DATA where MODEL_ID = #{modelId}")
+    @Select("select * from CDCOCKPIT_LIST_MODEL_DATA where MODEL_ID = #{modelId}")
     List<Map<String, Object>> selectByModelId(@Param("modelId") String modelId);
 
     /**
@@ -30,7 +30,7 @@ public interface ListMapper {
      * @param mid
      * @return
      */
-    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType from ODS_LIST_MODEL_DATA_MAP where ID = #{mid}")
+    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType from CDCOCKPIT_LIST_MODEL_DATA_MAP where ID = #{mid}")
     ListMap getMapById(@Param("mid") String mid);
 
     /**
@@ -40,7 +40,7 @@ public interface ListMapper {
      * @return
      */
     @Deprecated
-    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType from ODS_LIST_MODEL_DATA_MAP where MODEL_ID = #{modelId} ORDER BY COLUMN_ORI ASC")
+    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn,DATA_TYPE as dataType from CDCOCKPIT_LIST_MODEL_DATA_MAP where MODEL_ID = #{modelId} ORDER BY COLUMN_ORI ASC")
     List<ListMap> selectMap(@Param("modelId") String modelId);
 
     /**
@@ -57,7 +57,7 @@ public interface ListMapper {
      * @return
      */
     @Deprecated
-    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn from ODS_LIST_MODEL_DATA_MAP where ID = #{mapId}")
+    @Select("select ID,MODEL_ID as modelId,COLUMN_ORI as columnOrl,COLUMN_EN as columnEn,COLUMN_CN as columnCn from CDCOCKPIT_LIST_MODEL_DATA_MAP where ID = #{mapId}")
     List<ListMap> selectMapById(@Param("mapId") String mapId);
 
     /**
@@ -66,23 +66,23 @@ public interface ListMapper {
      * @param modelId
      * @return
      */
-    @Select("SELECT ID,MODEL_ID as modelId,NAME,URL,METHOD,PARAM FROM ODS_LIST_MODEL_DATA_OPERATION WHERE MODEL_ID = #{modelId}")
+    @Select("SELECT ID,MODEL_ID as modelId,NAME,URL,METHOD,PARAM FROM CDCOCKPIT_LIST_MODEL_OPERATION WHERE MODEL_ID = #{modelId}")
     List<ListOperation> selectOpreation(@Param("modelId") String modelId);
 
     boolean saveOpreation(ListOperation operation);
 
-    @Select("select DISTINCT ${column} FROM ODS_LIST_MODEL_DATA")
+    @Select("select DISTINCT ${column} FROM CDCOCKPIT_LIST_MODEL_DATA")
     List<Object> selectValueInColumn(@Param("column") String column);
 
     @Deprecated
-    @Select("select * from ODS_LIST_MODEL_DATA ${sql} ")
+    @Select("select * from CDCOCKPIT_LIST_MODEL_DATA ${sql} ")
     List<Map<String, Object>> selectData(@Param("sql") String sql);
 
     @Deprecated
-    @Select("select ${groupBy} as name,count(${groupBy}) as value from ODS_LIST_MODEL_DATA ${where} group by ${groupBy}")
+    @Select("select ${groupBy} as name,count(${groupBy}) as value from CDCOCKPIT_LIST_MODEL_DATA ${where} group by ${groupBy}")
     List<Map<String, Object>> selectDataCount(@Param("groupBy") String groupBy, @Param("where") String where);
 
-    @Select("SELECT VIEW_NAME as viewName FROM ODS_LIST_MODEL_VIEW WHERE MODEL_ID = #{modelId}")
+    @Select("SELECT VIEW_NAME as viewName FROM CDCOCKPIT_LIST_MODEL_VIEW WHERE MODEL_ID = #{modelId}")
     String selectViewByModelId(@Param("modelId") String modelId);
 
     @Select("select * from ${view} ${sql} ")
